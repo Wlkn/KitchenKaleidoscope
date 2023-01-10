@@ -3,6 +3,8 @@ import mongoose = require("mongoose");
 const Recipe = require("./models/Recipe");
 
 const app = express();
+app.use(express.json());             // for application/json
+app.use(express.urlencoded());       // for application/x-www-form-urlencoded
 mongoose.set("strictQuery", true);
 
 mongoose
@@ -18,8 +20,6 @@ mongoose
     });
 
 app.post("/api/recipe", (req, res, next) => {
-    console.log(req.body);
-
     const recipe = new Recipe({
         _id: req.body.id,
         name: req.body.name,

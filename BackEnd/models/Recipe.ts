@@ -8,3 +8,5 @@ const recipeSchema = Schema({
     description: { type: String},
     instructions: { type: String},
   });
+
+module.exports = mongoose.model('Recipe', recipeSchema)
