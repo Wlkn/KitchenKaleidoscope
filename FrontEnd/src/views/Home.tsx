@@ -5,6 +5,9 @@ export default function Home() {
         <div className="App">
             <Navbar />
             <h1>Home</h1>
+            <a href="/auth/login">Login </a>
+            <a href="/auth/signup"> Signup</a>
+
             <RecipeList />
         </div>
     );
