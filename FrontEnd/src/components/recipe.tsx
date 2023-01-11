@@ -31,7 +31,8 @@ export default function MediaCard(Recipe: {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small">Share</Button>
+                <Button size="small">LIKE</Button>
+                <Button size="small">Comments</Button>
                 <Button size="small">Learn More</Button>
             </CardActions>
         </Card>
