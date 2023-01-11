@@ -3,8 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -34,15 +32,17 @@ function Copyright(props: any) {
 
 const theme = createTheme();
 
-export default function SignIn() {
+export default function SignUp() {
     const navigate = useNavigate();
-    const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSignup = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+        const name = data.get("name") as string;
         const email = data.get("email") as string;
         const password = data.get("password") as string;
         let myHeaders = new Headers();
         const urlencoded = new URLSearchParams();
+        urlencoded.append("name", name);
         urlencoded.append("email", email);
         urlencoded.append("password", password);
 
@@ -54,13 +54,13 @@ export default function SignIn() {
         };
         try {
             const response = await fetch(
-                "http://localhost:4000/auth/login",
+                "http://localhost:4000/auth/signup",
                 requestOptions
             );
             if (response.ok) {
                 const json = await response.json();
-                alert("Login successful!");
-                navigate("/");
+                alert("Signup successful!");
+                navigate("/auth/login");
                 console.log(json);
             } else {
                 console.error(response.statusText);
@@ -82,18 +82,28 @@ export default function SignIn() {
                         alignItems: "center",
                     }}
                 >
-                    <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                    <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Sign in
+                        Sign up
                     </Typography>
                     <Box
                         component="form"
-                        onSubmit={handleLogin}
+                        onSubmit={handleSignup}
                         noValidate
                         sx={{ mt: 1 }}
                     >
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="Name"
+                            label="Full name"
+                            name="name"
+                            autoComplete="name"
+                            autoFocus
+                        />
                         <TextField
                             margin="normal"
                             required
@@ -102,7 +112,6 @@ export default function SignIn() {
                             label="Email Address"
                             name="email"
                             autoComplete="email"
-                            autoFocus
                         />
                         <TextField
                             margin="normal"
@@ -114,24 +123,18 @@ export default function SignIn() {
                             id="password"
                             autoComplete="current-password"
                         />
-                        <FormControlLabel
-                            control={
-                                <Checkbox value="remember" color="primary" />
-                            }
-                            label="Remember me"
-                        />
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                         >
-                            Sign In
+                            Sign Up
                         </Button>
                         <Grid container>
                             <Grid item>
-                                <Link href="/signup" variant="body2">
-                                    {"Don't have an account? Sign Up"}
+                                <Link href="/login" variant="body2">
+                                    {"Already have an account? Sign In"}
                                 </Link>
                             </Grid>
                         </Grid>

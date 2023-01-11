@@ -14,6 +14,18 @@ export default function MediaCard(Recipe: {
     instructions: string;
     imageUrl: string;
 }) {
+    function handleLike() {
+        console.log(Recipe._id + " " + "= Recipe name");
+    }
+
+    function handleComments() {
+        console.log("Comments");
+    }
+
+    function handleLearnMore() {
+        console.log("Learn More");
+    }
+
     return (
         <Card sx={{ maxWidth: 345 }}>
             <CardMedia
@@ -26,14 +38,21 @@ export default function MediaCard(Recipe: {
                 <Typography gutterBottom variant="h5" component="div">
                     {Recipe.name}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" color="text.secondary"
+                >
                     {Recipe.description}
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small">LIKE</Button>
-                <Button size="small">Comments</Button>
-                <Button size="small">Learn More</Button>
+                <Button size="small" onClick={handleLike}>
+                    LIKE
+                </Button>
+                <Button size="small" onClick={handleComments}>
+                    Comments
+                </Button>
+                <Button size="small" onClick={handleLearnMore}>
+                    Learn More
+                </Button>
             </CardActions>
         </Card>
     );

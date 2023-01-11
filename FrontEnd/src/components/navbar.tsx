@@ -33,7 +33,7 @@ const Search = styled("div")(({ theme }) => ({
         width: "auto",
     },
 }));
-
+//TODO REMOVE THE NOTIFICATIONS AND OTHER WHEN IT IS IN MOBILE MODE
 const SearchIconWrapper = styled("div")(({ theme }) => ({
     padding: theme.spacing(0, 2),
     height: "100%",
