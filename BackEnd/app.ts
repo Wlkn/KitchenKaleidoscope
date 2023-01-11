@@ -1,10 +1,13 @@
 import express = require("express");
 import mongoose = require("mongoose");
 const Recipe = require("./models/Recipe");
+const cors = require("cors")
+
 
 const app = express();
-app.use(express.json());             // for application/json
-app.use(express.urlencoded());       // for application/x-www-form-urlencoded
+app.use(express.json()); // for application/json
+app.use(express.urlencoded({ extended: true })); // for application/x-www-form-urlencoded
+app.use(cors())
 mongoose.set("strictQuery", true);
 
 mongoose
@@ -16,15 +19,16 @@ mongoose
     })
     .catch((error) => {
         console.log("Unable to connect to MongoDB.");
-        // console.error(error);
+        console.error(error);
     });
 
-app.post("/api/recipe", (req, res, next) => {
+app.post("/api/recipes", (req, res, next) => {
     const recipe = new Recipe({
-        _id: req.body.id,
+        // Id is automatically generated try to figure it out in the front end
         name: req.body.name,
         description: req.body.description,
         instructions: req.body.instructions,
+        imageUrl: req.body.imageUrl,
     });
 
     recipe
@@ -34,36 +38,38 @@ app.post("/api/recipe", (req, res, next) => {
                 message: "Post saved successfully!",
             });
         })
-        .catch((error: Object) => {
+        .catch((error: Error) => {
             res.status(400).json({
-                error: req,
+                error: error,
             });
         });
 });
 
-app.get("/api/recipe", (req, res, next) => {
+app.get("/api/recipes", (req, res, next) => {
     Recipe.find()
-        .then((recipe) => {
-            res.status(200).json(recipe);
+        .then((recipes: Object) => {
+            res.status(200).json(recipes);
         })
-        .catch((recipe) => {
+        .catch((recipes: Object) => {
             res.status(400).json({
                 error: Error,
+                recipes,
             });
         });
 });
 
-app.use((req, res, next) => {
-    res.status(201);
-    next();
+app.get("/api/recipes/:id", (req, res, next) => {
+    Recipe.findOne({
+        _id: req.params.id,
+    })
+        .then((recipe: Object) => {
+            res.status(200).json(recipe);
+        })
+        .catch((error: Error) => {
+            res.status(404).json({
+                error: error,
+            });
+        });
 });
 
-app.use((req, res, next) => {
-    res.json({ message: "Your request was successful!" });
-    next();
-});
-
-app.use((req, res, next) => {
-    console.log("Response sent successfully!");
-});
 module.exports = app;
