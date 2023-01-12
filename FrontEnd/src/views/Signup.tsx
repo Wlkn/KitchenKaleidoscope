@@ -32,7 +32,7 @@ function Copyright(props: any) {
 
 const theme = createTheme();
 
-export default function SignUp() {
+export default function Signup() {
     const navigate = useNavigate();
     const handleSignup = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();

@@ -1,6 +1,7 @@
 import express = require("express");
 const router = express.Router();
 import bcrypt = require("bcrypt");
+import jwt = require("jsonwebtoken");
 const User = require("../../models/User");
 // /auth/signup
 
@@ -44,9 +45,14 @@ router.post("/login", (req, res, next) => {
                             message: "Wrong password",
                         });
                     }
+                    const token = jwt.sign(
+                        { userId: user._id },
+                        "THISISMYRANDOMSECRETKEY",
+                        { expiresIn: "24h" }
+                    );
                     res.status(200).json({
                         userId: user._id,
-                        token: "token",
+                        token: token,
                     });
                 })
                 .catch((error) => {
@@ -56,7 +62,7 @@ router.post("/login", (req, res, next) => {
                     });
                 });
         })
-        .catch((error) => {
+        .catch((error: Error) => {
             res.status(500).json({
                 error: error,
                 message: "Something wrong happened.",

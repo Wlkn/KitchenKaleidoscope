@@ -1,42 +1,36 @@
+import React, { useState } from "react";
 import MediaCard from "./recipe";
 
 function RecipeList() {
+    const [recipes, setRecipes] = useState<Array<any>>([]);
     const apiUrl = "http://localhost:4000/api/recipes/";
     const fetchData = async () => {
         try {
             const response = await fetch(apiUrl);
             const json = await response.json();
-            console.log(json);
+            setRecipes(json);
         } catch (error) {
             console.log("error", error);
         }
     };
     fetchData();
-
     return (
         <div>
-            <MediaCard
-                _id={10}
-                name="Chicken Butter"
-                description="Buttery chicken brah"
-                instructions="Cook it"
-                imageUrl="https://source.unsplash.com/user/c_v_r"
-            />
-            <MediaCard
-                _id={14}
-                name="Chicken with olives idk"
-                description="addd a 250 chars limit rememrem"
-                //TODO add char limit of 250 chars for description
-                instructions="Cook it"
-                imageUrl="https://source.unsplash.com/user/c_v_r"
-            />
-            <MediaCard
-                _id={26}
-                name="Chicken Parm"
-                description="Parmy chicken brah"
-                instructions="Cook it"
-                imageUrl="https://source.unsplash.com/user/c_v_r"
-            />
+            {recipes.length === 0 ? (
+                //TODO add loader
+                <div>Loading...</div>
+            ) : (
+                recipes.map((recipe: any) => (
+                    <MediaCard
+                        key={recipe._id}
+                        _id={recipe._id}
+                        name={recipe.name}
+                        description={recipe.description}
+                        instructions={recipe.instructions}
+                        imageUrl={recipe.imageUrl}
+                    />
+                ))
+            )}
         </div>
     );
 }

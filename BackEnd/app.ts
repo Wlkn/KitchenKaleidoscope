@@ -20,6 +20,10 @@ mongoose
         console.error(error);
     });
 
+//AUTHENTICATION
+
+const auth = require("./routes/api/auth");
+
 //ROUTES
 
 const recipeRoute = require("./routes/api/recipes");
@@ -27,7 +31,7 @@ const userRoute = require("./routes/api/users");
 
 //ENDPOINTS
 
-app.use("/api/recipes", recipeRoute);
-app.use("/auth", userRoute);
+app.use("/api/recipes",  recipeRoute); // This targets every that starts with /api/recipes so the :id works too.
+app.use("/auth",  userRoute);// Same with this one.
 
 module.exports = app;
