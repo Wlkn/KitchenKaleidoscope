@@ -27,12 +27,13 @@ export default function MediaCard(Recipe: {
     }
 
     return (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ maxWidth: 345 }}
+        className="recipe-item"
+    >
             <CardMedia
                 sx={{ height: 140 }}
                 image={Recipe.imageUrl}
                 title={Recipe.name}
-                className="recipe-item"
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">

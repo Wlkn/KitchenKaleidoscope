@@ -31,7 +31,7 @@ const userRoute = require("./routes/api/users");
 
 //ENDPOINTS
 
-app.use("/api/recipes",  recipeRoute); // This targets every that starts with /api/recipes so the :id works too.
-app.use("/auth",  userRoute);// Same with this one.
+app.use("/api/recipes", recipeRoute); // This targets every that starts with /api/recipes so the :id works too.
+app.use("/auth", userRoute); // Same with this one.
 
 module.exports = app;

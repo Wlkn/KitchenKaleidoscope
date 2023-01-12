@@ -1,7 +1,11 @@
 import React, { useState } from "react";
-import MediaCard from "./recipe";
+import MediaCard from "../components/recipe";
 
-function RecipeList() {
+import "../styles/_recipes.css";
+
+import { Link } from "react-router-dom";
+
+export default function RecipeList() {
     const [recipes, setRecipes] = useState<Array<any>>([]);
     const apiUrl = "http://localhost:4000/api/recipes/";
     const fetchData = async () => {
@@ -16,11 +20,13 @@ function RecipeList() {
     fetchData();
     return (
         <div>
+        <Link to="/">Home </Link>
+        <div className="container">
             {recipes.length === 0 ? (
                 //TODO add loader
                 <div>Loading...</div>
-            ) : (
-                recipes.map((recipe: any) => (
+                ) : (
+                    recipes.map((recipe: any) => (
                     <MediaCard
                         key={recipe._id}
                         _id={recipe._id}
@@ -32,7 +38,6 @@ function RecipeList() {
                 ))
             )}
         </div>
+</div>
     );
 }
-
-export default RecipeList;

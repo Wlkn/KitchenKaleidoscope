@@ -1,15 +1,26 @@
+*{
+    top:0;
+    margin-top: 2px;
+
+}
+
+
 .recipe-image {
     height: 220px;
     width: 220px;
     border-radius: 20px;
+    margin-bottom: 12px;
 }
 
 .recipe-item {
-    margin: 10px;
+    margin-bottom: 1em;
+}
+.container {
+
     display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
     text-transform: capitalize;
     flex-wrap: wrap;
 }
