@@ -51,8 +51,8 @@ function SignIn() {
     const navigate = useNavigate();
     const userRef: any = useRef();
     const errRef: any = useRef();
-    const [user, setUser] = useState("");
-    const [pwd, setPwd] = useState("");
+    const [email, setUser] = useState("");
+    const [password, setPwd] = useState("");
     const [errMsg, setErrMsg] = useState("");
 
     const [login, { isLoading }] = useLoginMutation();
@@ -60,16 +60,16 @@ function SignIn() {
 
     useEffect(() => {
         setErrMsg("");
-    }, [user, pwd]);
+    }, [email, password]);
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
 
         try {
-            const userData = await login({ user, pwd }).unwrap();
+            const userData = await login({ email, password }).unwrap();
             console.log(userData);
-            dispatch(setCredentials({ ...userData, user }));
-            console.log(...userData)
+            dispatch(setCredentials({ ...userData, email }));
+            // console.log(...userData)
             setUser("");
             setPwd("");
             navigate("/profile");
@@ -91,12 +91,12 @@ function SignIn() {
 
     const handleUserInput = (e: any) => {
         setUser(e.target.value);
-        console.log(user)
+        console.log(email)
     };
 
     const handlePwdInput = (e: any) => {
         setPwd(e.target.value);
-        console.log(pwd)
+        console.log(password)
     };
 
     const content = isLoading ? (
@@ -141,7 +141,7 @@ function SignIn() {
                         ref={userRef}
                         autoComplete="email"
                         autoFocus
-                        value={user}
+                        value={email}
                         onChange={handleUserInput}
                     />
                     <TextField
@@ -153,7 +153,7 @@ function SignIn() {
                         type="password"
                         id="password"
                         autoComplete="current-password"
-                        value={pwd}
+                        value={password}
                         onChange={handlePwdInput}
                     />
                     <FormControlLabel

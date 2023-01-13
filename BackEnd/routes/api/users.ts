@@ -28,6 +28,7 @@ router.post("/signup", (req, res, next) => {
 
 // /auth/login
 router.post("/login", (req, res, next) => {
+    console.log("Test")
     User.findOne({ email: req.body.email })
         .then((user) => {
             if (!user) {
