@@ -1,4 +1,5 @@
 import "../styles/_ErrorPage.scss";
+import "../styles/style1/mystyle.scss";
 //todo weird thing happens when adding background color, the whole site takes the color
 export default function ErrorPage() {
     return (

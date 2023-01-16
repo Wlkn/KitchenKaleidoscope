@@ -46,7 +46,6 @@ function Copyright(props: any) {
     );
 }
 
-
 function SignIn() {
     const navigate = useNavigate();
     const userRef: any = useRef();
@@ -73,15 +72,19 @@ function SignIn() {
             setUser("");
             setPwd("");
             navigate("/profile");
-            console.log(userData)
+            console.log(userData);
         } catch (err: any) {
-            if (!err?.originalStatus) {
+            if (!err?.status) {
                 // isLoading: true until timeout occurs
                 setErrMsg("No Server Response");
-            } else if (err.Status === 400) {
+            } else if (err.status === 400) {
                 setErrMsg("Missing Username or Password");
-            } else if (err.originalStatus === 401) {
-                setErrMsg("Unauthorized");
+            } else if (err.status === 401) {
+                setErrMsg("Wrong password or email");
+            } else if (err.status === 404) {
+                setErrMsg("User not found");
+            } else if (err.status === 500) {
+                setErrMsg("Server issue");
             } else {
                 setErrMsg("Login Failed");
             }
@@ -91,12 +94,12 @@ function SignIn() {
 
     const handleUserInput = (e: any) => {
         setUser(e.target.value);
-        console.log(email)
+        console.log(email);
     };
 
     const handlePwdInput = (e: any) => {
         setPwd(e.target.value);
-        console.log(password)
+        console.log(password);
     };
 
     const content = isLoading ? (

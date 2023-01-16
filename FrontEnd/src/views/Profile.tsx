@@ -12,9 +12,10 @@ const Profile = () => {
     const content = (
         <section className="welcome">
             <h1>{welcome}</h1>
-            <p>Token: {tokenAbbr}</p>
+            <p>Token: {token}</p>
             <p>
                 <Link to="/recipelist">Go to the Users List</Link>
+                <Link to="/home">Go to the Home Page</Link>
             </p>
         </section>
     );

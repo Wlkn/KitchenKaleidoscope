@@ -28,11 +28,10 @@ router.post("/signup", (req, res, next) => {
 
 // /auth/login
 router.post("/login", (req, res, next) => {
-    console.log("Test")
     User.findOne({ email: req.body.email })
         .then((user) => {
             if (!user) {
-                return res.status(401).json({
+                return res.status(404).json({
                     error: Error,
                     message: "User not found",
                 });
@@ -48,7 +47,7 @@ router.post("/login", (req, res, next) => {
                     }
                     const token = jwt.sign(
                         { userId: user._id },
-                        "THISISMYRANDOMSECRETKEY",
+                        "RANDOM_TOKEN_SECRET",
                         { expiresIn: "24h" }
                     );
                     res.status(200).json({

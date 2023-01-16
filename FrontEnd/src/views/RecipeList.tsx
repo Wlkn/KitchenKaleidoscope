@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import MediaCard from "../components/recipe";
 
-import "../styles/_recipes.css";
+import "../styles/recipes.css";
 
 import { Link } from "react-router-dom";
 
