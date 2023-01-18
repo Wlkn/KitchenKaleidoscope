@@ -8,6 +8,7 @@ import ErrorPage from "../src/views/ErrorPage";
 import LoggedInHome from "../src/views/LoggedInHome";
 import RequireAuth from "../src/components/requireAuth";
 import Layout from "../src/components/Layout";
+import CreateRecipe from "./views/CreateRecipe";
 
 function App() {
     return (
@@ -19,6 +20,7 @@ function App() {
                     <Route index element={<Home />} />
                     <Route path="/auth/login" element={<Login />} />
                     <Route path="/auth/signup" element={<SignUp />} />
+                        <Route path="/newRecipe" element={<CreateRecipe />} />
                     {/* PRIVATE ROUTES */}
                     <Route element={<RequireAuth />}>
                         <Route path="/home" element={<LoggedInHome />} />

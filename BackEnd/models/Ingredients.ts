@@ -36,6 +36,21 @@ router.post("/", (req, res) => {
     );
 });
 
+router.delete("/:id", (req, res) => {
+    const id = parseInt(req.params.id);
+    pool.query(
+        "DELETE FROM ingredients WHERE id = $1",
+        [id],
+        (error: Error, results: any) => {
+            if (error) {
+                throw error;
+            }
+            res.status(200).send(`Ingredient deleted with ID: ${id}`);
+        }
+    );
+});
+
+
 router.get("/", (req, res) => {
     pool.query("SELECT * FROM ingredients", (error: Error, results: any) => {
         if (error) {

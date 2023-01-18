@@ -68,11 +68,9 @@ function SignIn() {
             const userData = await login({ email, password }).unwrap();
             console.log(userData);
             dispatch(setCredentials({ ...userData, email }));
-            // console.log(...userData)
             setUser("");
             setPwd("");
             navigate("/profile");
-            console.log(userData);
         } catch (err: any) {
             if (!err?.status) {
                 // isLoading: true until timeout occurs

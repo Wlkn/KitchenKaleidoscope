@@ -9,6 +9,7 @@ export default function LoggedInHome() {
             <a href="/auth/signup"> Signup</a>
             <a href="/profile"> Profile</a>
             <a href="/recipelist"> Recipe List</a>
+            <a href="/newRecipe"> Create Recipe</a>
         </div>
     );
 }

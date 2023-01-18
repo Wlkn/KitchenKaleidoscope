@@ -37,6 +37,49 @@ router.post("/", (req, res) => {
     );
 });
 
+router.put("/:id", (req, res) => {
+    const id = parseInt(req.params.id);
+    const { name } = req.body;
+
+    pool.query(
+        "UPDATE ingredient_names SET name = $1 WHERE id = $2",
+        [name, id],
+
+        (error: Error, results: any) => {
+            if (error) {
+                throw error;
+            }
+            res.status(200).send(`Ingredient modified with ID: ${id}`);
+        }
+    );
+});
+
+
+
+router.delete("/:id", (req, res) => {
+    const id = parseInt(req.params.id);
+    pool.query(
+        "DELETE FROM ingredient_names WHERE id = $1",
+        [id],
+        (error: Error, results: any) => {
+            if (error) {
+                throw error;
+            }
+            res.status(200).send(`Ingredient deleted with ID: ${id}`);
+        }
+    );
+});
+
+
+router.get("/", (req, res) => {
+    pool.query("SELECT * FROM ingredient_names", (error: Error, results: any) => {
+        if (error) {
+            throw error;
+        }
+        res.status(200).json(results.rows);
+    });
+});
+
 function createTables() {
     pool.query(
         `CREATE TABLE ingredient_names (
