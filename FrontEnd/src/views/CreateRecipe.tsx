@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useIngredientsMutation } from "../redux/slices/ingredients";
+import { setIngredients } from "../redux/reducers/ingredients";
+import { useDispatch } from "react-redux";
 
 interface Ingredient {
     id: number;
@@ -43,11 +46,33 @@ const RecipeForm: React.FC = () => {
     const [description, setDescription] = useState<string>("");
     const [instructions, setInstructions] = useState<string>("");
     const [isPublic, setIsPublic] = useState<boolean>(false); //todo: add this to the form, and make it work
-        
 
-    const RecipeData = await 
-        //RECIPE INFOS FORM THIS WILL USE THE MANGODB API TO CREATE A NEW RECIPE
-        //
+    const [recipeIngredients, { isLoading }] = useIngredientsMutation();
+    const dispatch = useDispatch();
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        console.log("handleSubmit" + ingredientsList);
+
+        try {
+            const recipeIngredientsData = recipeIngredients({
+                ingredientsList,
+            }).unwrap();
+            console.log(recipeIngredientsData);
+            dispatch(
+                setIngredients({ ...recipeIngredientsData, ingredientsList })
+            );
+            setIngredientsList([]);
+        } catch (error) {
+            console.log("error");
+        }
+        // Send ingredientsList to your backend here
+        console.log(ingredientsList);
+        console.log(recipeName);
+    };
+    // const RecipeData = await
+    //RECIPE INFOS FORM THIS WILL USE THE MANGODB API TO CREATE A NEW RECIPE
+    //
     const handleRecipeNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setRecipeName(e.target.value);
     };
@@ -117,14 +142,6 @@ const RecipeForm: React.FC = () => {
         const newIngredientsList = [...ingredientsList];
         newIngredientsList[index].newIngredient = e.target.value;
         setIngredientsList(newIngredientsList);
-    };
-
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        // Send ingredientsList to your backend here
-        console.log(ingredientsList);
-        console.log(recipeName);
-        
     };
 
     return (

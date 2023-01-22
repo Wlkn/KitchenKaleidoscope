@@ -1,17 +1,17 @@
-import { apiSlice } from "../actions/auth";
+// import { apiSlice } from "../actions/auth";
 
-export const RecipeApiSlice = apiSlice.injectEndpoints({
-    endpoints: (builder) => ({
-        login: builder.mutation({
-            query: (credentials) => ({
-                url: "/auth/login",
-                method: "POST",
-                body: { ...credentials },
-            }),
-        }),
-    }),
-});
+// export const RecipeApiSlice = apiSlice.injectEndpoints({
+//     endpoints: (builder) => ({
+//         login: builder.mutation({
+//             query: (recipeInfo) => ({
+//                 url: "/api/ingredients",
+//                 method: "POST",
+//                 body: { ...recipeInfo },
+//             }),
+//         }),
+//     }),
+// });
 
-export const {
-    useLoginMutation
-} = RecipeApiSlice
+// export const {
+//     useIngredientsMutation
+// } = RecipeApiSlice
