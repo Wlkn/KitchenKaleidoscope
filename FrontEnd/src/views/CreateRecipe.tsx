@@ -86,7 +86,6 @@ const RecipeForm: React.FC = () => {
         // Send ingredientsList to your backend here
         console.log(ingredientsList);
         console.log(recipeName);
-        
     }
 
     async function handleSubmitMongoDb() {
