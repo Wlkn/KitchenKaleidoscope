@@ -1,24 +1,36 @@
-// import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-// const authSlice = createSlice({
-//     name: "auth",
-//     initialState: { user: null, token: null },
-//     reducers: {
-//         setCredentials: (state, action) => {
-//             const { email, token } = action.payload;
-//             state.user = email;
-//             state.token = token;
-//         },
-//         logOut: (state, action) => {
-//             state.user = null;
-//             state.token = null;
-//         },
-//     },
-// });
+const recipeSlice = createSlice({
+    name: "recipe",
+    initialState: {
+        recipeName: null,
+        description: null,
+        instructions: null,
+        imageUrl: null,
+        recipeId: null,
+    },
+    reducers: {
+        addRecipe: (state, action) => {
+            const {
+                recipeName,
+                description,
+                instructions,
+                imageUrl,
+                recipeId,
+            } = action.payload;
+            state.recipeName = recipeName;
+            state.description = description;
+            state.instructions = instructions;
+            state.imageUrl = imageUrl;
+            state.recipeId = recipeId;
+        },
+    },
+});
 
-// export const { setCredentials, logOut } = authSlice.actions
+export const { addRecipe } = recipeSlice.actions;
 
-// export default authSlice.reducer
+export default recipeSlice.reducer;
 
-// export const selectCurrentUser = (state: any) => state.auth.user
-// export const selectCurrentToken = (state: any) => state.auth.token
+export const selectCurrentRecipe = (state: any) => state.recipe.recipe;
+
+export const selectCurrentRecipeId = (state: any) => state.recipe.recipeId;

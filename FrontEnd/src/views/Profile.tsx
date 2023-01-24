@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 
 const Profile = () => {
     const user = useSelector(selectCurrentUser);
-    const token = useSelector(selectCurrentToken);
+    const token: string = useSelector(selectCurrentToken);
 
-    const welcome = user ? `Welcome ${user}!` : "Welcome!";
-    const tokenAbbr = `${token.slice(0, 9)}...`;
+    const welcome: string = user ? `Welcome ${user}!` : "Welcome!";
+    const tokenAbbr: string = `${token.slice(0, 9)}...`;
 
     const content = (
         <section className="welcome">

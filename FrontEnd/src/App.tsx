@@ -26,6 +26,7 @@ function App() {
                         <Route path="/home" element={<LoggedInHome />} />
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/recipelist" element={<RecipeList />} />
+                        
                     </Route>
                 </Route>
             </Routes>

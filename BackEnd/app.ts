@@ -8,6 +8,10 @@ app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 //mongodb
 import mongoose = require("mongoose");
 mongoose.set("strictQuery", true);
+//todo link the ingredient_names and units and ingredients to the recipe_id.
+//todo when receiving a newIngredient string in the body, check if it exists in the ingredient_names collection, if not, add it. //done
+//todo when receiving a newUnit string in the body, check if it exists in the units collection, if not, add it. //fix
+//todo add the remove,update and get routes for the ingredients. Theses inlude the ingredient_names and units.
 
 mongoose
     .connect(
@@ -45,6 +49,5 @@ app.use("/api/ingredient_names", ingredient_nameRoute);
 app.use("/api/units", unitRoute);
 
 app.use("/auth", userRoute); // Same with this one.
-
 
 module.exports = app;

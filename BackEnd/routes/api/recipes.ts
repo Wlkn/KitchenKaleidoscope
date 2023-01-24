@@ -8,7 +8,7 @@ const Recipe = require("../../models/Recipe");
 router.post("/", (req, res, next) => {
     const recipe = new Recipe({
         // Id is automatically generated try to figure it out in the front end
-        name: req.body.name,
+        name: req.body.recipeName,
         description: req.body.description,
         instructions: req.body.instructions,
         imageUrl: req.body.imageUrl,
@@ -17,14 +17,17 @@ router.post("/", (req, res, next) => {
     recipe
         .save()
         .then(() => {
-            res.status(201).json({
-                message: "Post saved successfully!",
+            const recipeId = recipe._id.toHexString();
+            res.status(200).json({
+                recipeId: recipeId,
             });
+            console.log(recipeId);
         })
         .catch((error: Error) => {
             res.status(400).json({
                 error: error,
             });
+            console.log(error);
         });
 });
 //PUT ROUTE TO UPDATE RECIPES
