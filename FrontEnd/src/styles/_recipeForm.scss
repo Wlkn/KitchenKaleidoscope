@@ -1,0 +1,140 @@
+$primary-color: #b9e3c6;
+$secondary-color: #59c9a5;
+$third-color: #23395b;
+
+.form {
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 800px;
+}
+    .formWrapper {
+        background-color: $primary-color;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    h1 {
+        color: $third-color;
+        margin-bottom: 20px;
+    }
+
+    .formInput {
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border: none;
+        font-size: 16px;
+        width: 100%;
+        box-sizing: border-box;
+        background-color: #fff;
+        color: $third-color;
+        border: 1px solid $third-color;
+        
+    }
+
+    textarea {
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border: none;
+        font-size: 16px;
+        width: 100%;
+        box-sizing: border-box;
+        min-height: 100px;
+        background-color: #fff;
+        color: $third-color;
+        border: 1px solid $third-color;
+        resize: none;
+    }
+
+    label {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: $third-color;
+        &.new {
+            font-weight: normal;
+            color: $secondary-color;
+        }
+    }
+
+    select {
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border: none;
+        font-size: 16px;
+        width: 100%;
+        box-sizing: border-box;
+        background-color: #fff;
+        color: $third-color;
+        border: 1px solid $third-color;
+        option {
+            &.new {
+                background-color: $secondary-color;
+                color: #fff;
+            }
+        }
+    }
+    .newIngredient,
+    .newUnit {
+        border: 1px solid lightsalmon;
+        background-color: #fff;
+        color: $third-color;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        font-size: 16px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .button {
+        background-color: $secondary-color;
+        color: #fff;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        font-size: 16px;
+        margin-right: 10px;
+        cursor: pointer;
+        &:hover {
+            background-color: darken($secondary-color, 10%);
+        }
+    }
+
+.save-button {
+    background-color: $third-color;
+
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    margin-right: 10px;
+    cursor: pointer;
+    &:hover {
+        background-color: darken($third-color, 10%);
+    }
+}
+
+.take-me-back {
+    background-color: $secondary-color;
+    color: #fff;
+    font-size: 16px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    &:hover {
+        background-color: darken($secondary-color, 10%);
+    }
+}
+.required-star {
+    color: red;
+    font-size: 15px;
+    padding-left: 5px;
+}
+
+
+

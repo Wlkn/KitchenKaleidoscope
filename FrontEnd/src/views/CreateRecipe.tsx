@@ -6,9 +6,11 @@ import { addRecipe } from "../redux/reducers/recipes";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { selectCurrentRecipeId } from "../redux/reducers/recipes";
+import "../styles/_recipeForm.scss";
+import { Navigate, useNavigate } from "react-router-dom";
 
 interface Ingredient {
-    id: number;
+    ingredientId: number;
     unitId: number;
     quantity: number;
     newIngredient?: string;
@@ -24,27 +26,70 @@ interface IngredientOption {
     id: number;
     name: string;
 }
+// fetch units from databse
+let myHeaders = new Headers();
 
-const units: Unit[] = [
-    { id: 1, name: "tsp" },
-    { id: 2, name: "tbsp" },
-    { id: 3, name: "cup" },
-    { id: 4, name: "oz" },
-    { id: 5, name: "g" },
-    { id: 6, name: "kg" },
-    { id: 7, name: "mL" },
-    { id: 8, name: "L" },
-];
-const ingredients: IngredientOption[] = [
-    { id: 1, name: "flour" },
-    { id: 2, name: "sugar" },
-    { id: 3, name: "salt" },
-    { id: 4, name: "butter" },
-    { id: 5, name: "eggs" },
-    { id: 6, name: "milk" },
-];
+let requestOptions: object = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+};
+
+async function fetchIngredients() {
+    try {
+        const response = await fetch(
+            "http://localhost:4000/api/ingredient_names",
+            requestOptions
+        );
+        if (response.ok) {
+            const ingredientsJSON = await response.json();
+            console.log(ingredientsJSON);//todo remove
+            return ingredientsJSON;
+        } else {
+            console.error(response.statusText);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function fetchUnits() {
+    try {
+        const response = await fetch(
+            "http://localhost:4000/api/units",
+            requestOptions
+        );
+        if (response.ok) {
+            const unitsJSON = await response.json();
+            console.log(unitsJSON);//todo remove
+            return unitsJSON;
+        } else {
+            console.error(response.statusText);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+const unitsJSON: any = await fetchUnits();
+const units: Unit[] = unitsJSON.map((unit: Unit) => ({
+    id: unit.id,
+    name: unit.name,
+}));
+console.log(units);
+
+const ingredientsJSON: any = await fetchIngredients();
+const ingredients: IngredientOption[] = ingredientsJSON.map((ingredient: IngredientOption) => ({
+    id: ingredient.id,
+    name: ingredient.name,
+}));
+console.log(ingredients);//todo remove
 
 const RecipeForm: React.FC = () => {
+    const navigate = useNavigate();
+    const goBack = () => {
+        navigate(-1);
+    };
     const [ingredientsList, setIngredientsList] = useState<Ingredient[]>([]);
     //
 
@@ -65,20 +110,22 @@ const RecipeForm: React.FC = () => {
 
     //====================================================================================================
 
-    async function handleSubmitPostGreSql() {
+    async function handleSubmitIngredients(recipeData: any) {
         try {
+            const recipeId = currentRecipeId;
             const recipeIngredientsData = await recipeIngredients({
                 ingredientsList,
-                recipeId: currentRecipeId,
+                recipeId: recipeData.recipeId,
             }).unwrap();
-            console.log(recipeIngredientsData);
+            console.log(recipeId);
             dispatch(
                 setIngredients({
                     ...recipeIngredientsData,
                     ingredientsList,
-                    recipeId: currentRecipeId,
+                    recipeId: recipeData.recipeId,
                 })
             );
+            console.log(recipeId);
             setIngredientsList([]);
         } catch (error) {
             console.log("error");
@@ -88,7 +135,7 @@ const RecipeForm: React.FC = () => {
         console.log(recipeName);
     }
 
-    async function handleSubmitMongoDb() {
+    async function handleSubmitRecipeDetails() {
         //todo refactor this like the ingredients one.
         try {
             const recipeData = await recipe({
@@ -112,6 +159,7 @@ const RecipeForm: React.FC = () => {
             setDescription("");
             setInstructions("");
             setImageUrl("");
+            handleSubmitIngredients(recipeData);
 
             // setIsPublic(false);
         } catch (error) {
@@ -125,9 +173,9 @@ const RecipeForm: React.FC = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         //RECIPE INFOS FORM THIS WILL USE THE MANGODB API TO CREATE A NEW RECIPE
-        handleSubmitMongoDb();
+        handleSubmitRecipeDetails();
         //POSTGRESQL API, INGREDIENTS_NAMES, UNITS, NEW_INGREDIENTS? (IF NOT IN THE DB) AND QUANTITY
-        handleSubmitPostGreSql();
+        navigate(`/recipe/${currentRecipeId}`);
     };
     //====================================================================================================
 
@@ -191,7 +239,13 @@ const RecipeForm: React.FC = () => {
     const handleAddIngredient = () => {
         setIngredientsList([
             ...ingredientsList,
-            { id: 0, unitId: 0, quantity: 0, newIngredient: "", newUnit: "" },
+            {
+                ingredientId: 0,
+                unitId: 0,
+                quantity: 0,
+                newIngredient: "",
+                newUnit: "",
+            },
         ]);
     };
 
@@ -200,7 +254,7 @@ const RecipeForm: React.FC = () => {
         index: number
     ) => {
         const newIngredientsList = [...ingredientsList];
-        newIngredientsList[index].id = parseInt(e.target.value);
+        newIngredientsList[index].ingredientId = parseInt(e.target.value);
         setIngredientsList(newIngredientsList);
     };
 
@@ -241,136 +295,176 @@ const RecipeForm: React.FC = () => {
     const content = isLoading ? (
         <h1>Loading...</h1>
     ) : (
-        <form onSubmit={handleSubmit}>
-            <h1>id: {currentRecipeId}</h1>
-            <label>
-                Recipe Name:
-                <input
-                    type="text"
-                    placeholder="Recipe Name"
-                    value={recipeName}
-                    onChange={handleRecipeNameChange}
-                    required
-                />
-            </label>
-            <br />
-            <label>
-                Description:
-                <textarea
-                    placeholder="Description"
-                    value={description}
-                    onChange={handleDescriptionChange}
-                    required
-                />
-            </label>
-            <br />
-            <label>
-                Instructions:
-                <textarea
-                    placeholder="Instructions"
-                    value={instructions}
-                    onChange={handleInstructionsChange}
-                    required
-                />
-            </label>
-            <br />
-            <label>
-                Image URL:
-                <input
-                    type="text"
-                    placeholder="Image URL"
-                    value={imageUrl}
-                    onChange={handleImageUrlChange}
-                />
-            </label>
-            <br />
-            <h3>Ingredients:</h3>
-            {ingredientsList.map((ingredient, index) => (
-                <div key={index}>
+        <div>
+            <button onClick={goBack} className="take-me-back">
+                Take me back!
+            </button>
+            <div className="form">
+                <form className="formWrapper" onSubmit={handleSubmit}>
                     <label>
-                        Ingredient:
-                        <select
-                            value={ingredient.id}
-                            onChange={(e) => handleIngredientChange(e, index)}
-                        >
-                            <option value={0} disabled>
-                                Select an ingredient
-                            </option>
-                            {ingredients.map((ingredientName, i) => (
-                                <option key={i} value={ingredientName.id}>
-                                    {ingredientName.name}
-                                </option>
-                            ))}
-                            <option value={-1}>Other</option>
-                        </select>
-                        {ingredient.id === -1 && (
-                            <label>
-                                New Ingredient:
-                                <input
-                                    type="text"
-                                    value={ingredient.newIngredient}
-                                    onChange={(e) =>
-                                        handleNewIngredientChange(e, index)
-                                    }
-                                />
-                            </label>
-                        )}
-                    </label>
-                    <br />
-                    <label>
-                        Unit:
-                        <select
-                            value={ingredient.unitId}
-                            onChange={(e) => handleUnitChange(e, index)}
-                        >
-                            <option value={0} disabled>
-                                Select a unit
-                            </option>
-                            {units.map((unit, i) => (
-                                <option key={i} value={unit.id}>
-                                    {unit.name}
-                                </option>
-                            ))}
-                            <option value={-1}>Other</option>
-                        </select>
-                        {ingredient.unitId === -1 && (
-                            <label>
-                                New measuring unit:
-                                <input
-                                    type="text"
-                                    value={ingredient.newUnit}
-                                    onChange={(e) =>
-                                        handleNewUnitChange(e, index)
-                                    }
-                                />
-                            </label>
-                        )}
-                    </label>
-                    <br />
-                    <label>
-                        Quantity:
+                        Recipe Name
+                        <span className="required-star">*</span>
                         <input
-                            type="number"
-                            value={ingredient.quantity}
-                            onChange={(e) => handleQuantityChange(e, index)}
+                            className="formInput"
+                            type="text"
+                            placeholder="Enter recipe name here"
+                            value={recipeName}
+                            onChange={handleRecipeNameChange}
+                            required
                         />
                     </label>
                     <br />
+                    <label>
+                        Description
+                        <span className="required-star">*</span>
+                        <textarea
+                            placeholder="Enter a brief description of the recipe"
+                            value={description}
+                            onChange={handleDescriptionChange}
+                            required
+                        />
+                    </label>
+                    <br />
+                    <label>
+                        Instructions
+                        <span className="required-star">*</span>
+                        <textarea
+                            placeholder="Enter step-by-step instructions for the recipe"
+                            value={instructions}
+                            onChange={handleInstructionsChange}
+                            required
+                        />
+                    </label>
+                    <br />
+                    <label>
+                        Recipe's picture URL
+                        <input
+                            className="formInput"
+                            type="text"
+                            placeholder="Enter a URL for an image of the recipe"
+                            value={imageUrl}
+                            onChange={handleImageUrlChange}
+                        />
+                    </label>
+                    <br />
+                    <h3>Ingredients</h3>
+                    {ingredientsList.map((ingredient, index) => (
+                        <div key={index}>
+                            <label>
+                                Ingredient
+                                <span className="required-star">*</span>
+                                <select
+                                    value={ingredient.ingredientId}
+                                    onChange={(e) =>
+                                        handleIngredientChange(e, index)
+                                    }
+                                >
+                                    <option value={0} disabled>
+                                        Select an ingredient or enter a new one
+                                    </option>
+                                    {ingredients.map((ingredientName, i) => (
+                                        <option
+                                            key={i}
+                                            value={ingredientName.id}
+                                        >
+                                            {ingredientName.name}
+                                        </option>
+                                    ))}
+                                    <option value={-1}>
+                                        Add a new Ingredient!
+                                    </option>
+                                </select>
+                                {ingredient.ingredientId === -1 && (
+                                    <label>
+                                        New Ingredient
+                                        <input
+                                            className="newIngredient"
+                                            type="text"
+                                            value={ingredient.newIngredient}
+                                            onChange={(e) =>
+                                                handleNewIngredientChange(
+                                                    e,
+                                                    index
+                                                )
+                                            }
+                                        />
+                                    </label>
+                                )}
+                            </label>
+                            <br />
+                            <label>
+                                Unit
+                                <span className="required-star">*</span>
+                                <select
+                                    value={ingredient.unitId}
+                                    onChange={(e) => handleUnitChange(e, index)}
+                                >
+                                    <option value={0} disabled>
+                                        Select a unit or enter a new one
+                                    </option>
+                                    {units.map((unit, i) => (
+                                        <option key={i} value={unit.id}>
+                                            {unit.name}
+                                        </option>
+                                    ))}
+                                    <option value={-1}>Add a new unit!</option>
+                                </select>
+                                {ingredient.unitId === -1 && (
+                                    <label>
+                                        New measuring unit
+                                        <input
+                                            className="formInput"
+                                            type="text"
+                                            value={ingredient.newUnit}
+                                            onChange={(e) =>
+                                                handleNewUnitChange(e, index)
+                                            }
+                                        />
+                                    </label>
+                                )}
+                            </label>
+                            <br />
+                            <label>
+                                Quantity
+                                <span className="required-star">*</span>
+                                <input
+                                    className="formInput"
+                                    type="number"
+                                    value={ingredient.quantity}
+                                    onChange={(e) =>
+                                        handleQuantityChange(e, index)
+                                    }
+                                />
+                            </label>
+                            <br />
+                            <button
+                                className="button"
+                                type="button"
+                                onClick={() => handleRemoveIngredient(index)}
+                            >
+                                Remove Ingredient
+                            </button>
+                            <br />
+                        </div>
+                    ))}
                     <button
+                        className="button"
                         type="button"
-                        onClick={() => handleRemoveIngredient(index)}
+                        onClick={handleAddIngredient}
                     >
-                        Remove Ingredient
+                        Add Ingredient
                     </button>
                     <br />
-                </div>
-            ))}
-            <button type="button" onClick={handleAddIngredient}>
-                Add Ingredient
-            </button>
-            <br />
-            <input type="submit" value="Save Recipe" />
-        </form>
+                    <button
+                        className="save-button"
+                        type="submit"
+                        value="Save Recipe"
+                    >
+                        Save Recipe
+                    </button>
+                </form>
+            </div>
+        </div>
     );
     return content;
 };

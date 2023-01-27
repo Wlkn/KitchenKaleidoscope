@@ -34,6 +34,15 @@ router.post("/", (req, res) => {
     );
 });
 
+router.get("/", (req, res) => {
+    pool.query("SELECT * FROM units", (error: Error, results: any) => {
+        if (error) {
+            throw error;
+        }
+        res.status(200).json(results.rows);
+    });
+});
+
 function createTables() {
     pool.query(
         `

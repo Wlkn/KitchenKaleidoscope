@@ -9,6 +9,7 @@ import LoggedInHome from "../src/views/LoggedInHome";
 import RequireAuth from "../src/components/requireAuth";
 import Layout from "../src/components/Layout";
 import CreateRecipe from "./views/CreateRecipe";
+import RecipeDetails from "./components/recipeDetails";
 
 function App() {
     return (
@@ -20,14 +21,13 @@ function App() {
                     <Route index element={<Home />} />
                     <Route path="/auth/login" element={<Login />} />
                     <Route path="/auth/signup" element={<SignUp />} />
-                        <Route path="/newRecipe" element={<CreateRecipe />} />
+                    <Route path="/newRecipe" element={<CreateRecipe />} />
+                    <Route path="/home" element={<LoggedInHome />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/recipelist" element={<RecipeList />} />
+                    <Route path="/recipe/:id" element={<RecipeDetails />} />
                     {/* PRIVATE ROUTES */}
-                    <Route element={<RequireAuth />}>
-                        <Route path="/home" element={<LoggedInHome />} />
-                        <Route path="/profile" element={<Profile />} />
-                        <Route path="/recipelist" element={<RecipeList />} />
-                        
-                    </Route>
+                    <Route element={<RequireAuth />}></Route>
                 </Route>
             </Routes>
         </Router>

@@ -21,7 +21,7 @@ router.post("/", (req, res, next) => {
             res.status(200).json({
                 recipeId: recipeId,
             });
-            console.log(recipeId);
+            // console.log(recipeId);
         })
         .catch((error: Error) => {
             res.status(400).json({
