@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const Recipe = require("../../models/Recipe");
-
+const User = require("../../models/User");
 // @route   GET api/recipes
 // POST ROUTE TO ADD RECIPES
 router.post("/", (req, res, next) => {
@@ -18,6 +18,8 @@ router.post("/", (req, res, next) => {
         .save()
         .then(() => {
             const recipeId = recipe._id.toHexString();
+            //push the recipeId to the user
+            updateUserRecipes(req, recipeId);
             res.status(200).json({
                 recipeId: recipeId,
             });
@@ -96,5 +98,18 @@ router.get("/:id", (req, res, next) => {
             });
         });
 });
+
+function updateUserRecipes(req, recipeId) {
+    User.findOneAndUpdate(
+        { _id: req.auth.userId.userId },
+        { $push: { recipes: recipeId } }
+    )
+        .then(() => {
+            console.log("Recipe added to user.");
+        })
+        .catch((error: Error) => {
+            console.log(error);
+        });
+}
 
 module.exports = router;

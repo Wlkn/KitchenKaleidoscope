@@ -17,7 +17,6 @@ const Profile = () => {
                 <Link to="/recipelist">Go to the Users List</Link>
                 <Link to="/home">Go to the Home Page</Link>
                 <Link to="/newRecipe">Create a new Recipe</Link>
-                
             </p>
         </section>
     );

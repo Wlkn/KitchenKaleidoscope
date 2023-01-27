@@ -1,13 +1,28 @@
-import Navbar from "../components/navbar";
-import "../styles/_base.scss"
-export default function Home() {
+import React from "react";
+import "../styles/Home.css";
+import { Link } from "react-router-dom";
+
+const Home = () => {
     return (
-        <div className="App">
-            <h1>Home</h1>
-            <a href="/auth/login">Login </a>
-            <a href="/auth/signup"> Signup</a>
-            <a href="/profile"> Profile</a>
-            <a href="/recipelist"> Recipe List</a>
+        <div className="container-homepage">
+        <div className="home-container">
+            <div className="home-text">
+                <h1>Welcome to Our Recipe App</h1>
+                <p>
+                    Here you can find and share delicious recipes with others!
+                </p>
+            </div>
+            <div className="home-buttons">
+                <Link to="/auth/login">
+                    <button>Log In</button>
+                </Link>
+                <Link to="/auth/signup">
+                    <button>Sign Up</button>
+                </Link>
+            </div>
+        </div>
         </div>
     );
-}
+};  
+
+export default Home;
