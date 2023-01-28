@@ -22,6 +22,30 @@ export const RecipeGetApiSlice = apiSlice.injectEndpoints({
         }),
     }),
 });
+export const GetRecipeCreatorApiSlice = apiSlice.injectEndpoints({
+    endpoints: (builder) => ({
+        getCreatorOfRecipe: builder.query({
+            query: (currentRecipeId) => ({
+                url: `/api/recipes/user/${currentRecipeId}`,
+                method: "GET",
+            }),
+        }),
+    }),
+});
+export const GetAllRecipesApiSlice = apiSlice.injectEndpoints({
+    endpoints: (builder) => ({
+        getAllRecipes: builder.query({
+            query: () => ({
+                url: "/api/recipes",
+                method: "GET",
+            }),
+        }),
+    }),
+});
+
+export const { useGetAllRecipesQuery } = GetAllRecipesApiSlice;
+
+export const { useGetCreatorOfRecipeQuery } = GetRecipeCreatorApiSlice;
 
 export const { useGetRecipesQuery } = RecipeGetApiSlice;
 

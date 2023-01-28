@@ -12,7 +12,7 @@ export default function MediaCard(Recipe: {
     name: string;
     description: string;
     instructions: string;
-    imageUrl: string;
+    imageURL: string;
 }) {
     function handleLike() {
         console.log(Recipe._id + " " + "= Recipe name");
@@ -32,8 +32,9 @@ export default function MediaCard(Recipe: {
     >
             <CardMedia
                 sx={{ height: 140 }}
-                image={Recipe.imageUrl}
+                image={Recipe.imageURL}
                 title={Recipe.name}
+                component='img'
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">

@@ -112,4 +112,27 @@ function updateUserRecipes(req, recipeId) {
         });
 }
 
+//find who owns the recipe with the recipe_id
+router.get("/user/:recipe_id", (req, res, next) => {
+    User.findOne({ recipes: req.params.recipe_id })
+        .then((user) => {
+            if (!user) {
+                return res.status(404).json({
+                    error: Error,
+                    message: "User not found",
+                });
+            }
+            res.status(200).json({
+                userId: user._id,
+                OwnerName: user.name,
+            });
+        })
+        .catch((error: Error) => {
+            res.status(500).json({
+                error: error,
+                message: "Something wrong happened.",
+            });
+        });
+});
+
 module.exports = router;

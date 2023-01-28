@@ -53,6 +53,7 @@ router.post("/login", (req, res, next) => {
                     res.status(200).json({
                         userId: user._id,
                         token: token,
+                        name: user.name,
                     });
                 })
                 .catch((error) => {
@@ -69,4 +70,6 @@ router.post("/login", (req, res, next) => {
             });
         });
 });
+
+
 module.exports = router;

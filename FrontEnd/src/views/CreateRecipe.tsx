@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useIngredientsMutation } from "../redux/slices/ingredients";
 import { useRecipeMutation } from "../redux/slices/recipes";
 import { setIngredients } from "../redux/reducers/ingredients";
@@ -8,6 +8,8 @@ import { useSelector } from "react-redux";
 import { selectCurrentRecipeId } from "../redux/reducers/recipes";
 import "../styles/_recipeForm.scss";
 import { Navigate, useNavigate } from "react-router-dom";
+import { retry } from "@reduxjs/toolkit/dist/query";
+import { TakemeBackButton } from "../components/Buttons";
 
 interface Ingredient {
     ingredientId: number;
@@ -43,7 +45,7 @@ async function fetchIngredients() {
         );
         if (response.ok) {
             const ingredientsJSON = await response.json();
-            console.log(ingredientsJSON);//todo remove
+            console.log(ingredientsJSON); //todo remove
             return ingredientsJSON;
         } else {
             console.error(response.statusText);
@@ -61,7 +63,7 @@ async function fetchUnits() {
         );
         if (response.ok) {
             const unitsJSON = await response.json();
-            console.log(unitsJSON);//todo remove
+            console.log(unitsJSON); //todo remove
             return unitsJSON;
         } else {
             console.error(response.statusText);
@@ -76,38 +78,38 @@ const units: Unit[] = unitsJSON.map((unit: Unit) => ({
     id: unit.id,
     name: unit.name,
 }));
-console.log(units);
 
 const ingredientsJSON: any = await fetchIngredients();
-const ingredients: IngredientOption[] = ingredientsJSON.map((ingredient: IngredientOption) => ({
-    id: ingredient.id,
-    name: ingredient.name,
-}));
-console.log(ingredients);//todo remove
+const ingredients: IngredientOption[] = ingredientsJSON.map(
+    (ingredient: IngredientOption) => ({
+        id: ingredient.id,
+        name: ingredient.name,
+    })
+);
 
 const RecipeForm: React.FC = () => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
-    const goBack = () => {
-        navigate(-1);
-    };
-    const [ingredientsList, setIngredientsList] = useState<Ingredient[]>([]);
-    //
-
-    //
     const [imageUrl, setImageUrl] = useState<string>("");
     const [recipeName, setRecipeName] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [instructions, setInstructions] = useState<string>("");
-    const [isPublic, setIsPublic] = useState<boolean>(false); //todo: add this to the form, and make it work
+    // const [isPublic, setIsPublic] = useState<boolean>(false); //todo: add this to the form, and make it work
     //REDUX
     //====================================================================================================
+    const currentRecipeId: string = useSelector(selectCurrentRecipeId);
     //postgreSql
     const [recipeIngredients, { isLoading }] = useIngredientsMutation();
+    const [ingredientsList, setIngredientsList] = useState<Ingredient[]>([]);
     //mongoDb
     const [recipe] = useRecipeMutation();
-    const dispatch = useDispatch();
-    const currentRecipeId: string = useSelector(selectCurrentRecipeId);
-
+    //====================================================================================================
+    
+    useEffect(() => {
+        if (currentRecipeId) {
+            navigate(`/recipe/${currentRecipeId}`);
+        }
+    }, [currentRecipeId, navigate]);
     //====================================================================================================
 
     async function handleSubmitIngredients(recipeData: any) {
@@ -175,7 +177,6 @@ const RecipeForm: React.FC = () => {
         //RECIPE INFOS FORM THIS WILL USE THE MANGODB API TO CREATE A NEW RECIPE
         handleSubmitRecipeDetails();
         //POSTGRESQL API, INGREDIENTS_NAMES, UNITS, NEW_INGREDIENTS? (IF NOT IN THE DB) AND QUANTITY
-        navigate(`/recipe/${currentRecipeId}`);
     };
     //====================================================================================================
 
@@ -296,9 +297,7 @@ const RecipeForm: React.FC = () => {
         <h1>Loading...</h1>
     ) : (
         <div>
-            <button onClick={goBack} className="take-me-back">
-                Take me back!
-            </button>
+            <TakemeBackButton/>
             <div className="form">
                 <form className="formWrapper" onSubmit={handleSubmit}>
                     <label>
@@ -466,6 +465,7 @@ const RecipeForm: React.FC = () => {
             </div>
         </div>
     );
+
     return content;
 };
 export default RecipeForm;
