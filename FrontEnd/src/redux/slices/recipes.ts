@@ -10,7 +10,6 @@ export const RecipeApiSlice = apiSlice.injectEndpoints({
             }),
         }),
     }),
-    
 });
 export const RecipeGetApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
@@ -42,6 +41,30 @@ export const GetAllRecipesApiSlice = apiSlice.injectEndpoints({
         }),
     }),
 });
+export const LikesApiSlice = apiSlice.injectEndpoints({
+    endpoints: (builder) => ({
+        likeRecipe: builder.mutation({
+            query: () => ({
+                url: "/api/recipes/likes",
+                method: "POST",
+            }),
+        }),
+    }),
+});
+export const GetAllLikesApiSlice = apiSlice.injectEndpoints({
+    endpoints: (builder) => ({
+        getAllLikes: builder.query({
+            query: () => ({
+                url: "/api/recipes/likes",
+                method: "GET",
+            }),
+        }),
+    }),
+});
+
+export const { useGetAllLikesQuery } = GetAllLikesApiSlice;
+
+export const { useLikeRecipeMutation } = LikesApiSlice;
 
 export const { useGetAllRecipesQuery } = GetAllRecipesApiSlice;
 

@@ -21,7 +21,7 @@ export default function RecipeList() {
 
     return (
         <div>
-            <HomeButton/>
+            <HomeButton />
             <div className="container">
                 {isLoading ? (
                     //TODO add loader

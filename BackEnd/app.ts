@@ -48,9 +48,9 @@ const likesRoute = require("./models/Likes");
 //ENDPOINTS
 
 app.use("/api/recipes",auth, recipeRoute); // This targets every that starts with /api/recipes so the :id works too.
-app.use("/api/comments", commentRoute);
+app.use("/api/recipes/likes", likesRoute);
+app.use("/api/recipes/comments", commentRoute);
 app.use("/api/ingredients", ingredientRoute);
-app.use("/api/likes", likesRoute);
 app.use("/api/ingredient_names", ingredient_nameRoute);
 app.use("/api/units", unitRoute);
 

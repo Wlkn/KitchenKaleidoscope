@@ -21,7 +21,8 @@ export default function RecipeDetails() {
 
     // const currentToken = useSelector(selectCurrentToken);
     console.log(currentToken);
-    const currentUserId = useSelector(selectCurrentUserId);
+    const currentUserId =
+        useSelector(selectCurrentUserId) || localStorage.getItem("userId");
     console.log(currentUserId);
 
     const { data: CreatorOfRecipe } = useGetCreatorOfRecipeQuery(id, {
@@ -46,7 +47,6 @@ export default function RecipeDetails() {
         const { userId, OwnerName } = CreatorOfRecipe;
         content = (
             <div>
-                
                 <h2>Title</h2>
                 <p>{name}</p>
                 <h3>Description:</h3>
@@ -71,7 +71,7 @@ export default function RecipeDetails() {
 
     return (
         <div>
-            <VisitRecipeListButton/>
+            <VisitRecipeListButton />
             {content}
         </div>
     );
