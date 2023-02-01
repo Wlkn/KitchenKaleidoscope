@@ -10,6 +10,8 @@ import RequireAuth from "../src/components/requireAuth";
 import Layout from "../src/components/Layout";
 import CreateRecipe from "./views/CreateRecipe";
 import RecipeDetails from "./components/recipeDetails";
+import Comments from "./components/Comments";
+import UserRecipes from "./views/UserRecipes";
 
 function App() {
     return (
@@ -26,6 +28,8 @@ function App() {
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/recipelist" element={<RecipeList />} />
                     <Route path="/recipe/:id" element={<RecipeDetails />} />
+                    <Route path="/recipe/:id/comments" element={<Comments />} />
+                    <Route path="/myrecipes/:id" element={<UserRecipes />} />
                     {/* PRIVATE ROUTES */}
                     <Route element={<RequireAuth />}></Route>
                 </Route>

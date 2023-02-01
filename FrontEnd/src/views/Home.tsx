@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import { LogInButton, SignUpButton } from "../components/Buttons";
 const Home = () => {
     return (
-        <div className="container-homepage">
-            <div className="home-container">
+        <div className="Home-container">
+            <div className="home-container2">
                 <div className="home-text">
                     <h1>Welcome to Our Recipe App</h1>
                     <p>

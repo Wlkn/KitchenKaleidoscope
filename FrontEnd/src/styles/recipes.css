@@ -3,6 +3,18 @@
     margin-top: 2px;
 } */
 
+.h1-userRecipes {
+    text-align: center;
+    font-size: 2em;
+    font-weight: 600;
+    margin-bottom: 1em;
+}
+.h2-LearnMore {
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-bottom: 1em;
+}
 .recipe-image {
     height: 220px;
     width: 220px;
@@ -13,7 +25,7 @@
 .recipe-item {
     margin-bottom: 1em;
 }
-.container {
+.RecipeList-container {
     display: flex;
     align-items: center;
     justify-content: space-evenly;

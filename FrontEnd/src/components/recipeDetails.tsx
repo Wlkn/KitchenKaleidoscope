@@ -10,6 +10,7 @@ import {
 } from "../redux/slices/recipes";
 import { useParams } from "react-router-dom";
 import { VisitRecipeListButton } from "../components/Buttons";
+import  Loader from "./Loader";
 import RecipeList from "../views/RecipeList";
 
 export default function RecipeDetails() {
@@ -41,7 +42,7 @@ export default function RecipeDetails() {
     });
     let content;
     if (isLoading) {
-        content = <p>Loading...</p>;
+        content = <Loader />;
     } else if (isSuccess && recipeData && CreatorOfRecipe) {
         const { name, description, instructions } = recipeData;
         const { userId, OwnerName } = CreatorOfRecipe;

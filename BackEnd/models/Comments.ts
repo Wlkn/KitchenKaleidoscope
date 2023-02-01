@@ -25,7 +25,7 @@ router.post("/", (req, res) => {
                     if (error) {
                         throw error;
                     }
-                    res.status(201).send(
+                    res.status(201).json(
                         `Comment added with ID: ${results.rows[0].id}`
                     );
                     console.log(`Comment added with ID: ${results.rows[0].id}`); //TODO REMOVE THIS WHEN DONE
@@ -82,7 +82,7 @@ router.get("/", (req, res) => {
 
 //GET A SINGLE COMMENT WITH /api/comments/id
 router.get("/:id", (req, res) => {
-    const id = parseInt(req.params.id);
+    const id = req.params.id;
 
     pool.query(
         "SELECT * FROM comments WHERE recipe_id = $1",

@@ -1,15 +1,17 @@
-import "../styles/recipes.css";
-import * as React from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { selectCurrentUserId } from "../redux/reducers/auth";
+import { useLikeRecipeMutation } from "../redux/slices/recipes";
+import { changeLike } from "../redux/reducers/recipes";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectCurrentUserId } from "../redux/reducers/auth";
-import { useLikeRecipeMutation } from "../redux/slices/recipes";
+import { useGetUserLikesQuery } from "../redux/slices/recipes";
+
 export default function MediaCard(Recipe: {
     _id: any;
     name: string;
@@ -17,34 +19,106 @@ export default function MediaCard(Recipe: {
     instructions: string;
     imageURL: string;
 }) {
+    //==================================================================================================
+    //==================================================================================================
+    //========================================HANDLE LIKES=============================================
+    //==================================================================================================
+    //==================================================================================================
+    const [isLiked, setIsLiked] = useState(false);
+    const [likeData, setLikeData] = useState({});
+    const dispatch = useDispatch();
     const navigate = useNavigate();
-    const currentUserId = useSelector(selectCurrentUserId) || localStorage.getItem("userId");
-    const [likeRecipe] = useLikeRecipeMutation();
-    async function handleLike() {
-        //for the post request of the like you need: recipe_id, user_id and the liked which is a boolean True or false.
-        try {
-           await likeRecipe({
-                recipe_id: Recipe._id,
-                user_id: currentUserId,
-                liked: true,
-            });
+    const currentUserId =
+        useSelector(selectCurrentUserId) || localStorage.getItem("userId");
+    const [likeRecipe, { data, error, isSuccess }] = useLikeRecipeMutation();
 
-            console.log("Liked");
-        }
-        catch (error) {
-            console.log(error);
-        }
-
+    if (data && isSuccess && data !== likeData) {
+        setLikeData(data);
+    } else if (error) {
+        console.log(error);
     }
 
+    const { data: userLikedData, isLoading } = useGetUserLikesQuery(
+        currentUserId,
+        {
+            skip: !currentUserId,
+        }
+    );
+
+    useEffect(() => {
+        if (!isLoading && userLikedData) {
+            const likedRecipes =
+                userLikedData.length > 0
+                    ? userLikedData.map((like: any) => like.recipe_id)
+                    : [];
+            if (likedRecipes.includes(Recipe._id)) {
+                setIsLiked(true);
+            }
+        }
+    }, [userLikedData]);
+
+    const handleLike = async (e: any) => {
+        e.preventDefault();
+
+        if (isLiked) {
+            try {
+                const unlikedData = await likeRecipe({
+                    recipe_id: Recipe._id,
+                    user_id: currentUserId,
+                    liked: false,
+                }).unwrap();
+                dispatch(changeLike({ ...unlikedData, recipe_id: Recipe._id }));
+                setIsLiked(false);
+
+                console.log(unlikedData);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        if (!isLiked) {
+            try {
+                const likedData = await likeRecipe({
+                    recipe_id: Recipe._id,
+                    user_id: currentUserId,
+                    liked: true,
+                }).unwrap();
+                dispatch(changeLike({ ...likedData, recipe_id: Recipe._id }));
+                setIsLiked(true);
+
+                console.log(likedData);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    };
+    //==================================================================================================
+    //==================================================================================================
+    //========================================HANDLE LIKES==============================================
+    //==================================================================================================
+    //==================================================================================================
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    //==================================================================================================
+    //==================================================================================================
+    //=======================================HANDLE COMMENTS============================================
+    //==================================================================================================
+    //==================================================================================================
     function handleComments() {
-        console.log("Comments");
+        navigate(`/recipe/${Recipe._id}/comments`);
     }
-
+    //==================================================================================================
+    //==================================================================================================
+    //=======================================HANDLE COMMENTS============================================
+    //==================================================================================================
+    //==================================================================================================
     function handleLearnMore() {
         navigate(`/recipe/${Recipe._id}`);
     }
-
+    //==================================================================================================
+    //==================================================================================================
+    //==========================================JSX=====================================================
+    //==================================================================================================
+    //==================================================================================================
     return (
         <Card sx={{ maxWidth: 345 }} className="recipe-item">
             <CardMedia
@@ -63,8 +137,9 @@ export default function MediaCard(Recipe: {
             </CardContent>
             <CardActions>
                 <Button size="small" onClick={handleLike}>
-                    LIKE
+                    {isLoading ? "----" : isLiked ? "Unlike" : "Like"}
                 </Button>
+
                 <Button size="small" onClick={handleComments}>
                     Comments
                 </Button>

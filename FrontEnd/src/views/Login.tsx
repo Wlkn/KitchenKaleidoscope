@@ -26,6 +26,7 @@ import { useDispatch } from "react-redux";
 import { useRef, useState, useEffect } from "react";
 import { setCredentials } from "../redux/reducers/auth";
 import { useLoginMutation } from "../redux/slices/auth";
+import Loader from "../components/Loader";
 //REDUX
 
 function Copyright(props: any) {
@@ -103,9 +104,9 @@ function SignIn() {
     };
 
     const content = isLoading ? (
-        <h1>Loading...</h1>
+        <Loader />
     ) : (
-        <Container component="main" maxWidth="xs">
+        <Container component="main" maxWidth="xs" className="Login-container">
             <p
                 ref={errRef}
                 className={errMsg ? "errmsg" : "offscreen"}

@@ -5,6 +5,7 @@ import "../styles/recipes.css";
 import { Link } from "react-router-dom";
 import { useGetAllRecipesQuery } from "../redux/slices/recipes";
 import { HomeButton } from "../components/Buttons";
+import Loader from "../components/Loader";
 
 export default function RecipeList() {
     const [recipes, setRecipes] = useState<Array<any>>([]);
@@ -22,10 +23,12 @@ export default function RecipeList() {
     return (
         <div>
             <HomeButton />
-            <div className="container">
+            <br></br>
+            <br></br>
+                
+            <div className="RecipeList-container">
                 {isLoading ? (
-                    //TODO add loader
-                    <div>Loading...</div>
+                    <Loader />
                 ) : isError ? (
                     <div>error</div>
                 ) : (

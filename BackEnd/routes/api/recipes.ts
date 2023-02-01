@@ -134,5 +134,32 @@ router.get("/user/:recipe_id", (req, res, next) => {
             });
         });
 });
+//find all recipes of a user
+router.get("/myrecipes/:user_id", (req, res, next) => {
+    User.findOne({ _id: req.params.user_id })
+        .then((user) => {
+            if (!user) {
+                return res.status(404).json({
+                    error: Error,
+                    message: "User not found",
+                });
+            }
+
+            const recipeIds = user.recipes;
+            Promise.all(recipeIds.map((id) => Recipe.findById(id))).then(
+                (recipes) => {
+                    res.status(200).json({
+                        recipes,
+                    });
+                }
+            );
+        })
+        .catch((error: Error) => {
+            res.status(500).json({
+                error: error,
+                message: "Something wrong happened.",
+            });
+        });
+});
 
 module.exports = router;

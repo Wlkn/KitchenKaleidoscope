@@ -1,0 +1,41 @@
+.MuiButton-root {
+    background-image: linear-gradient(
+        to right,
+        #abdae9 0%,
+        #a6c1ee 51%,
+        #fbc2eb 100%
+    );
+    flex: 1 1 auto;
+    margin: 10px;
+    padding: 30px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: all 0.28s ease-out;
+    background-size: 200% auto;
+
+    color: white;
+    /* text-shadow: 0px 0px 10px rgba(0,0,0,0.2);*/
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+}
+.MuiButton-root:hover {
+    background-position: right center; /* change the direction of the change here */
+    transition: all 0.28s ease-out;
+}
+.like-button {
+    background-image: linear-gradient(
+        to right,
+        #abdae9 0%,
+        #a6c1ee 51%,
+        #fbc2eb 100%
+    );
+    flex: 1 1 auto;
+    margin: 10px;
+    padding: 30px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: all 0.28s ease-out;
+    background-size: 200% auto;
+
+    color: white;
+}

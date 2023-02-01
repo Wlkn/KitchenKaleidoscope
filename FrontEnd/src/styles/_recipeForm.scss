@@ -1,5 +1,5 @@
-$primary-color: #b9e3c6;
-$secondary-color: #59c9a5;
+$primary-color: #daf3ff;
+$secondary-color: #548fe7;
 $third-color: #23395b;
 
 .form {
@@ -78,7 +78,7 @@ $third-color: #23395b;
     }
     .newIngredient,
     .newUnit {
-        border: 1px solid lightsalmon;
+        border: 2px solid rgb(0, 0, 255);
         background-color: #fff;
         color: $third-color;
         padding: 10px;
@@ -96,6 +96,8 @@ $third-color: #23395b;
         border-radius: 5px;
         border: none;
         font-size: 16px;
+        
+        margin-bottom: 0.5em;
         margin-right: 10px;
         cursor: pointer;
         &:hover {
@@ -105,7 +107,6 @@ $third-color: #23395b;
 
 .save-button {
     background-color: $third-color;
-
     color: #fff;
     padding: 10px;
     border-radius: 5px;

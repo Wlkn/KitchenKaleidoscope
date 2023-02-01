@@ -30,29 +30,55 @@ const recipeSlice = createSlice({
 const likesSlice = createSlice({
     name: "likes",
     initialState: {
-        likes: null,
+        liked: false,
         recipe_id: null,
         user_id: null,
     },
     reducers: {
-        addLikes: (state, action) => {
-            const { likes, recipe_id, user_id } = action.payload;
-            state.likes = likes;
+        changeLike: (state, action) => {
+            const { liked, recipe_id, user_id } = action.payload;
+            state.liked = liked;
             state.recipe_id = recipe_id;
             state.user_id = user_id;
         },
     },
 });
 
+const commentsSlice = createSlice({
+    name: "comments",
+    initialState: {
+        comments: null,
+        user_id: null,
+        recipe_id: null,
+    },
+    reducers: {
+        addComment: (state, action) => {
+            const { comments, user_id, recipe_id } = action.payload;
+            state.comments = comments;
+            state.user_id = user_id;
+            state.recipe_id = recipe_id;
+        },
+        removeComment: (state) => {
+            state.comments = null;
+            state.user_id = null;
+            state.recipe_id = null;
+        },
+        editComment: (state, action) => {
+            const { comments, user_id, recipe_id } = action.payload;
+            state.comments = comments;
+            state.user_id = user_id;
+            state.recipe_id = recipe_id;
+        },
+    },
+});
 
-export const { addLikes } = likesSlice.actions;
-
-
+export const { changeLike } = likesSlice.actions;
+export const { addComment, removeComment, editComment } = commentsSlice.actions;
 export const { addRecipe } = recipeSlice.actions;
 
 export const likeSliceReducer = likesSlice.reducer;
-export const recipeSliceReducer =  recipeSlice.reducer;
+export const recipeSliceReducer = recipeSlice.reducer;
+export const commentsSliceReducer = commentsSlice.reducer;
 
 export const selectCurrentRecipe = (state: any) => state.recipe.recipe;
-
 export const selectCurrentRecipeId = (state: any) => state.recipe.recipeId;

@@ -7,10 +7,10 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { selectCurrentRecipeId } from "../redux/reducers/recipes";
 import "../styles/_recipeForm.scss";
-import { Navigate, useNavigate } from "react-router-dom";
-import { retry } from "@reduxjs/toolkit/dist/query";
+import { useNavigate } from "react-router-dom";
 import { TakemeBackButton } from "../components/Buttons";
-
+import Loader from "../components/Loader";
+import "../styles/_base.scss"
 interface Ingredient {
     ingredientId: number;
     unitId: number;
@@ -104,7 +104,7 @@ const RecipeForm: React.FC = () => {
     //mongoDb
     const [recipe] = useRecipeMutation();
     //====================================================================================================
-    
+
     useEffect(() => {
         if (currentRecipeId) {
             navigate(`/recipe/${currentRecipeId}`);
@@ -294,10 +294,10 @@ const RecipeForm: React.FC = () => {
     //====================================================================================================
 
     const content = isLoading ? (
-        <h1>Loading...</h1>
+        <Loader />
     ) : (
-        <div>
-            <TakemeBackButton/>
+        <div className="CreateRecipe-container">
+            <TakemeBackButton />
             <div className="form">
                 <form className="formWrapper" onSubmit={handleSubmit}>
                     <label>
