@@ -35,26 +35,31 @@ const UserRecipes: React.FC = () => {
         }
     }, [data, isSuccess]);
 
-    if (isLoading) return <Loader/>;
+    if (isLoading) return <Loader />;
     if (error) return <div>Error</div>;
     console.log(UserCreatedRecipes);
     return (
         <div>
-            <TakemeBackButton/>
+            <TakemeBackButton />
             <p className="h1-userRecipes">Theses are your recipes!</p>
-            <p className="h2-LearnMore">Click on learn more to edit, or delete the recipes.</p>
+            <p className="h2-LearnMore">
+                Click on learn more to edit, or delete the recipes.
+            </p>
             <div className="container">
                 {UserCreatedRecipes.map(
-                    (UserCreatedRecipes: UserCreatedRecipesProps) => (
-                        <MediaCard
-                            key={UserCreatedRecipes._id}
-                            _id={UserCreatedRecipes._id}
-                            name={UserCreatedRecipes.name}
-                            description={UserCreatedRecipes.description}
-                            instructions={UserCreatedRecipes.instructions}
-                            imageURL={UserCreatedRecipes.imageURL}
-                        />
-                    )
+                    (UserCreatedRecipes: UserCreatedRecipesProps) => {
+                        if (!UserCreatedRecipes) return null;
+                        return (
+                            <MediaCard
+                                key={UserCreatedRecipes._id}
+                                _id={UserCreatedRecipes._id}
+                                name={UserCreatedRecipes.name}
+                                description={UserCreatedRecipes.description}
+                                instructions={UserCreatedRecipes.instructions}
+                                imageURL={UserCreatedRecipes.imageURL}
+                            />
+                        );
+                    }
                 )}
             </div>
         </div>

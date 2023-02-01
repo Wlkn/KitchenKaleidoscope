@@ -33,6 +33,19 @@ export const RecipeApiSlice = apiSlice.injectEndpoints({
                 method: "GET",
             }),
         }),
+        editRecipe: builder.mutation({
+            query: (recipe_id, ...recipeInfo) => ({
+                url: `/api/recipes/${recipe_id}`,
+                method: "PUT",
+                body: { ...recipeInfo },
+            }),
+        }),
+        deleteRecipe: builder.mutation({
+            query: (recipe_id) => ({
+                url: `/api/recipes/${recipe_id}`,
+                method: "DELETE",
+            }),
+        }),
     }),
 });
 
@@ -115,6 +128,10 @@ export const { useGetRecipesQuery } = RecipeApiSlice;
 export const { useRecipeMutation } = RecipeApiSlice;
 
 export const { useGetUserRecipesQuery } = RecipeApiSlice;
+
+export const { useEditRecipeMutation } = RecipeApiSlice;
+
+export const { useDeleteRecipeMutation } = RecipeApiSlice;
 //recipes slices
 //============================================
 //comments slices

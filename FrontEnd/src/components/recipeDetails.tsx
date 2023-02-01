@@ -10,16 +10,29 @@ import {
 } from "../redux/slices/recipes";
 import { useParams } from "react-router-dom";
 import { VisitRecipeListButton } from "../components/Buttons";
-import  Loader from "./Loader";
+import Loader from "./Loader";
 import RecipeList from "../views/RecipeList";
+import DeleteEdit from "./DeleteEdit";
+import { useEditRecipeMutation } from "../redux/slices/recipes";
+import { useDeleteRecipeMutation } from "../redux/slices/recipes";
+import { removeRecipe } from "../redux/reducers/recipes";
+import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+
+interface DeleteDataType {
+    success: boolean;
+    message?: string;
+}
 
 export default function RecipeDetails() {
     let { id } = useParams();
+    const navigate = useNavigate();
+    const [removeRecipe] = useDeleteRecipeMutation();
     console.log(id);
     const currentRecipeId = useSelector(selectCurrentRecipeId);
     const currentToken =
         useSelector(selectCurrentToken) || localStorage.getItem("token");
-
+    const recipe_id: string = currentRecipeId || id;
     // const currentToken = useSelector(selectCurrentToken);
     console.log(currentToken);
     const currentUserId =
@@ -29,7 +42,10 @@ export default function RecipeDetails() {
     const { data: CreatorOfRecipe } = useGetCreatorOfRecipeQuery(id, {
         skip: !currentToken,
     });
+    const [deleteData, setDeleteData] = useState<DeleteDataType | null>(null);
+    // export const { useEditRecipeMutation } = RecipeApiSlice;
 
+    // export const { useDeleteRecipeMutation } = RecipeApiSlice;
     //wrap everything inside an async function
     const {
         data: recipeData,
@@ -40,6 +56,20 @@ export default function RecipeDetails() {
     } = useGetRecipesQuery(id, {
         skip: !currentToken,
     });
+
+    const sendDeleteRequest = async () => {
+        // await removeRecipe(recipe_id);
+        // setDeleteData(null);
+    };
+
+    const sendEditRequest = async () => {};
+
+    useEffect(() => {
+        if (deleteData && deleteData.success) {
+            navigate(-1);
+        }
+    }, [deleteData]);
+
     let content;
     if (isLoading) {
         content = <Loader />;
@@ -58,12 +88,6 @@ export default function RecipeDetails() {
                 <p>{OwnerName}</p>
                 <h3>Author ID</h3>
                 <p>{userId}</p>
-                {userId === currentUserId && (
-                    <div>
-                        <button>Edit</button>
-                        <button>Delete</button>
-                    </div>
-                )}
             </div>
         );
     } else if (isError) {
@@ -74,6 +98,11 @@ export default function RecipeDetails() {
         <div>
             <VisitRecipeListButton />
             {content}
+            <DeleteEdit
+                deleteFunc={sendDeleteRequest}
+                editFunc={sendEditRequest}
+                data={recipeData}
+            />
         </div>
     );
 }
