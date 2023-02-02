@@ -6,9 +6,9 @@ const baseQuery = fetchBaseQuery({
     credentials: "include",
     prepareHeaders: (headers, { getState }: any) => {
         //TODO why is this any?
-        // const token = getState().auth.token;
+        
         const token = localStorage.getItem("token") || getState().auth.token;
-        // const RecipeId = getState().recipe.recipeId;
+        
         if (token) {
             headers.set("authorization", `Bearer ${token}`);
         }

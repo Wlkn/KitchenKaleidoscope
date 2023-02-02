@@ -30,7 +30,7 @@ export default function RecipeDetails(formData: any) {
     let { id } = useParams();
     const currentRecipeId = useSelector(selectCurrentRecipeId);
     const recipe_id: string = currentRecipeId || id;
-    console.log(id);
+    // console.log(id);
     // console.log(formData);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -40,10 +40,10 @@ export default function RecipeDetails(formData: any) {
     const currentToken =
         useSelector(selectCurrentToken) || localStorage.getItem("token");
     // const currentToken = useSelector(selectCurrentToken);
-    console.log(currentToken);
+    // console.log(currentToken);
     const currentUserId =
         useSelector(selectCurrentUserId) || localStorage.getItem("userId");
-    console.log(currentUserId);
+    // console.log(currentUserId);
 
     const { data: CreatorOfRecipe } = useGetCreatorOfRecipeQuery(id, {
         skip: !currentToken,
@@ -66,8 +66,8 @@ export default function RecipeDetails(formData: any) {
 
     const sendDeleteRequest = async () => {
         try {
-            const deleteData = await removeRecipe(recipe_id);
-            console.log(deleteData);
+            await removeRecipe(recipe_id);
+            // console.log(deleteData);
         } catch (error) {
             console.error(error);
         }
@@ -94,7 +94,7 @@ export default function RecipeDetails(formData: any) {
         }, 1600);
     };
 
-    console.log("deleteData", deleteData);
+    // console.log("deleteData", deleteData);
     let content;
     if (isLoading) {
         content = <Loader />;

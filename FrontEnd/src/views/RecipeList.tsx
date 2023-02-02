@@ -2,14 +2,14 @@ import MediaCard from "../components/recipe";
 import { useEffect, useState } from "react";
 import "../styles/recipes.css";
 
-import { Link } from "react-router-dom";
+
 import { useGetAllRecipesQuery } from "../redux/slices/recipes";
 import { HomeButton } from "../components/Buttons";
 import Loader from "../components/Loader";
 
 export default function RecipeList() {
     const [recipes, setRecipes] = useState<Array<any>>([]);
-    const { data, isLoading, isSuccess, isError, error } =
+    const { data, isLoading, isSuccess, isError} =
         useGetAllRecipesQuery({
             skip: false,
         });

@@ -58,10 +58,10 @@ export default function Signup() {
                 requestOptions
             );
             if (response.ok) {
-                const json = await response.json();
+                // const json = await response.json();
                 alert("Signup successful!");
                 navigate("/auth/login");
-                console.log(json);
+                //console.log(json);
             } else {
                 console.error(response.statusText);
             }

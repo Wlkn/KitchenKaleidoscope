@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUserId } from "../redux/reducers/auth";
 import { addComment } from "../redux/reducers/recipes";
 import { TakemeBackButton, SubmitButton } from "./Buttons";
-import  Loader from "./Loader";
+import Loader from "./Loader";
 interface Comment {
     id: string;
     comment: string;
@@ -29,31 +29,25 @@ export default function Comments() {
         comment: "",
     });
 
-    const { data, isLoading, isSuccess, isError, error } =
+    const { data, isLoading, isSuccess, isError } =
         useGetCommentByRecipeIdQuery(recipe_id, {
             skip: false,
         });
 
     const handleSubmit = async (e: any) => {
         const { comment } = formData;
-        // await addComment({
-        //     variables: {
-        //         comment,
-        //         recipe_id,
-        //     },
-        // });
         try {
             const commentData = await createNewComment({
                 comment,
                 recipe_id,
                 user_id,
             }).unwrap();
-            console.log(commentData);
+            //console.log(commentData);
             dispatch(
                 addComment({ ...commentData, comment, recipe_id, user_id })
             );
         } catch (err) {
-            console.log(err);
+            //console.log(err);
         }
     };
 

@@ -2,8 +2,8 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useGetUserRecipesQuery } from "../redux/slices/recipes";
 import MediaCard from "../components/recipe";
-import { useSelector } from "react-redux";
-import { selectCurrentUserId } from "../redux/reducers/auth";
+
+
 import { useParams } from "react-router-dom";
 import "../styles/recipes.css";
 import { ProfileButton, TakemeBackButton } from "../components/Buttons";
@@ -18,17 +18,11 @@ interface UserCreatedRecipesProps {
 }
 
 const UserRecipes: React.FC = () => {
-    // window.onbeforeunload = function() {
-    //     window.setTimeout(function () {
-
-    //     }, 0);
-    //     window.onbeforeunload = null; // necessary to prevent infinite loop, that kills your browser
-    // }
-    const navigate = useNavigate();
+   
 
     const { id } = useParams();
     const user_id = id?.toString();
-    console.log(user_id);
+    //console.log(user_id);
     const [UserCreatedRecipes, setUserRecipes] = useState<Array<any>>([]);
     const { data, isLoading, error, isSuccess } = useGetUserRecipesQuery(
         user_id,
@@ -45,7 +39,7 @@ const UserRecipes: React.FC = () => {
 
     if (isLoading) return <Loader />;
     if (error) return <div>Error</div>;
-    console.log(UserCreatedRecipes);
+    //console.log(UserCreatedRecipes);
     return (
         <div>
             <ProfileButton />

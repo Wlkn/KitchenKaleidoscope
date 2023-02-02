@@ -1,5 +1,5 @@
 //REACT
-import * as React from "react";
+
 import { useNavigate } from "react-router-dom";
 
 //MUI
@@ -67,9 +67,8 @@ function SignIn() {
 
         try {
             const userData = await login({ email, password }).unwrap();
-            
 
-            console.log(userData);
+            //console.log(userData);
             dispatch(setCredentials({ ...userData, email }));
             setUser("");
             setPwd("");
@@ -95,12 +94,12 @@ function SignIn() {
 
     const handleUserInput = (e: any) => {
         setUser(e.target.value);
-        console.log(email);
+        //console.log(email);
     };
 
     const handlePwdInput = (e: any) => {
         setPwd(e.target.value);
-        console.log(password);
+        //console.log(password);
     };
 
     const content = isLoading ? (

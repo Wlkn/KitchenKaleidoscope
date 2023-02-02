@@ -35,7 +35,7 @@ export default function MediaCard(Recipe: {
     if (data && isSuccess && data !== likeData) {
         setLikeData(data);
     } else if (error) {
-        console.log(error);
+        //console.log(error);
     }
 
     const { data: userLikedData, isLoading } = useGetUserLikesQuery(
@@ -70,9 +70,9 @@ export default function MediaCard(Recipe: {
                 dispatch(changeLike({ ...unlikedData, recipe_id: Recipe._id }));
                 setIsLiked(false);
 
-                console.log(unlikedData);
+                //console.log(unlikedData);
             } catch (error) {
-                console.log(error);
+                //console.log(error);
             }
         }
         if (!isLiked) {
@@ -85,7 +85,7 @@ export default function MediaCard(Recipe: {
                 dispatch(changeLike({ ...likedData, recipe_id: Recipe._id }));
                 setIsLiked(true);
 
-                console.log(likedData);
+                //console.log(likedData);
             } catch (error) {
                 console.log(error);
             }
@@ -146,7 +146,6 @@ export default function MediaCard(Recipe: {
                 <Button size="small" onClick={handleLearnMore}>
                     Learn more
                 </Button>
-                
             </CardActions>
         </Card>
     );

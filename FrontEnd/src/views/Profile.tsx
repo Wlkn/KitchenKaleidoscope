@@ -5,7 +5,7 @@ import {
     selectCurrentName,
     selectCurrentUserId,
 } from "../redux/reducers/auth";
-import { Link } from "react-router-dom";
+
 import {
     VisitRecipeListButton,
     HomeButton,

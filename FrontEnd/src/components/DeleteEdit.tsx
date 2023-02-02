@@ -4,7 +4,6 @@ import withReactContent from "sweetalert2-react-content";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectCurrentUserId } from "../redux/reducers/auth";
-import RecipeDetails from "./recipeDetails";
 
 const MySwal = withReactContent(Swal);
 type Props = {
@@ -21,26 +20,25 @@ const DeleteEdit = ({ deleteFunc, editFunc, data }: Props) => {
     const currentUserId =
         localStorage.getItem("userId") || useSelector(selectCurrentUserId);
 
-        const handleSubmit = (event: any) => {
-            MySwal.fire({
-                title: <p>The Recipe has been successfully edited!</p>,
-                icon: "success",
-                showConfirmButton: false,
-                timer: 1500,
-            });
-            event.preventDefault();
-            console.log(formData);
-            editFunc(formData);
-            setEditMode(false);
-        };
-        
-    
+    const handleSubmit = (event: any) => {
+        MySwal.fire({
+            title: <p>The Recipe has been successfully edited!</p>,
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1500,
+        });
+        event.preventDefault();
+        //console.log(formData);
+        editFunc(formData);
+        setEditMode(false);
+    };
+
     const handleChange = (event: any) => {
         setFormData({
             ...(formData || {}),
             [event.target.name]: event.target.value,
         });
-        console.log(formData)
+        //console.log(formData);
     };
 
     function handleDeleteClick() {

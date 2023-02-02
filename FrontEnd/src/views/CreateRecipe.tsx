@@ -71,7 +71,7 @@ const RecipeForm: React.FC = () => {
             );
             if (response.ok) {
                 const unitsJSON = await response.json();
-                console.log(unitsJSON); //todo remove
+                //console.log(unitsJSON); //todo remove
                 return unitsJSON;
             } else {
                 console.error(response.statusText);
@@ -103,7 +103,7 @@ const RecipeForm: React.FC = () => {
             );
             if (response.ok) {
                 const ingredientsJSON = await response.json();
-                console.log(ingredientsJSON); //todo remove
+                //console.log(ingredientsJSON); //todo remove
                 return ingredientsJSON;
             } else {
                 console.error(response.statusText);
@@ -120,9 +120,8 @@ const RecipeForm: React.FC = () => {
                     id: ingredient.id,
                     name: ingredient.name,
                 })
-           
-                 );
-                 setFetchIngredients(ingredients);
+            );
+            setFetchIngredients(ingredients);
         }
         fetchData();
     }, []);
@@ -140,12 +139,11 @@ const RecipeForm: React.FC = () => {
 
     async function handleSubmitIngredients(recipeData: any) {
         try {
-            const recipeId = currentRecipeId;
             const recipeIngredientsData = await recipeIngredients({
                 ingredientsList,
                 recipeId: recipeData.recipeId,
             }).unwrap();
-            console.log(recipeId);
+            //console.log(recipeId);
             dispatch(
                 setIngredients({
                     ...recipeIngredientsData,
@@ -153,13 +151,13 @@ const RecipeForm: React.FC = () => {
                     recipeId: recipeData.recipeId,
                 })
             );
-            console.log(recipeId);
+            //console.log(recipeId);
             setIngredientsList([]);
         } catch (error) {
-            console.log("error");
+            //console.log("error");
         }
         // Send ingredientsList to your backend here
-        console.log(ingredientsList);
+        //console.log(ingredientsList);
         console.log(recipeName);
     }
 
@@ -182,7 +180,7 @@ const RecipeForm: React.FC = () => {
                     imageUrl,
                 })
             );
-            console.log(recipeData.recipeId);
+            //console.log(recipeData.recipeId);
             setRecipeName("");
             setDescription("");
             setInstructions("");
@@ -387,14 +385,16 @@ const RecipeForm: React.FC = () => {
                                     <option value={0} disabled>
                                         Select an ingredient or enter a new one
                                     </option>
-                                    {fetchIngredients.map((ingredientName, i) => (
-                                        <option
-                                            key={i}
-                                            value={ingredientName.id}
-                                        >
-                                            {ingredientName.name}
-                                        </option>
-                                    ))}
+                                    {fetchIngredients.map(
+                                        (ingredientName, i) => (
+                                            <option
+                                                key={i}
+                                                value={ingredientName.id}
+                                            >
+                                                {ingredientName.name}
+                                            </option>
+                                        )
+                                    )}
                                     <option value={-1}>
                                         Add a new Ingredient!
                                     </option>
