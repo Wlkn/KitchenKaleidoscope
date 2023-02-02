@@ -10,7 +10,7 @@ import "../styles/_recipeForm.scss";
 import { useNavigate } from "react-router-dom";
 import { TakemeBackButton } from "../components/Buttons";
 import Loader from "../components/Loader";
-import "../styles/_base.scss"
+import "../styles/_base.scss";
 interface Ingredient {
     ingredientId: number;
     unitId: number;
@@ -37,56 +37,6 @@ let requestOptions: object = {
     redirect: "follow",
 };
 
-async function fetchIngredients() {
-    try {
-        const response = await fetch(
-            "http://localhost:4000/api/ingredient_names",
-            requestOptions
-        );
-        if (response.ok) {
-            const ingredientsJSON = await response.json();
-            console.log(ingredientsJSON); //todo remove
-            return ingredientsJSON;
-        } else {
-            console.error(response.statusText);
-        }
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-async function fetchUnits() {
-    try {
-        const response = await fetch(
-            "http://localhost:4000/api/units",
-            requestOptions
-        );
-        if (response.ok) {
-            const unitsJSON = await response.json();
-            console.log(unitsJSON); //todo remove
-            return unitsJSON;
-        } else {
-            console.error(response.statusText);
-        }
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-const unitsJSON: any = await fetchUnits();
-const units: Unit[] = unitsJSON.map((unit: Unit) => ({
-    id: unit.id,
-    name: unit.name,
-}));
-
-const ingredientsJSON: any = await fetchIngredients();
-const ingredients: IngredientOption[] = ingredientsJSON.map(
-    (ingredient: IngredientOption) => ({
-        id: ingredient.id,
-        name: ingredient.name,
-    })
-);
-
 const RecipeForm: React.FC = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -94,6 +44,10 @@ const RecipeForm: React.FC = () => {
     const [recipeName, setRecipeName] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [instructions, setInstructions] = useState<string>("");
+    const [fetchUnits, setFetchUnits] = useState<Unit[]>([]);
+    const [fetchIngredients, setFetchIngredients] = useState<
+        IngredientOption[]
+    >([]);
     // const [isPublic, setIsPublic] = useState<boolean>(false); //todo: add this to the form, and make it work
     //REDUX
     //====================================================================================================
@@ -104,7 +58,79 @@ const RecipeForm: React.FC = () => {
     //mongoDb
     const [recipe] = useRecipeMutation();
     //====================================================================================================
+    //====================================================================================================
+    //====================================================================================================
+    //FETCHING INGREDIENTS AND UNITS
+    //====================================================================================================
+    //====================================================================================================
+    async function fetchUnitsFromApi() {
+        try {
+            const response = await fetch(
+                "http://localhost:4000/api/units",
+                requestOptions
+            );
+            if (response.ok) {
+                const unitsJSON = await response.json();
+                console.log(unitsJSON); //todo remove
+                return unitsJSON;
+            } else {
+                console.error(response.statusText);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    useEffect(() => {
+        async function fetchData() {
+            const unitsJSON: any = await fetchUnitsFromApi();
+            const units: Unit[] = unitsJSON.map((unit: Unit) => ({
+                id: unit.id,
+                name: unit.name,
+            }));
+            setFetchUnits(units);
+        }
 
+        fetchData();
+    }, []);
+    //====================================================================================================
+    //INGREDIENTS
+
+    async function fetchIngredientsFromApi() {
+        try {
+            const response = await fetch(
+                "http://localhost:4000/api/ingredient_names",
+                requestOptions
+            );
+            if (response.ok) {
+                const ingredientsJSON = await response.json();
+                console.log(ingredientsJSON); //todo remove
+                return ingredientsJSON;
+            } else {
+                console.error(response.statusText);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    useEffect(() => {
+        async function fetchData() {
+            const ingredientsJSON: any = await fetchIngredientsFromApi();
+            const ingredients: IngredientOption[] = ingredientsJSON.map(
+                (ingredient: IngredientOption) => ({
+                    id: ingredient.id,
+                    name: ingredient.name,
+                })
+           
+                 );
+                 setFetchIngredients(ingredients);
+        }
+        fetchData();
+    }, []);
+    //====================================================================================================
+    //====================================================================================================
+    //FETCHING INGREDIENTS AND UNITS
+    //====================================================================================================
+    //====================================================================================================
     useEffect(() => {
         if (currentRecipeId) {
             navigate(`/recipe/${currentRecipeId}`);
@@ -361,7 +387,7 @@ const RecipeForm: React.FC = () => {
                                     <option value={0} disabled>
                                         Select an ingredient or enter a new one
                                     </option>
-                                    {ingredients.map((ingredientName, i) => (
+                                    {fetchIngredients.map((ingredientName, i) => (
                                         <option
                                             key={i}
                                             value={ingredientName.id}
@@ -401,7 +427,7 @@ const RecipeForm: React.FC = () => {
                                     <option value={0} disabled>
                                         Select a unit or enter a new one
                                     </option>
-                                    {units.map((unit, i) => (
+                                    {fetchUnits.map((unit, i) => (
                                         <option key={i} value={unit.id}>
                                             {unit.name}
                                         </option>

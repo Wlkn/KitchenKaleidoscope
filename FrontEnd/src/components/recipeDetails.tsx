@@ -11,14 +11,14 @@ import {
 import { useParams } from "react-router-dom";
 import { MyRecipesButton, TakemeBackButton } from "../components/Buttons";
 import Loader from "./Loader";
-import RecipeList from "../views/RecipeList";
+
 import DeleteEdit from "./DeleteEdit";
 import { useEditRecipeMutation } from "../redux/slices/recipes";
 import { useDeleteRecipeMutation } from "../redux/slices/recipes";
-import { removeRecipe } from "../redux/reducers/recipes";
+
 import { useNavigate } from "react-router-dom";
-import React, { useState, useEffect } from "react";
-import { dialogContentTextClasses } from "@mui/material/DialogContentText";
+import React, { useState } from "react";
+
 import { editRecipe } from "../redux/reducers/recipes";
 
 interface DeleteDataType {
@@ -26,11 +26,7 @@ interface DeleteDataType {
     message?: string;
 }
 
-interface RecipeDetailsProps {
-    formData: any;
-}
-
-export default function RecipeDetails({ formData }: RecipeDetailsProps) {
+export default function RecipeDetails(formData: any) {
     let { id } = useParams();
     const currentRecipeId = useSelector(selectCurrentRecipeId);
     const recipe_id: string = currentRecipeId || id;
@@ -79,7 +75,6 @@ export default function RecipeDetails({ formData }: RecipeDetailsProps) {
             navigate(`/myrecipes/${currentUserId}`);
             window.location.reload();
         }, 1600);
-
     };
 
     const sendEditRequest = async (data: any) => {
