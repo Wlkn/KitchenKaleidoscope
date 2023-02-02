@@ -6,18 +6,26 @@ import { useSelector } from "react-redux";
 import { selectCurrentUserId } from "../redux/reducers/auth";
 import { useParams } from "react-router-dom";
 import "../styles/recipes.css";
-import { TakemeBackButton } from "../components/Buttons";
+import { ProfileButton, TakemeBackButton } from "../components/Buttons";
 import Loader from "../components/Loader";
-
+import { useNavigate } from "react-router-dom";
 interface UserCreatedRecipesProps {
     _id: string;
     name: string;
     description: string;
     instructions: string;
-    imageURL: string;
+    imageUrl: string;
 }
 
 const UserRecipes: React.FC = () => {
+    // window.onbeforeunload = function() {
+    //     window.setTimeout(function () {
+
+    //     }, 0);
+    //     window.onbeforeunload = null; // necessary to prevent infinite loop, that kills your browser
+    // }
+    const navigate = useNavigate();
+
     const { id } = useParams();
     const user_id = id?.toString();
     console.log(user_id);
@@ -40,6 +48,7 @@ const UserRecipes: React.FC = () => {
     console.log(UserCreatedRecipes);
     return (
         <div>
+            <ProfileButton />
             <TakemeBackButton />
             <p className="h1-userRecipes">Theses are your recipes!</p>
             <p className="h2-LearnMore">
@@ -56,7 +65,7 @@ const UserRecipes: React.FC = () => {
                                 name={UserCreatedRecipes.name}
                                 description={UserCreatedRecipes.description}
                                 instructions={UserCreatedRecipes.instructions}
-                                imageURL={UserCreatedRecipes.imageURL}
+                                imageUrl={UserCreatedRecipes.imageUrl}
                             />
                         );
                     }

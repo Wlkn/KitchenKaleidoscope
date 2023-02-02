@@ -32,26 +32,36 @@ router.post("/", (req, res, next) => {
             console.log(error);
         });
 });
-//PUT ROUTE TO UPDATE RECIPES
+//PUT ROUTE TO UPDATE THE RECIPE WITH THE RECIPEID RECIEVED FROM THE FRONT END
+
 router.put("/:id", (req, res, next) => {
-    const recipe = new Recipe({
-        name: req.body.name,
-        description: req.body.description,
-        instructions: req.body.instructions,
-        imageUrl: req.body.imageUrl,
-    });
-    Recipe.updateOne({ _id: req.params.id }, recipe)
+    Recipe.updateOne(
+        { _id: req.params.id },
+        {
+            $set: {
+                name: req.body.name,
+                description: req.body.description,
+                instructions: req.body.instructions,
+                imageUrl: req.body.imageUrl,
+            },
+        }
+    )
         .then(() => {
-            res.status(201).json({
+            res.status(200).json({
                 message: `The recipe with the ID of ${req.params.id} has been updated.`,
             });
+            console.log(
+                `The recipe with the ID of ${req.params.id} has been updated.`
+            );
         })
         .catch((error) => {
             res.status(400).json({
                 error: error,
             });
+            console.log(error);
         });
 });
+
 //DELETE ROUTE
 // /api/recipes/id
 router.delete("/:id", (req, res, next) => {
@@ -60,11 +70,15 @@ router.delete("/:id", (req, res, next) => {
             res.status(200).json({
                 message: `The recipe with the ID of ${req.params.id} has been deleted.`,
             });
+            console.log(
+                `The recipe with the ID of ${req.params.id} has been deleted.`
+            );
         })
         .catch((error) => {
             res.status(400).json({
                 error: error,
             });
+            console.log(error);
         });
 });
 // GET ROUTES

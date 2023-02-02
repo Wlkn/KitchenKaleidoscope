@@ -17,7 +17,7 @@ export default function MediaCard(Recipe: {
     name: string;
     description: string;
     instructions: string;
-    imageURL: string;
+    imageUrl: string;
 }) {
     //==================================================================================================
     //==================================================================================================
@@ -123,7 +123,7 @@ export default function MediaCard(Recipe: {
         <Card sx={{ maxWidth: 345 }} className="recipe-item">
             <CardMedia
                 sx={{ height: 140 }}
-                image={Recipe.imageURL}
+                image={Recipe.imageUrl}
                 title={Recipe.name}
                 component="img"
             />
@@ -146,6 +146,7 @@ export default function MediaCard(Recipe: {
                 <Button size="small" onClick={handleLearnMore}>
                     Learn more
                 </Button>
+                
             </CardActions>
         </Card>
     );

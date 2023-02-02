@@ -1,5 +1,12 @@
 import React, { useState } from "react";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectCurrentUserId } from "../redux/reducers/auth";
+import RecipeDetails from "./recipeDetails";
 
+const MySwal = withReactContent(Swal);
 type Props = {
     deleteFunc: () => void;
     editFunc: (data: any) => void;
@@ -10,27 +17,50 @@ const DeleteEdit = ({ deleteFunc, editFunc, data }: Props) => {
     const [deleteMode, setDeleteMode] = useState(false);
     const [editMode, setEditMode] = useState(false);
     const [formData, setFormData] = useState(data || {});
+    const navigate = useNavigate();
+    const currentUserId =
+        localStorage.getItem("userId") || useSelector(selectCurrentUserId);
 
-    console.log(data);
-    const handleSubmit = (event: any) => {
-        event.preventDefault();
-        editFunc(formData);
-        setEditMode(false);
-        console.log(formData);
-    };
-
+        const handleSubmit = (event: any) => {
+            MySwal.fire({
+                title: <p>The Recipe has been successfully edited!</p>,
+                icon: "success",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+            event.preventDefault();
+            console.log(formData);
+            editFunc(formData);
+            setEditMode(false);
+        };
+        
+    
     const handleChange = (event: any) => {
         setFormData({
             ...(formData || {}),
             [event.target.name]: event.target.value,
         });
+        console.log(formData)
     };
 
+    function handleDeleteClick() {
+        MySwal.fire({
+            title: <p>The Recipe has been successfully deleted!</p>,
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1500,
+        });
+        setDeleteMode(true);
+        deleteFunc();
+        navigate(`/myrecipes/${currentUserId}`);
+    }
     return (
         <div>
             {deleteMode ? (
                 <div>
-                    <button onClick={deleteFunc}>Are you sure you want to delete your recipe?</button>
+                    <button onClick={handleDeleteClick}>
+                        Are you sure you want to delete your recipe?
+                    </button>
                     <button onClick={() => setDeleteMode(false)}>Cancel</button>
                 </div>
             ) : editMode ? (
@@ -40,7 +70,8 @@ const DeleteEdit = ({ deleteFunc, editFunc, data }: Props) => {
                         type="text"
                         name="name"
                         onChange={handleChange}
-                        value={data.name || ""}
+                        value={formData.name || ""}
+                        placeholder="Name"
                     />
                     <br />
                     Description: <br />
@@ -48,7 +79,7 @@ const DeleteEdit = ({ deleteFunc, editFunc, data }: Props) => {
                         type="text"
                         name="description"
                         onChange={handleChange}
-                        value={data.description || ""}
+                        value={formData.description || ""}
                     />
                     <br />
                     Instructions:
@@ -57,7 +88,7 @@ const DeleteEdit = ({ deleteFunc, editFunc, data }: Props) => {
                         type="text"
                         name="instructions"
                         onChange={handleChange}
-                        value={data.instructions || ""}
+                        value={formData.instructions || ""}
                     />
                     <br />
                     Image URL: <br />
@@ -65,7 +96,7 @@ const DeleteEdit = ({ deleteFunc, editFunc, data }: Props) => {
                         type="text"
                         name="imageUrl"
                         onChange={handleChange}
-                        value={data.imageUrl || ""}
+                        value={formData.imageUrl || ""}
                     />
                     <button type="submit">Confirm Edit</button>
                     <button onClick={() => setEditMode(false)}>Cancel</button>

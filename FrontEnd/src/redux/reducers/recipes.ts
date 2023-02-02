@@ -31,6 +31,20 @@ const recipeSlice = createSlice({
             state.imageUrl = null;
             state.recipeId = null;
         },
+        editRecipe: (state, action) => {
+            const {
+                recipeName,
+                description,
+                instructions,
+                imageUrl,
+                recipeId,
+            } = action.payload;
+            state.recipeName = recipeName;
+            state.description = description;
+            state.instructions = instructions;
+            state.imageUrl = imageUrl;
+            state.recipeId = recipeId;
+        },
     },
 });
 
@@ -83,6 +97,7 @@ export const { changeLike } = likesSlice.actions;
 export const { addComment, removeComment, editComment } = commentsSlice.actions;
 export const { addRecipe } = recipeSlice.actions;
 export const { removeRecipe } = recipeSlice.actions;
+export const { editRecipe } = recipeSlice.actions;
 
 export const likeSliceReducer = likesSlice.reducer;
 export const recipeSliceReducer = recipeSlice.reducer;

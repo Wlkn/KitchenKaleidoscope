@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentRecipeId } from "../redux/reducers/recipes";
 import {
     selectCurrentToken,
@@ -9,7 +9,7 @@ import {
     useGetCreatorOfRecipeQuery,
 } from "../redux/slices/recipes";
 import { useParams } from "react-router-dom";
-import { VisitRecipeListButton } from "../components/Buttons";
+import { MyRecipesButton, TakemeBackButton } from "../components/Buttons";
 import Loader from "./Loader";
 import RecipeList from "../views/RecipeList";
 import DeleteEdit from "./DeleteEdit";
@@ -18,21 +18,31 @@ import { useDeleteRecipeMutation } from "../redux/slices/recipes";
 import { removeRecipe } from "../redux/reducers/recipes";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+import { dialogContentTextClasses } from "@mui/material/DialogContentText";
+import { editRecipe } from "../redux/reducers/recipes";
 
 interface DeleteDataType {
     success: boolean;
     message?: string;
 }
 
-export default function RecipeDetails() {
+interface RecipeDetailsProps {
+    formData: any;
+}
+
+export default function RecipeDetails({ formData }: RecipeDetailsProps) {
     let { id } = useParams();
-    const navigate = useNavigate();
-    const [removeRecipe] = useDeleteRecipeMutation();
-    console.log(id);
     const currentRecipeId = useSelector(selectCurrentRecipeId);
+    const recipe_id: string = currentRecipeId || id;
+    console.log(id);
+    // console.log(formData);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [removeRecipe] = useDeleteRecipeMutation();
+    const [editRecipeMutation] = useEditRecipeMutation();
+
     const currentToken =
         useSelector(selectCurrentToken) || localStorage.getItem("token");
-    const recipe_id: string = currentRecipeId || id;
     // const currentToken = useSelector(selectCurrentToken);
     console.log(currentToken);
     const currentUserId =
@@ -43,6 +53,7 @@ export default function RecipeDetails() {
         skip: !currentToken,
     });
     const [deleteData, setDeleteData] = useState<DeleteDataType | null>(null);
+    // const [formData, setFormData] = useState({})
     // export const { useEditRecipeMutation } = RecipeApiSlice;
 
     // export const { useDeleteRecipeMutation } = RecipeApiSlice;
@@ -58,18 +69,37 @@ export default function RecipeDetails() {
     });
 
     const sendDeleteRequest = async () => {
-        // await removeRecipe(recipe_id);
-        // setDeleteData(null);
+        try {
+            const deleteData = await removeRecipe(recipe_id);
+            console.log(deleteData);
+        } catch (error) {
+            console.error(error);
+        }
+        setTimeout(() => {
+            navigate(`/myrecipes/${currentUserId}`);
+            window.location.reload();
+        }, 1600);
+
     };
 
-    const sendEditRequest = async () => {};
+    const sendEditRequest = async (data: any) => {
+        try {
+            const recipeData = await editRecipeMutation({
+                recipe_id,
+                ...data,
+            }).unwrap();
 
-    useEffect(() => {
-        if (deleteData && deleteData.success) {
-            navigate(-1);
+            dispatch(editRecipe({ recipeData }));
+        } catch (error) {
+            console.error(error);
         }
-    }, [deleteData]);
+        setTimeout(() => {
+            navigate(`/myrecipes/${currentUserId}`);
+            window.location.reload();
+        }, 1600);
+    };
 
+    console.log("deleteData", deleteData);
     let content;
     if (isLoading) {
         content = <Loader />;
@@ -96,12 +126,13 @@ export default function RecipeDetails() {
 
     return (
         <div>
-            <VisitRecipeListButton />
+            <MyRecipesButton userId={currentUserId} />
+            <TakemeBackButton />
             {content}
             <DeleteEdit
                 deleteFunc={sendDeleteRequest}
                 editFunc={sendEditRequest}
-                data={recipeData}
+                data={formData}
             />
         </div>
     );

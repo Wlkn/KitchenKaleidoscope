@@ -39,7 +39,8 @@ export default function RecipeList() {
                             name={recipe.name}
                             description={recipe.description}
                             instructions={recipe.instructions}
-                            imageURL={recipe.imageUrl}
+                            imageUrl={recipe.imageUrl}
+                            
                         />
                     ))
                 )}
