@@ -13,9 +13,6 @@ router.post("/", (req, res) => {
                 throw error;
             }
 
-            if (!results.rows[0].to_regclass) {
-                createTables();
-            }
 
             const { recipe_id, user_id, comment } = req.body;
             pool.query(
@@ -110,16 +107,16 @@ router.get("/:id", (req, res) => {
 
 // INFO:
 //TO DELETE, or UPDATE you need to auth it, so send the token as authorizatio and the user_id which will be in the body.
-function createTables() {
-    pool.query(
-        "CREATE TABLE comments (id SERIAL PRIMARY KEY, recipe_id CHAR(24) , user_id CHAR(24), comment TEXT NOT NULL, created_at TIMESTAMP DEFAULT NOW())",
-        (error: Error) => {
-            if (error) {
-                throw error;
-            }
-            console.log("comments table created");
-        }
-    );
-}
+// function createTables() {
+//     pool.query(
+//         "CREATE TABLE comments (id SERIAL PRIMARY KEY, recipe_id CHAR(24) , user_id CHAR(24), comment TEXT NOT NULL, created_at TIMESTAMP DEFAULT NOW())",
+//         (error: Error) => {
+//             if (error) {
+//                 throw error;
+//             }
+//             console.log("comments table created");
+//         }
+//     );
+// }
 
 module.exports = router;

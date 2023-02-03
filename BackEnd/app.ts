@@ -45,14 +45,15 @@ const unitRoute = require("./models/Units");
 const likesRoute = require("./models/Likes");
 
 //ENDPOINTS
-
+app.use("/auth", userRoute); // Same with this one.
+//mongodb
 app.use("/api/recipes", auth, recipeRoute); // This targets every that starts with /api/recipes so the :id works too.
 app.use("/api/likes", likesRoute);
+//postgres
 app.use("/api/comments", commentRoute);
 app.use("/api/ingredients", ingredientRoute);
 app.use("/api/ingredient_names", ingredient_nameRoute);
 app.use("/api/units", unitRoute);
 
-app.use("/auth", userRoute); // Same with this one.
 
 module.exports = app;

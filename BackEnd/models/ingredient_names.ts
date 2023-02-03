@@ -12,10 +12,6 @@ router.post("/", (req, res) => {
                 throw error;
             }
 
-            if (!results.rows[0].to_regclass) {
-                createTables();
-            }
-
             const { name } = req.body;
             pool.query(
                 "INSERT INTO ingredient_names (name) VALUES ($1) RETURNING *",
@@ -49,12 +45,11 @@ router.put("/:id", (req, res) => {
             if (error) {
                 throw error;
             }
+
             res.status(200).send(`Ingredient modified with ID: ${id}`);
         }
     );
 });
-
-
 
 router.delete("/:id", (req, res) => {
     const id = parseInt(req.params.id);
@@ -65,34 +60,37 @@ router.delete("/:id", (req, res) => {
             if (error) {
                 throw error;
             }
+
             res.status(200).send(`Ingredient deleted with ID: ${id}`);
         }
     );
 });
 
-
 router.get("/", (req, res) => {
-    pool.query("SELECT * FROM ingredient_names", (error: Error, results: any) => {
-        if (error) {
-            throw error;
-        }
-        res.status(200).json(results.rows);
-    });
-});
-
-function createTables() {
     pool.query(
-        `CREATE TABLE ingredient_names (
-                id SERIAL PRIMARY KEY,
-                name TEXT NOT NULL
-                );`,
-        (error: Error) => {
+        "SELECT * FROM ingredient_names",
+        (error: Error, results: any) => {
             if (error) {
                 throw error;
             }
-            console.log("ingredient_names table created");
+            res.status(200).json(results.rows);
         }
     );
-}
+});
+
+// function createTables() {
+//     pool.query(
+//         `CREATE TABLE ingredient_names (
+//                 id SERIAL PRIMARY KEY,
+//                 name TEXT NOT NULL
+//                 );`,
+//         (error: Error) => {
+//             if (error) {
+//                 throw error;
+//             }
+//             console.log("ingredient_names table created");
+//         }
+//     );
+// }
 
 module.exports = router;

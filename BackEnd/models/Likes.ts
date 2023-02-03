@@ -13,9 +13,7 @@ router.post("/", (req, res) => {
                 throw error;
             }
 
-            if (!results.rows[0].to_regclass) {
-                createTables();
-            }
+            
 
             const { recipe_id, user_id, liked } = req.body;
             pool.query(
@@ -51,6 +49,7 @@ router.put("/:id", (req, res) => {
             if (error) {
                 throw error;
             }
+            
             res.status(200).send(`Like modified with ID: ${id}`);
             console.log(`Like modified with ID: ${id}`); //TODO REMOVE THIS WHEN DONE
         }
@@ -59,6 +58,8 @@ router.put("/:id", (req, res) => {
 
 router.get("/", (req, res) => {
     pool.query("SELECT * FROM likes", (error: Error, results: any) => {
+        
+        
         if (error) {
             throw error;
         }
@@ -73,7 +74,7 @@ router.get("/:id", (req, res) => {
         "SELECT * FROM likes WHERE user_id = $1 AND liked = true",
         [userId],
         (error: Error, results: any) => {
-            if (error) {
+             if (error) {
                 throw error;
             } else if (results.rows.length === 0) {
                 res.status(200).json({ message: "No liked recipes found" });
@@ -91,6 +92,8 @@ function addLike(recipe_id: string, user_id: string, liked: boolean, res: any) {
             if (error) {
                 throw error;
             }
+            
+
             res.status(201).json(`Like added with ID: ${results.rows[0].id}`);
             console.log(`Like added with ID: ${results.rows[0].id}`); //TODO REMOVE THIS WHEN DONE
         }
@@ -126,16 +129,16 @@ router.delete("/", (req, res) => {
     });
 });
 
-function createTables() {
-    pool.query(
-        "CREATE TABLE likes (id SERIAL PRIMARY KEY, recipe_id CHAR(24), user_id CHAR(24), liked BOOLEAN NOT NULL, created_at TIMESTAMP DEFAULT NOW())",
-        (error: Error) => {
-            if (error) {
-                throw error;
-            }
-            console.log("likes table created");
-        }
-    );
-}
+// function createTables() {
+//     pool.query(
+//         "CREATE TABLE likes (id SERIAL PRIMARY KEY, recipe_id CHAR(24), user_id CHAR(24), liked BOOLEAN NOT NULL, created_at TIMESTAMP DEFAULT NOW())",
+//         (error: Error) => {
+//             if (error) {
+//                 throw error;
+//             }
+//             console.log("likes table created");
+//         }
+//     );
+// }
 
 module.exports = router;

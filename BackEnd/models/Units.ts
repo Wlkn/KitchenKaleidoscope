@@ -11,10 +11,7 @@ router.post("/", (req, res) => {
             if (error) {
                 throw error;
             }
-
-            if (!results.rows[0].to_regclass) {
-                createTables();
-            }
+            
 
             const { name } = req.body;
             pool.query(
@@ -39,24 +36,25 @@ router.get("/", (req, res) => {
         if (error) {
             throw error;
         }
+       
         res.status(200).json(results.rows);
     });
 });
 
-function createTables() {
-    pool.query(
-        `
-CREATE TABLE units (
-    id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL
-);`,
-        (error: Error) => {
-            if (error) {
-                throw error;
-            }
-            console.log("comments table created");
-        }
-    );
-}
+// function createTables() {
+//     pool.query(
+//         `
+// CREATE TABLE units (
+//     id SERIAL PRIMARY KEY,
+//     name TEXT NOT NULL
+// );`,
+//         (error: Error) => {
+//             if (error) {
+//                 throw error;
+//             }
+//             console.log("comments table created");
+//         }
+//     );
+// }
 
 module.exports = router;

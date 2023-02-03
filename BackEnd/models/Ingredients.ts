@@ -5,16 +5,12 @@ router.post("/", (req, res) => {
     console.log(req.body);
     pool.query(
         "SELECT to_regclass('ingredients')",
-        (error: Error, results: any) => {
+        async (error: Error, results: any) => {
             if (error) {
                 throw error;
             }
 
-            if (!results.rows[0].to_regclass) {
-                createTables();
-            }
-
-            if (req.body.ingredientsList != undefined) {
+            if (req.body.ingredientsList !== undefined) {
                 for (let i = 0; i < req.body.ingredientsList.length; i++) {
                     let ingredientId = req.body.ingredientsList[i].ingredientId;
                     let unitId = req.body.ingredientsList[i].unitId;
@@ -25,40 +21,17 @@ router.post("/", (req, res) => {
 
                     // if unitId = -1 then its a completly new unit, we know this because the unitId is set to -1 in the front end
                     if (unitId === -1) {
-                        //check if it indeed is a new unit
-                        pool.query(
-                            "SELECT id FROM units WHERE name = $1",
-                            [newUnit],
-                            (error: Error, results: any) => {
-                                if (error) {
-                                    throw error;
-                                }
-                                if (results.rows.length === 0) {
-                                    addNewUnit(newUnit);
-                                }
-                                //make the unitId the id of the new unit
-                                unitId = results.rows[0].id;
-                            }
-                        );
+                        unitId = await addNewUnit(newUnit);
+                        //make the unitId the id of the new unit
+                        //  getUnitId(newUnit);
                     }
 
                     //if ingredientId = '' then its a completly new ingredient, we know this because the ingredientId is set to '' in the front end
-                    if (ingredientId === "") {
+                    if (ingredientId === -1) {
                         //check if it indeed is a new ingredient
-                        pool.query(
-                            "SELECT id FROM ingredient_names WHERE name = $1",
-                            [newIngredient],
-                            (error: Error, results: any) => {
-                                if (error) {
-                                    throw error;
-                                }
-                                if (results.rows.length === 0) {
-                                    addNewIngredient(newIngredient);
-                                }
-                                //make the ingredientId the id of the new ingredient
-                                ingredientId = results.rows[0].id;
-                            }
-                        );
+                        ingredientId = await addNewIngredient(newIngredient);
+                        //make the ingredientId the id of the new ingredient
+                        //  getIngredientId(newIngredient);
                     }
 
                     pool.query(
@@ -102,58 +75,45 @@ router.get("/", (req, res) => {
 });
 
 router.get("/:id", (req, res) => {
-    pool.query("SELECT * FROM ingredients WHERE recipe_id = $1"
-    [req.body.recipeId],
-    (error: Error, results: any) => {
-        if (error) {
-            throw error;
+    pool.query(
+        "SELECT * FROM ingredients WHERE recipe_id = $1"[req.body.recipeId],
+        (error: Error, results: any) => {
+            if (error) {
+                throw error;
+            }
+            res.status(200).json(results.rows);
         }
-        res.status(200).json(results.rows);
-    }
-    )
+    );
 });
 
-function addNewIngredient(newIngredient) {
-    pool.query(
-        "INSERT INTO ingredient_names (name) VALUES ($1) RETURNING *",
-        [newIngredient],
-        (error: Error, results: any) => {
-            if (error) {
-                throw error;
-            }
-            console.log(`new Ingredient added with ID: ${results.rows[0].id}`);
-        }
-    );
+async function addNewIngredient(newIngredient) {
+    try {
+        const { rows } = await pool.query(
+            "INSERT INTO ingredient_names (name) VALUES ($1) RETURNING *",
+            [newIngredient]
+        );
+        const newIngredientId = rows[0].id;
+        console.log(`new Ingredient added with ID: ${newIngredientId}`);
+        return newIngredientId;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
 }
 
-function addNewUnit(newUnit) {
-    pool.query(
-        "INSERT INTO units (name) VALUES ($1) RETURNING *",
-        [newUnit],
-        (error: Error, results: any) => {
-            if (error) {
-                throw error;
-            }
-            console.log(`new Unit added with ID: ${results.rows[0].id}`);
-        }
-    );
+async function addNewUnit(newUnit) {
+    try {
+        const { rows } = await pool.query(
+            "INSERT INTO units (name) VALUES ($1) RETURNING *",
+            [newUnit]
+        );
+        const newUnitId = rows[0].id;
+        console.log(`new Unit added with ID: ${newUnitId}`);
+        return newUnitId;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
 }
 
-function createTables() {
-    pool.query(
-        `CREATE TABLE ingredients (
-                id SERIAL PRIMARY KEY,
-                recipe_id CHAR(24),
-                quantity NUMERIC,
-                ingredient_id INTEGER REFERENCES ingredient_names(id),
-                unit_id INTEGER REFERENCES units(id)
-                );`,
-        (error: Error) => {
-            if (error) {
-                throw error;
-            }
-            console.log("ingredients table created");
-        }
-    );
-}
 module.exports = router;
