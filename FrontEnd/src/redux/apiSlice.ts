@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 // import { setCredentials, logOut } from "../reducers/auth"
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: "http://localhost:4000/",
+    baseUrl: "https://kitchenkaleidoscope.onrender.com/",
     credentials: "include",
     prepareHeaders: (headers, { getState }: any) => {
         //TODO why is this any?
