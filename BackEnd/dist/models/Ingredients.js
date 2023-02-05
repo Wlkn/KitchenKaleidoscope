@@ -1,18 +1,24 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const router = express.Router();
 const pool = require("../postGres");
 router.post("/", (req, res) => {
     console.log(req.body);
-    pool.query("SELECT to_regclass('ingredients')", (error, results) => {
+    pool.query("SELECT to_regclass('ingredients')", (error, results) => __awaiter(void 0, void 0, void 0, function* () {
         if (error) {
             throw error;
         }
-        if (!results.rows[0].to_regclass) {
-            createTables();
-        }
-        if (req.body.ingredientsList != undefined) {
+        if (req.body.ingredientsList !== undefined) {
             for (let i = 0; i < req.body.ingredientsList.length; i++) {
                 let ingredientId = req.body.ingredientsList[i].ingredientId;
                 let unitId = req.body.ingredientsList[i].unitId;
@@ -21,31 +27,16 @@ router.post("/", (req, res) => {
                 let newUnit = req.body.ingredientsList[i].newUnit;
                 // if unitId = -1 then its a completly new unit, we know this because the unitId is set to -1 in the front end
                 if (unitId === -1) {
-                    //check if it indeed is a new unit
-                    pool.query("SELECT id FROM units WHERE name = $1", [newUnit], (error, results) => {
-                        if (error) {
-                            throw error;
-                        }
-                        if (results.rows.length === 0) {
-                            addNewUnit(newUnit);
-                        }
-                        //make the unitId the id of the new unit
-                        unitId = results.rows[0].id;
-                    });
+                    unitId = yield addNewUnit(newUnit);
+                    //make the unitId the id of the new unit
+                    //  getUnitId(newUnit);
                 }
                 //if ingredientId = '' then its a completly new ingredient, we know this because the ingredientId is set to '' in the front end
-                if (ingredientId === "") {
+                if (ingredientId === -1) {
                     //check if it indeed is a new ingredient
-                    pool.query("SELECT id FROM ingredient_names WHERE name = $1", [newIngredient], (error, results) => {
-                        if (error) {
-                            throw error;
-                        }
-                        if (results.rows.length === 0) {
-                            addNewIngredient(newIngredient);
-                        }
-                        //make the ingredientId the id of the new ingredient
-                        ingredientId = results.rows[0].id;
-                    });
+                    ingredientId = yield addNewIngredient(newIngredient);
+                    //make the ingredientId the id of the new ingredient
+                    //  getIngredientId(newIngredient);
                 }
                 pool.query("INSERT INTO ingredients (recipe_id, ingredient_id, unit_id, quantity) VALUES ($1, $2, $3, $4)", [req.body.recipeId, ingredientId, unitId, quantity], (error, results) => {
                     if (error) {
@@ -56,7 +47,7 @@ router.post("/", (req, res) => {
             res.status(201).send("Ingredients added to recipe.");
             console.log("Ingredients added to recipe.");
         }
-    });
+    }));
 });
 router.delete("/:id", (req, res) => {
     const id = parseInt(req.params.id);
@@ -84,33 +75,31 @@ router.get("/:id", (req, res) => {
     });
 });
 function addNewIngredient(newIngredient) {
-    pool.query("INSERT INTO ingredient_names (name) VALUES ($1) RETURNING *", [newIngredient], (error, results) => {
-        if (error) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const { rows } = yield pool.query("INSERT INTO ingredient_names (name) VALUES ($1) RETURNING *", [newIngredient]);
+            const newIngredientId = rows[0].id;
+            console.log(`new Ingredient added with ID: ${newIngredientId}`);
+            return newIngredientId;
+        }
+        catch (error) {
+            console.error(error);
             throw error;
         }
-        console.log(`new Ingredient added with ID: ${results.rows[0].id}`);
     });
 }
 function addNewUnit(newUnit) {
-    pool.query("INSERT INTO units (name) VALUES ($1) RETURNING *", [newUnit], (error, results) => {
-        if (error) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const { rows } = yield pool.query("INSERT INTO units (name) VALUES ($1) RETURNING *", [newUnit]);
+            const newUnitId = rows[0].id;
+            console.log(`new Unit added with ID: ${newUnitId}`);
+            return newUnitId;
+        }
+        catch (error) {
+            console.error(error);
             throw error;
         }
-        console.log(`new Unit added with ID: ${results.rows[0].id}`);
-    });
-}
-function createTables() {
-    pool.query(`CREATE TABLE ingredients (
-                id SERIAL PRIMARY KEY,
-                recipe_id CHAR(24),
-                quantity NUMERIC,
-                ingredient_id INTEGER REFERENCES ingredient_names(id),
-                unit_id INTEGER REFERENCES units(id)
-                );`, (error) => {
-        if (error) {
-            throw error;
-        }
-        console.log("ingredients table created");
     });
 }
 module.exports = router;

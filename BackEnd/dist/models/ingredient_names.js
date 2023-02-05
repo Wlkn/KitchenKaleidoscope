@@ -9,9 +9,6 @@ router.post("/", (req, res) => {
         if (error) {
             throw error;
         }
-        if (!results.rows[0].to_regclass) {
-            createTables();
-        }
         const { name } = req.body;
         pool.query("INSERT INTO ingredient_names (name) VALUES ($1) RETURNING *", [name], (error, results) => {
             if (error) {
@@ -50,15 +47,18 @@ router.get("/", (req, res) => {
         res.status(200).json(results.rows);
     });
 });
-function createTables() {
-    pool.query(`CREATE TABLE ingredient_names (
-                id SERIAL PRIMARY KEY,
-                name TEXT NOT NULL
-                );`, (error) => {
-        if (error) {
-            throw error;
-        }
-        console.log("ingredient_names table created");
-    });
-}
+// function createTables() {
+//     pool.query(
+//         `CREATE TABLE ingredient_names (
+//                 id SERIAL PRIMARY KEY,
+//                 name TEXT NOT NULL
+//                 );`,
+//         (error: Error) => {
+//             if (error) {
+//                 throw error;
+//             }
+//             console.log("ingredient_names table created");
+//         }
+//     );
+// }
 module.exports = router;

@@ -10,9 +10,6 @@ router.post("/", (req, res) => {
         if (error) {
             throw error;
         }
-        if (!results.rows[0].to_regclass) {
-            createTables();
-        }
         const { recipe_id, user_id, liked } = req.body;
         pool.query("SELECT * FROM likes WHERE recipe_id = $1 AND user_id = $2", [recipe_id, user_id], (error, results) => {
             if (error) {
@@ -94,12 +91,15 @@ router.delete("/", (req, res) => {
         console.log(`Likes table deleted`); //TODO REMOVE THIS WHEN DONE
     });
 });
-function createTables() {
-    pool.query("CREATE TABLE likes (id SERIAL PRIMARY KEY, recipe_id CHAR(24), user_id CHAR(24), liked BOOLEAN NOT NULL, created_at TIMESTAMP DEFAULT NOW())", (error) => {
-        if (error) {
-            throw error;
-        }
-        console.log("likes table created");
-    });
-}
+// function createTables() {
+//     pool.query(
+//         "CREATE TABLE likes (id SERIAL PRIMARY KEY, recipe_id CHAR(24), user_id CHAR(24), liked BOOLEAN NOT NULL, created_at TIMESTAMP DEFAULT NOW())",
+//         (error: Error) => {
+//             if (error) {
+//                 throw error;
+//             }
+//             console.log("likes table created");
+//         }
+//     );
+// }
 module.exports = router;

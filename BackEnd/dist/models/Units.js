@@ -9,9 +9,6 @@ router.post("/", (req, res) => {
         if (error) {
             throw error;
         }
-        if (!results.rows[0].to_regclass) {
-            createTables();
-        }
         const { name } = req.body;
         pool.query("INSERT INTO units (name) VALUES ($1) RETURNING *", [name], (error, results) => {
             if (error) {
@@ -30,16 +27,19 @@ router.get("/", (req, res) => {
         res.status(200).json(results.rows);
     });
 });
-function createTables() {
-    pool.query(`
-CREATE TABLE units (
-    id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL
-);`, (error) => {
-        if (error) {
-            throw error;
-        }
-        console.log("comments table created");
-    });
-}
+// function createTables() {
+//     pool.query(
+//         `
+// CREATE TABLE units (
+//     id SERIAL PRIMARY KEY,
+//     name TEXT NOT NULL
+// );`,
+//         (error: Error) => {
+//             if (error) {
+//                 throw error;
+//             }
+//             console.log("comments table created");
+//         }
+//     );
+// }
 module.exports = router;
