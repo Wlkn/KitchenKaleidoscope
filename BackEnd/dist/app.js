@@ -9,14 +9,7 @@ app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 //mongodbn
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", true);
-//todo Make the website usable and clean //fix
-//todo make the recipes details page
-//todo make the recipes actually be linked to the user that created them. //done
-//todo add comments and likes to the recipes.
-//todo link the ingredient_names and units and ingredients to the recipe_id. // done
-//todo when receiving a newIngredient string in the body, check if it exists in the ingredient_names collection, if not, add it. //done
-//todo when receiving a newUnit string in the body, check if it exists in the units collection, if not, add it. //done
-//todo add the remove,update and get routes for the ingredients. Theses inlude the ingredient_names and units.
+
 mongoose
     .connect("mongodb+srv://Wlkn:vrcuITJZyZDemKby@cluster0.ztgyito.mongodb.net/?retryWrites=true&w=majority")
     .then(() => {
