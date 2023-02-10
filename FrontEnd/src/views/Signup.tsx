@@ -21,7 +21,10 @@ function Copyright(props: any) {
             {...props}
         >
             {"Copyright © "}
-            <Link color="inherit" href="https://kitchenkaleidoscopewebapp.onrender.com/">
+            <Link
+                color="inherit"
+                href="https://kitchenkaleidoscopewebapp.onrender.com/"
+            >
                 KitchenKaleidoscope
             </Link>{" "}
             {new Date().getFullYear()}
