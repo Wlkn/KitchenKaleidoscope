@@ -115,23 +115,21 @@ export default function RecipeDetails(formData: any) {
                 <p>{userId}</p>
             </div>
         );
+        return (
+            <div>
+                <MyRecipesButton userId={currentUserId} />
+                <TakemeBackButton />
+                {content}
+                {currentUserId === userId && (
+                    <DeleteEdit
+                        deleteFunc={sendDeleteRequest}
+                        editFunc={sendEditRequest}
+                        data={formData}
+                    />
+                )}
+            </div>
+        );
     } else if (isError) {
         throw error;
     }
-    const { userId } = CreatorOfRecipe;
-    return (
-        <div>
-            <MyRecipesButton userId={currentUserId} />
-            <TakemeBackButton />
-            {content}
-
-            {currentUserId === userId && (
-                <DeleteEdit
-                    deleteFunc={sendDeleteRequest}
-                    editFunc={sendEditRequest}
-                    data={formData}
-                />
-            )}
-        </div>
-    );
 }
