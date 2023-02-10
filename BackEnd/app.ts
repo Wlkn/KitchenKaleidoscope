@@ -44,9 +44,6 @@ const ingredientNamesRoute = require("./models/IngredientNames");
 const unitRoute = require("./models/Units");
 const likesRoute = require("./models/Likes");
 //redirect all the wrong requess to the home page.
-app.get("/*", (req, res) => {
-    res.redirect("/404");
-});
 
 //ENDPOINTS
 app.use("/auth", userRoute); // Same with this one.
