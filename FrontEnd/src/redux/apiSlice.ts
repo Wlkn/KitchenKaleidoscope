@@ -3,7 +3,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const baseQuery = fetchBaseQuery({
     baseUrl: "https://kitchenkaleidoscope-server.onrender.com/",
-    credentials: "include",
+    //attempt at bypassin cors
+    credentials: "omit",
+
     prepareHeaders: (headers, { getState }: any) => {
         //TODO why is this any?
 
