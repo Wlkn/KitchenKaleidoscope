@@ -40,7 +40,7 @@ const recipeRoute = require("./routes/api/recipes");
 const userRoute = require("./routes/api/users");
 const commentRoute = require("./models/Comments");
 const ingredientRoute = require("./models/Ingredients");
-// const ingredient_nameRoute = require("./models/Ingredient_names");
+const ingredientNamesRoute = require("./models/IngredientNames");
 const unitRoute = require("./models/Units");
 const likesRoute = require("./models/Likes");
 
@@ -52,8 +52,7 @@ app.use("/api/likes", likesRoute);
 //postgres
 app.use("/api/comments", commentRoute);
 app.use("/api/ingredients", ingredientRoute);
-// app.use("/api/ingredient_names", ingredient_nameRoute);
+app.use("/api/ingredientNames", ingredientNamesRoute);
 app.use("/api/units", unitRoute);
-
 
 module.exports = app;
