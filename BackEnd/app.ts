@@ -3,7 +3,7 @@ const app = express();
 const cors = require("cors");
 app.use(express.json()); // for application/json
 app.use(express.urlencoded({ extended: true })); // for application/x-www-form-urlencoded
-app.use(cors({ origin: "https://kitchenkaleidoscopewebapp.onrender.com/", credentials: false }));
+app.use(cors());
 
 //mongodbn
 import mongoose = require("mongoose");
