@@ -15,7 +15,7 @@ import UserRecipes from "./views/UserRecipes";
 
 function App() {
     return (
-        <Router>
+        <Router basename="/">
             <Routes>
                 <Route path="/" element={<Layout />}>
                     <Route path="/*" element={<ErrorPage />} />
