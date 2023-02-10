@@ -66,7 +66,7 @@ const RecipeForm: React.FC = () => {
     async function fetchUnitsFromApi() {
         try {
             const response = await fetch(
-                "http://localhost:4000/api/units",
+                "https://kitchenkaleidoscope-server.onrender.com/api/units",
                 requestOptions
             );
             if (response.ok) {
@@ -98,7 +98,7 @@ const RecipeForm: React.FC = () => {
     async function fetchIngredientsFromApi() {
         try {
             const response = await fetch(
-                "http://localhost:4000/api/ingredient_names",
+                "https://kitchenkaleidoscope-server.onrender.com/ingredientNames",
                 requestOptions
             );
             if (response.ok) {

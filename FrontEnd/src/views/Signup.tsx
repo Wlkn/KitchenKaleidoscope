@@ -21,7 +21,7 @@ function Copyright(props: any) {
             {...props}
         >
             {"Copyright © "}
-            <Link color="inherit" href="http://localhost:3000/">
+            <Link color="inherit" href="https://kitchenkaleidoscopewebapp.onrender.com/">
                 KitchenKaleidoscope
             </Link>{" "}
             {new Date().getFullYear()}
@@ -54,7 +54,7 @@ export default function Signup() {
         };
         try {
             const response = await fetch(
-                "http://localhost:4000/auth/signup",
+                "https://kitchenkaleidoscope-server.onrender.com/auth/signup",
                 requestOptions
             );
             if (response.ok) {
