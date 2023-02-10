@@ -118,17 +118,20 @@ export default function RecipeDetails(formData: any) {
     } else if (isError) {
         throw error;
     }
-
+    const { userId } = CreatorOfRecipe;
     return (
         <div>
             <MyRecipesButton userId={currentUserId} />
             <TakemeBackButton />
             {content}
-            <DeleteEdit
-                deleteFunc={sendDeleteRequest}
-                editFunc={sendEditRequest}
-                data={formData}
-            />
+
+            {currentUserId === userId && (
+                <DeleteEdit
+                    deleteFunc={sendDeleteRequest}
+                    editFunc={sendEditRequest}
+                    data={formData}
+                />
+            )}
         </div>
     );
 }
