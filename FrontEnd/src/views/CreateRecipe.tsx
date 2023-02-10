@@ -98,7 +98,7 @@ const RecipeForm: React.FC = () => {
     async function fetchIngredientsFromApi() {
         try {
             const response = await fetch(
-                "https://kitchenkaleidoscope-server.onrender.com/ingredientNames",
+                "https://kitchenkaleidoscope-server.onrender.com/api/IngredientNames",
                 requestOptions
             );
             if (response.ok) {
