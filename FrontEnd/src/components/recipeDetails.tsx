@@ -113,19 +113,6 @@ export default function RecipeDetails(formData: any) {
                 <p>{OwnerName}</p>
                 <h3>Author ID</h3>
                 <p>{userId}</p>
-            </div>
-        );
-    } else if (isError) {
-        throw error;
-    }
-    if (CreatorOfRecipe) {
-        const { userId } = CreatorOfRecipe;
-        return (
-            <div>
-                <MyRecipesButton userId={currentUserId} />
-                <TakemeBackButton />
-                {content}
-
                 {currentUserId === userId && (
                     <DeleteEdit
                         deleteFunc={sendDeleteRequest}
@@ -135,5 +122,15 @@ export default function RecipeDetails(formData: any) {
                 )}
             </div>
         );
+    } else if (isError) {
+        throw error;
     }
+
+    return (
+        <div>
+            <MyRecipesButton userId={currentUserId} />
+            <TakemeBackButton />
+            {content}
+        </div>
+    );
 }
