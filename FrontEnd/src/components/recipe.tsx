@@ -11,6 +11,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useGetUserLikesQuery } from "../redux/slices/recipes";
+import { StyledEngineProvider } from "@mui/styled-engine-sc";
 
 export default function MediaCard(Recipe: {
     _id: any;
@@ -120,33 +121,36 @@ export default function MediaCard(Recipe: {
     //==================================================================================================
     //==================================================================================================
     return (
-        <Card sx={{ maxWidth: 345 }} className="recipe-item">
-            <CardMedia
-                sx={{ height: 140 }}
-                image={Recipe.imageUrl}
-                title={Recipe.name}
-                component="img"
-            />
-            <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                    {Recipe.name}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                    {Recipe.description}
-                </Typography>
-            </CardContent>
-            <CardActions>
-                <Button size="small" onClick={handleLike}>
-                    {isLoading ? "----" : isLiked ? "Unlike" : "Like"}
-                </Button>
+        <StyledEngineProvider injectFirst>
+            <Card sx={{ maxWidth: 345 }} className="recipe-item">
+                <CardMedia
+                    sx={{ height: 140 }}
+                    image={Recipe.imageUrl}
+                    title={Recipe.name}
+                    component="img"
+                    className="MuiCardMediaCustom"
+                />
+                <CardContent className="MuiCardContentCustom">
+                    <Typography gutterBottom variant="h5" component="div">
+                        {Recipe.name}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                        {Recipe.description}
+                    </Typography>
+                </CardContent>
+                <CardActions>
+                    <Button size="small" onClick={handleLike}>
+                        {isLoading ? "----" : isLiked ? "Unlike" : "Like"}
+                    </Button>
 
-                <Button size="small" onClick={handleComments}>
-                    Comments
-                </Button>
-                <Button size="small" onClick={handleLearnMore}>
-                    Learn more
-                </Button>
-            </CardActions>
-        </Card>
+                    <Button size="small" onClick={handleComments}>
+                        Comments
+                    </Button>
+                    <Button size="small" onClick={handleLearnMore}>
+                        Learn more
+                    </Button>
+                </CardActions>
+            </Card>
+        </StyledEngineProvider>
     );
 }
