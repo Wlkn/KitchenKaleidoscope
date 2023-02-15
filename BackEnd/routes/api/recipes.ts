@@ -6,15 +6,11 @@ const User = require("../../models/User");
 // @route   GET api/recipes
 // POST ROUTE TO ADD RECIPES
 router.post("/", (req, res, next) => {
-    const token = req.headers.authorization.split("Bearer ")[1];
-    const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
-    const userId = decodedToken;
     const recipe = new Recipe({
         name: req.body.recipeName,
         description: req.body.description,
         instructions: req.body.instructions,
         imageUrl: req.body.imageUrl,
-        userId: userId.userId,
     });
 
     recipe
@@ -117,8 +113,11 @@ router.get("/:id", (req, res, next) => {
 });
 
 function updateUserRecipes(req, recipeId) {
+    const token = req.headers.authorization.split("Bearer ")[1];
+    const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+    const userId = decodedToken;
     User.findOneAndUpdate(
-        { _id: req.auth.userId.userId },
+        { _id: userId.userId },
         { $push: { recipes: recipeId } }
     )
         .then(() => {
