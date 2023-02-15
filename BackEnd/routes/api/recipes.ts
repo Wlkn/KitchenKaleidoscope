@@ -1,17 +1,20 @@
 const express = require("express");
 const router = express.Router();
-
+const jwt = require("jsonwebtoken");
 const Recipe = require("../../models/Recipe");
 const User = require("../../models/User");
 // @route   GET api/recipes
 // POST ROUTE TO ADD RECIPES
 router.post("/", (req, res, next) => {
+    const token = req.headers.authorization.split("Bearer ")[1];
+    const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+    const userId = decodedToken;
     const recipe = new Recipe({
-        // Id is automatically generated try to figure it out in the front end
         name: req.body.recipeName,
         description: req.body.description,
         instructions: req.body.instructions,
         imageUrl: req.body.imageUrl,
+        userId: userId.userId,
     });
 
     recipe

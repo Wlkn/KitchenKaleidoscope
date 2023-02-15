@@ -75,8 +75,10 @@ router.get("/", (req, res) => {
 });
 
 router.get("/:id", (req, res) => {
+    const id = req.params.id;
     pool.query(
-        "SELECT * FROM ingredients WHERE recipe_id = $1"[req.body.recipeId],
+        "SELECT * FROM ingredients WHERE recipe_id = $1",
+        [id],
         (error: Error, results: any) => {
             if (error) {
                 throw error;

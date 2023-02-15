@@ -30,7 +30,6 @@ const Profile = () => {
     const showEmail: string = email
         ? `${email}`
         : "Could not fetch the email of the user";
-    // const tokenAbbr: string = `${token.slice(0, 9)}...`;
 
     const content = (
         <div className="profile">
@@ -54,15 +53,11 @@ const Profile = () => {
                     <span>Your email: </span>
                     {showEmail}
                 </h2>
-                <p>Token: {token}</p>
-                <p>
-                    <VisitRecipeListButton />
-                    <HomeButton />
-                </p>
             </section>
         </div>
     );
 
     return content;
 };
+
 export default Profile;

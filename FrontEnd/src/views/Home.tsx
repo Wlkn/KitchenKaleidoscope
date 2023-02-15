@@ -8,12 +8,15 @@ import {
     selectCurrentToken,
     selectCurrentUserId,
 } from "../redux/reducers/auth";
+import { LogOutButton, MyRecipesButton } from "../components/Buttons";
 const Home = () => {
     const currentToken =
         localStorage.getItem("token") || useSelector(selectCurrentToken);
 
     const currentUserId =
-        localStorage.getItem("token") || useSelector(selectCurrentToken);
+        localStorage.getItem("userId") || useSelector(selectCurrentUserId);
+
+    const userId = currentUserId;
     const userLoggedIn = currentUserId && currentToken ? true : false;
 
     return (
@@ -21,7 +24,10 @@ const Home = () => {
             <header className="home-header-container">
                 <Header />
                 {userLoggedIn ? (
-                    <div>Log out</div>
+                    <div className="home-logout">
+                        <LogOutButton />
+                        <MyRecipesButton userId={userId} />
+                    </div>
                 ) : (
                     <div className="home-login">
                         <a

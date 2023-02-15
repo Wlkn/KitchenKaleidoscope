@@ -1,7 +1,13 @@
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import "../styles/MUI.scss";
+import { logOut } from "../redux/reducers/auth";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+const MySwal = withReactContent(Swal);
+
 export const VisitRecipeListButton = () => {
     return (
         <Button
@@ -117,12 +123,33 @@ export const SubmitButton = () => {
 };
 
 export const LogOutButton = () => {
+    const dispatch = useDispatch();
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("email");
+        localStorage.removeItem("user");
+
+        dispatch(logOut);
+
+        MySwal.fire({
+            title: <p>Logged Out!</p>,
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1500,
+        });
+
+        setTimeout(() => {
+            window.location.reload();
+        }, 1500);
+    };
     return (
         <Button
             variant="contained"
             color="primary"
             component={Link}
-            to="/auth/logout"
+            to="/"
+            onClick={handleLogout}
         >
             Log Out
         </Button>
@@ -137,7 +164,7 @@ export const MyRecipesButton = (userId: any) => {
             component={Link}
             to={`/myrecipes/${userId.userId}`}
         >
-            My Recipes
+            Your Recipes
         </Button>
     );
 };

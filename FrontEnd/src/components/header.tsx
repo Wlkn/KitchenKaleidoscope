@@ -2,7 +2,7 @@ import "../styles/Home.scss";
 export default function Header() {
     return (
         <header className="home-header-container">
-            <a className="home-logo-wrapper" href="#">
+            <a className="home-logo-wrapper" href="/">
                 <img
                     className="logo"
                     src="/./src/assets/KKaleido.svg"

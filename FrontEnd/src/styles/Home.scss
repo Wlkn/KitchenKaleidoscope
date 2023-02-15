@@ -109,7 +109,13 @@ body {
         color: var(--offwhite);
     }
 }
-
+.home-logout {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 20px;
+    margin-left: 15px;
+}
 .home-logo-wrapper {
     display: flex;
     align-items: center;
