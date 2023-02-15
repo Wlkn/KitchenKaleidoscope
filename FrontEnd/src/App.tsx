@@ -17,19 +17,21 @@ function App() {
     return (
         <Router basename="/">
             <Routes>
+                {/* PUBLIC ROUTES */}
                 <Route path="/" element={<Layout />}>
                     <Route path="/*" element={<ErrorPage />} />
-                    {/* PUBLIC ROUTES */}
                     <Route index element={<Home />} />
                     <Route path="/auth/login" element={<Login />} />
                     <Route path="/auth/signup" element={<SignUp />} />
+
                     <Route path="/newRecipe" element={<CreateRecipe />} />
                     <Route path="/home" element={<LoggedInHome />} />
                     <Route path="/profile" element={<Profile />} />
-                    <Route path="/recipelist" element={<RecipeList />} />
                     <Route path="/recipe/:id" element={<RecipeDetails />} />
                     <Route path="/recipe/:id/comments" element={<Comments />} />
                     <Route path="/myrecipes/:id" element={<UserRecipes />} />
+                    <Route path="/recipelist" element={<RecipeList />} />
+
                     {/* PRIVATE ROUTES */}
                     <Route element={<RequireAuth />}></Route>
                 </Route>

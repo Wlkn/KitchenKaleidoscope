@@ -1,14 +1,18 @@
 /* Top Navigation Bar */
 /* variables */
 
+body {
+    margin: 0;
+}
 :root {
     --offwhite: #eee;
     --blueish: #7ccbe1;
     --regular: 400;
     --semibold: 600;
     --bold: 700;
-    padding: 0 20px;
-    margin: auto;
+    padding: 0;
+    margin: 0;
+    min-height: 100vh;
     max-width: 2200px;
     width: 100%;
     box-sizing: border-box;
@@ -16,6 +20,7 @@
     --green: rgba(69, 255, 143, 0.592);
     --blue: rgba(42, 100, 151);
     --dark-blue: rgb(24, 70, 107);
+    overflow-x: hidden;
 }
 @keyframes rotate {
     from {
@@ -85,20 +90,31 @@
         margin-right: 20px;
     }
 }
-
-.home-navigation .home-links a {
+.home-login a{
     display: inline-block;
     font-weight: var(--semibold);
     font-size: 18px;
     margin-right: 55px;
     text-decoration: none;
     color: var(--offwhite);
+    margin: 10px;
+}
+.home-navigation {
+    .home-links a {
+        display: inline-block;
+        font-weight: var(--semibold);
+        font-size: 18px;
+        margin-right: 55px;
+        text-decoration: none;
+        color: var(--offwhite);
+    }
 }
 
 .home-logo-wrapper {
     display: flex;
     align-items: center;
-    padding: 17px 54px 17px 12px;
+
+    padding: 17px 54px 17px 17px;
     margin: 0;
     box-sizing: border-box;
 }
@@ -113,16 +129,16 @@
 .home-navigation {
     display: flex;
 }
-.home-navigation .home-links .hover-underline-animation {
+.hover-underline-animation {
     position: relative;
     color: #eee;
 }
 
-.home-navigation .home-links .hover-underline-animation:hover:after {
+.hover-underline-animation:hover:after {
     transform: scaleX(1);
     transform-origin: bottom left;
 }
-.home-navigation .home-links .hover-underline-animation:after {
+.hover-underline-animation:after {
     content: "";
     position: absolute;
     width: 100%;

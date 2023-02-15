@@ -5,7 +5,8 @@ import {
     selectCurrentName,
     selectCurrentUserId,
 } from "../redux/reducers/auth";
-
+import Header from "../components/header";
+import "../styles/profile.scss";
 import {
     VisitRecipeListButton,
     HomeButton,
@@ -32,28 +33,34 @@ const Profile = () => {
     // const tokenAbbr: string = `${token.slice(0, 9)}...`;
 
     const content = (
-        <div className=".Profile-container">
-        <section className="welcome">
-            <h1>Welcome to your profile page!</h1>
-            <h3>
-                Here you can see your profile information and manage your
-                recipes.
-            </h3>
-            <h2>
-                <span>Your name: </span> {showUser}{" "}
-            </h2>
-            <h2>
-                <span>Your email: </span>
-                {showEmail}
-            </h2>
-            <p>Token: {token}</p>
-            <p>
-                <VisitRecipeListButton />
-                <HomeButton />
-                <CreateNewRecipeButton />
-                <MyRecipesButton userId={userId} />
-            </p>
-        </section></div>
+        <div className="profile">
+            <div className="profile-header-container">
+                <Header />
+                <div className="profile-header-buttons">
+                    <CreateNewRecipeButton />
+                    <MyRecipesButton userId={userId} />
+                </div>
+            </div>
+            <section className="welcome">
+                <h1>Welcome to your profile page!</h1>
+                <h3>
+                    Here you can see your profile information and manage your
+                    recipes.
+                </h3>
+                <h2>
+                    <span>Your name: </span> {showUser}{" "}
+                </h2>
+                <h2>
+                    <span>Your email: </span>
+                    {showEmail}
+                </h2>
+                <p>Token: {token}</p>
+                <p>
+                    <VisitRecipeListButton />
+                    <HomeButton />
+                </p>
+            </section>
+        </div>
     );
 
     return content;

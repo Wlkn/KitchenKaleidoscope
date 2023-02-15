@@ -1,10 +1,23 @@
+@keyframes anime {
+    0% {
+        background-position: 0%;
+    }
+    50% {
+        background-position: 100%;
+    }
+    100% {
+        background-position: 0%;
+    }
+}
 .MuiButton-root {
-    background-image: linear-gradient(
-        to right,
-        #abdae9 0%,
-        #a6c1ee 51%,
-        #fbc2eb 100%
-    );
+    border-radius: 50px;
+    background: linear-gradient(-45deg, #ffa63d, #ff3d77, #338aff, #3cf0c5);
+    background-size: 600%;
+    animation: anime 16s linear infinite;
+    position: absolute;
+    margin-top: -70px;
+    z-index: 3;
+    opacity: 0.9;
     flex: 1 1 auto;
     margin: 10px;
     padding: 30px;

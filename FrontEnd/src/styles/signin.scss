@@ -1,0 +1,35 @@
+//declare variables
+$off-white: #f5f5f5;
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #fbfbfb inset;
+}
+.css-1wrsjbk-MuiTypography-root p {
+    color: $off-white;
+    font-size: 12px;
+    text-align: center;
+    margin-top: 20px;
+}
+.Login-container {
+}
+.sign-in-text {
+}
+.sign-in-form {
+}
+
+.MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"] {
+    background: #7a0f0f;
+}
+
+.sign-in-remember {
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #171717 inset;
+    -webkit-text-fill-color: #fff;
+}
+
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 10 10 10 23px #fff inset;
+    
+}

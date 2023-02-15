@@ -1,31 +1,44 @@
-import "../styles/Home.css";
+import "../styles/Home.scss";
 import GlobeAnimation from "../components/GlobeAnimation";
 import Recipe from "../components/recipe";
 import { LogInButton, SignUpButton } from "../components/Buttons";
+import Header from "../components/header";
+import { useSelector } from "react-redux";
+import {
+    selectCurrentToken,
+    selectCurrentUserId,
+} from "../redux/reducers/auth";
 const Home = () => {
+    const currentToken =
+        localStorage.getItem("token") || useSelector(selectCurrentToken);
+
+    const currentUserId =
+        localStorage.getItem("token") || useSelector(selectCurrentToken);
+    const userLoggedIn = currentUserId && currentToken ? true : false;
+
     return (
         <div className="home">
             <header className="home-header-container">
-                <a className="home-logo-wrapper" href="#">
-                    <img
-                        className="logo"
-                        src="/./src/assets/KKaleido.svg"
-                        alt="logo"
-                    ></img>
-                </a>
-                <nav className="home-navigation">
-                    <div className="home-links">
-                        <a className="hover-underline-animation" href="#">
-                            Home
+                <Header />
+                {userLoggedIn ? (
+                    <div>Log out</div>
+                ) : (
+                    <div className="home-login">
+                        <a
+                            className="hover-underline-animation"
+                            href="/auth/login"
+                        >
+                            Login
                         </a>
-                        <a className="hover-underline-animation" href="#">
-                            About
-                        </a>
-                        <a className="hover-underline-animation" href="#">
-                            Contact
+                        <span>or</span>
+                        <a
+                            className="hover-underline-animation"
+                            href="/auth/signup"
+                        >
+                            Sign up
                         </a>
                     </div>
-                </nav>
+                )}
             </header>
             <div className="home-page">
                 <div className="home-page-hero">

@@ -15,7 +15,7 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-
+import "../styles/signin.scss";
 //MUI
 
 //BREAK
@@ -31,14 +31,9 @@ import Loader from "../components/Loader";
 
 function Copyright(props: any) {
     return (
-        <Typography
-            variant="body2"
-            color="text.secondary"
-            align="center"
-            {...props}
-        >
+        <Typography color={"#1976d2"} variant="body2" align="center" {...props}>
             {"Copyright © "}
-            <Link color="inherit" href="https://kitchenkaleidoscope-server.onrender.com/">
+            <Link href="https://kitchenkaleidoscope-server.onrender.com/">
                 KitchenKaleidoscope
             </Link>{" "}
             {new Date().getFullYear()}
@@ -120,19 +115,25 @@ function SignIn() {
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
+                    color: "#f5f5f5",
                 }}
             >
                 <Avatar sx={{ m: 1, bgcolor: "error.main" }}>
                     <LockOutlinedIcon />
                 </Avatar>
-                <Typography component="h1" variant="h5">
+                <Typography
+                    component="h1"
+                    variant="h5"
+                    className="sign-in-text"
+                    sx={{ color: "#f5f5f5" }}
+                >
                     Sign in
                 </Typography>
                 <Box
                     component="form"
                     onSubmit={handleSubmit}
                     noValidate
-                    sx={{ mt: 1 }}
+                    sx={{ mt: 1, color: "#f5f5f5" }}
                 >
                     <TextField
                         margin="normal"
@@ -142,14 +143,19 @@ function SignIn() {
                         label="Email Address"
                         name="email"
                         ref={userRef}
-                        autoComplete="email"
                         autoFocus
                         value={email}
                         onChange={handleUserInput}
+                        className="sign-in-form"
+                        sx={{ input: { color: "#f5f5f5" } }}
+                        color="primary"
+                        focused
+                        variant="outlined"
                     />
                     <TextField
                         margin="normal"
                         required
+                        focused
                         fullWidth
                         name="password"
                         label="Password"
@@ -158,10 +164,13 @@ function SignIn() {
                         autoComplete="current-password"
                         value={password}
                         onChange={handlePwdInput}
+                        sx={{ input: { color: "#f5f5f5" } }}
                     />
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary" />}
                         label="Remember me"
+                        className="sign-in-remember"
+                        sx={{ color: "#f5f5f5" }}
                     />
                     <Button
                         type="submit"

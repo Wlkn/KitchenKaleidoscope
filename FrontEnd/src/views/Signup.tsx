@@ -88,14 +88,18 @@ export default function Signup() {
                     <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
                         <LockOutlinedIcon />
                     </Avatar>
-                    <Typography component="h1" variant="h5">
+                    <Typography
+                        component="h1"
+                        variant="h5"
+                        sx={{ color: "#f5f5f5" }}
+                    >
                         Sign up
                     </Typography>
                     <Box
                         component="form"
                         onSubmit={handleSignup}
                         noValidate
-                        sx={{ mt: 1 }}
+                        sx={{ mt: 1, color: "#f5f5f5" }}
                     >
                         <TextField
                             margin="normal"
@@ -106,6 +110,10 @@ export default function Signup() {
                             name="name"
                             autoComplete="name"
                             autoFocus
+                            sx={{ input: { color: "#f5f5f5" } }}
+                            color="primary"
+                            focused
+                            variant="outlined"
                         />
                         <TextField
                             margin="normal"
@@ -115,6 +123,8 @@ export default function Signup() {
                             label="Email Address"
                             name="email"
                             autoComplete="email"
+                            sx={{ input: { color: "#f5f5f5" } }}
+                            focused
                         />
                         <TextField
                             margin="normal"
@@ -125,6 +135,8 @@ export default function Signup() {
                             type="password"
                             id="password"
                             autoComplete="current-password"
+                            sx={{ input: { color: "#f5f5f5" } }}
+                            focused
                         />
                         <Button
                             type="submit"
@@ -143,7 +155,7 @@ export default function Signup() {
                         </Grid>
                     </Box>
                 </Box>
-                <Copyright sx={{ mt: 8, mb: 4 }} />
+                <Copyright sx={{ mt: 8, mb: 4, color: "#1976d2" }} />
             </Container>
         </ThemeProvider>
     );
