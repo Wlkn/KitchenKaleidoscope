@@ -9,13 +9,10 @@ const ingredientsSlice = createSlice({
             state.ingredients = ingredients;
             
         },
-        removeIngredients: (state) => {
-            state.ingredients = null;
-        },
     },
 });
 
-export const { setIngredients, removeIngredients } = ingredientsSlice.actions;
+export const { setIngredients } = ingredientsSlice.actions;
 
 export default ingredientsSlice.reducer;
 

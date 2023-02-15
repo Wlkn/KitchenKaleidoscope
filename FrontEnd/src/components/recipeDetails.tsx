@@ -17,14 +17,20 @@ import { useEditRecipeMutation } from "../redux/slices/recipes";
 import { useDeleteRecipeMutation } from "../redux/slices/recipes";
 
 import { useNavigate } from "react-router-dom";
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
 import { editRecipe } from "../redux/reducers/recipes";
 
 interface DeleteDataType {
     success: boolean;
     message?: string;
 }
+
+interface Unit {
+    id: number;
+    name: string;
+}
+
+import { useFetchIngredientsByRecipeIdQuery } from "../redux/slices/ingredients";
 
 export default function RecipeDetails(formData: any) {
     let { id } = useParams();
@@ -39,21 +45,23 @@ export default function RecipeDetails(formData: any) {
 
     const currentToken =
         useSelector(selectCurrentToken) || localStorage.getItem("token");
-    // const currentToken = useSelector(selectCurrentToken);
-    // console.log(currentToken);
     const currentUserId =
         useSelector(selectCurrentUserId) || localStorage.getItem("userId");
-    // console.log(currentUserId);
 
     const { data: CreatorOfRecipe } = useGetCreatorOfRecipeQuery(id, {
         skip: !currentToken,
     });
     const [deleteData, setDeleteData] = useState<DeleteDataType | null>(null);
-    // const [formData, setFormData] = useState({})
-    // export const { useEditRecipeMutation } = RecipeApiSlice;
 
-    // export const { useDeleteRecipeMutation } = RecipeApiSlice;
-    //wrap everything inside an async function
+    const [fetchUnits, setFetchUnits] = useState<Unit[]>([]);
+    const requestOptions = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${currentToken}`,
+        },
+    };
+
     const {
         data: recipeData,
         isLoading,
@@ -63,6 +71,42 @@ export default function RecipeDetails(formData: any) {
     } = useGetRecipesQuery(id, {
         skip: !currentToken,
     });
+
+    const { data: ingredientsData } = useFetchIngredientsByRecipeIdQuery(id, {
+        skip: !currentToken,
+    });
+    console.log(ingredientsData);
+
+    async function fetchUnitsFromApi() {
+        try {
+            const response = await fetch(
+                "https://kitchenkaleidoscope-server.onrender.com/api/units",
+                requestOptions
+            );
+            if (response.ok) {
+                const unitsJSON = await response.json();
+                //console.log(unitsJSON); //todo remove
+                return unitsJSON;
+            } else {
+                console.error(response.statusText);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    useEffect(() => {
+        async function fetchData() {
+            const unitsJSON: any = await fetchUnitsFromApi();
+            const units: Unit[] = unitsJSON.map((unit: Unit) => ({
+                id: unit.id,
+                name: unit.name,
+            }));
+            setFetchUnits(units);
+            console.log(units);
+        }
+
+        fetchData();
+    }, []);
 
     const sendDeleteRequest = async () => {
         try {
@@ -93,14 +137,13 @@ export default function RecipeDetails(formData: any) {
             window.location.reload();
         }, 1600);
     };
-
-    // console.log("deleteData", deleteData);
     let content;
     if (isLoading) {
         content = <Loader />;
     } else if (isSuccess && recipeData && CreatorOfRecipe) {
         const { name, description, instructions } = recipeData;
         const { userId, OwnerName } = CreatorOfRecipe;
+
         content = (
             <div>
                 <h2>Title</h2>

@@ -9,9 +9,14 @@ export const ingredientsApiSlice = apiSlice.injectEndpoints({
                 body: { ...ingredients },
             }),
         }),
+        fetchIngredientsByRecipeId: builder.query({
+            query: (recipeId) => ({
+                url: `/api/ingredients/${recipeId}`,
+                method: "GET",
+            }),
+        }),
     }),
 });
 
-export const {
-    useIngredientsMutation
-} = ingredientsApiSlice
+export const { useIngredientsMutation, useFetchIngredientsByRecipeIdQuery } =
+    ingredientsApiSlice;
