@@ -19,13 +19,18 @@ import { useDeleteRecipeMutation } from "../redux/slices/recipes";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { editRecipe } from "../redux/reducers/recipes";
-
+import Header from "./header";
+import "../styles/recipeDetails.scss";
 interface DeleteDataType {
     success: boolean;
     message?: string;
 }
 
 interface Unit {
+    id: number;
+    name: string;
+}
+interface IngredientOption {
     id: number;
     name: string;
 }
@@ -54,6 +59,9 @@ export default function RecipeDetails(formData: any) {
     const [deleteData, setDeleteData] = useState<DeleteDataType | null>(null);
 
     const [fetchUnits, setFetchUnits] = useState<Unit[]>([]);
+    const [fetchIngredients, setFetchIngredients] = useState<
+        IngredientOption[]
+    >([]);
     const requestOptions = {
         method: "GET",
         headers: {
@@ -108,6 +116,38 @@ export default function RecipeDetails(formData: any) {
         fetchData();
     }, []);
 
+    async function fetchIngredientsFromApi() {
+        try {
+            const response = await fetch(
+                "https://kitchenkaleidoscope-server.onrender.com/api/IngredientNames",
+                requestOptions
+            );
+            if (response.ok) {
+                const ingredientsJSON = await response.json();
+                //console.log(ingredientsJSON); //todo remove
+                return ingredientsJSON;
+            } else {
+                console.error(response.statusText);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    useEffect(() => {
+        async function fetchData() {
+            const ingredientsJSON: any = await fetchIngredientsFromApi();
+            const ingredients: IngredientOption[] = ingredientsJSON.map(
+                (ingredient: IngredientOption) => ({
+                    id: ingredient.id,
+                    name: ingredient.name,
+                })
+            );
+            setFetchIngredients(ingredients);
+            console.log(ingredients);
+        }
+        fetchData();
+    }, []);
+
     const sendDeleteRequest = async () => {
         try {
             await removeRecipe(recipe_id);
@@ -140,29 +180,47 @@ export default function RecipeDetails(formData: any) {
     let content;
     if (isLoading) {
         content = <Loader />;
-    } else if (isSuccess && recipeData && CreatorOfRecipe) {
-        const { name, description, instructions } = recipeData;
+    } else if (isSuccess && recipeData && CreatorOfRecipe && ingredientsData ) {
+        const { name, description, instructions, imageUrl } = recipeData;
         const { userId, OwnerName } = CreatorOfRecipe;
-
+        const ingredientList = ingredientsData.map((ingredient: any) => {
+            const { quantity, unit_id, ingredient_id } = ingredient;
+            const unit = fetchUnits.find((unit) => unit.id === unit_id);
+            const ingredientName = fetchIngredients.find(
+                (ingredient) => ingredient.id === ingredient_id
+            );
+            return (
+                <li key={ingredient_id}>
+                    {quantity} {unit?.name} of {ingredientName?.name}
+                </li>
+            );
+        });
         content = (
-            <div>
-                <h2>Title</h2>
-                <p>{name}</p>
-                <h3>Description:</h3>
-                <p>{description}</p>
-                <h3>Instructions:</h3>
-                <p>{instructions}</p>
-                <h3>Author</h3>
-                <p>{OwnerName}</p>
-                <h3>Author ID</h3>
-                <p>{userId}</p>
+            <div className="recipeInfo-container">
+                <div className="recipe-title">{name}</div>
+                <div className="recipe-author">Made By: {OwnerName}</div>
+                <div className="recipe-description">{description}</div>
+                <div>ADD A LIKE NUMBER AND LIKE BUTTON</div>
+                <img
+                    className="recipe-image"
+                    src={imageUrl}
+                    alt="recipe image"
+                />
+                <div className="recipe-instructions-title">Directions</div>
+                <div className="recipe-instructions">{instructions}</div>
                 {currentUserId === userId && (
+                    <div className="recipe-deleteEdit-buttons">
                     <DeleteEdit
                         deleteFunc={sendDeleteRequest}
                         editFunc={sendEditRequest}
                         data={formData}
                     />
+                    </div>
                 )}
+                <div className="recipe-ingredients-title">Ingredients</div>
+                <div className="recipe-ingredients">
+                    <ul>{ingredientList}</ul>
+                </div>
             </div>
         );
     } else if (isError) {
@@ -170,9 +228,14 @@ export default function RecipeDetails(formData: any) {
     }
 
     return (
-        <div>
-            <MyRecipesButton userId={currentUserId} />
-            <TakemeBackButton />
+        <div className="recipeDetails-container">
+            <div className="recipeDetails-header-container">
+                <Header />
+                <div className="recipeDetails-header-buttons">
+                <MyRecipesButton userId={currentUserId} />
+                <TakemeBackButton />
+                </div>
+            </div>
             {content}
         </div>
     );

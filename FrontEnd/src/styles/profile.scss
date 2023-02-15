@@ -1,6 +1,6 @@
-.profile {
+.profile-container {
     min-height: 100vh;
-    color: var(--offwhite);
+    color: white;
     padding-bottom: 150px;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.1);
@@ -16,15 +16,10 @@
     align-items: center;
     position: relative;
 }
+
 .profile-header-buttons {
     display: flex;
-    justify-content: space-evenly;
     align-items: center;
-    position: relative;
-    font-weight: var(--semibold);
-    font-size: 18px;
-    margin-right: 55px;
-    margin-left: 55px;
-    text-decoration: none;
-    color: var(--offwhite);
+    flex-direction: row;
+    justify-content: space-between;
 }

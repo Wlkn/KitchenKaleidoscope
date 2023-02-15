@@ -1,0 +1,105 @@
+.recipeInfo-container {
+    min-height: 100vh;
+    color: var(--offwhite);
+    padding-bottom: 150px;
+    height: 100vh;
+    font-family: Montserrat, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    padding-left: 40px;
+}
+
+.recipe-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+}
+.recipe-description {
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+}
+
+.recipe-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    max-height: 300px;
+    max-width: 500px;
+    object-fit: cover;
+}
+.recipe-ingredients-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+}
+.recipe-ingredients {
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+    // add space between list items
+    list-style-type: disc;
+    list-style-position: inside;
+    li {
+        margin-bottom: 1rem;
+        padding-left: 0.5em;
+    }
+
+    ::marker {
+        color: rgb(111, 201, 231);
+    }
+}
+
+.recipe-instructions-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    margin-top: 3rem;
+}
+
+.recipe-instructions {
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
+}
+
+.recipe-author {
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
+    text-decoration: underline;
+    text-decoration-color: rgb(111, 201, 231);
+    text-underline-offset: 2px;
+    font-style: italic;
+}
+
+.recipe-deleteEdit-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.recipeDetails-container {
+    min-height: 100vh;
+    color: var(--offwhite);
+    padding-bottom: 150px;
+    height: 100vh;
+    font-family: Montserrat, sans-serif;
+    -webkit-font-smoothing: antialiased;
+   
+}
+.recipeDetails-header-container {
+    padding-top: 7px;
+    padding-bottom: 7px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}

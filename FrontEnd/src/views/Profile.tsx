@@ -12,6 +12,7 @@ import {
     HomeButton,
     CreateNewRecipeButton,
     MyRecipesButton,
+    LogOutButton,
 } from "../components/Buttons";
 const Profile = () => {
     const SelectedUserId =
@@ -23,7 +24,7 @@ const Profile = () => {
     //if you cant get token thru useSelector you can get it from local storage
     const token: string =
         useSelector(selectCurrentToken) || localStorage.getItem("token");
-
+    const userLoggedIn = token && userId ? true : false;
     const showUser: string = name
         ? `${name}`
         : "Could not fetch the name of the user";
@@ -32,14 +33,19 @@ const Profile = () => {
         : "Could not fetch the email of the user";
 
     const content = (
-        <div className="profile">
-            <div className="profile-header-container">
+        <div className="home">
+            <header className="RecipeList-header-container">
                 <Header />
-                <div className="profile-header-buttons">
-                    <CreateNewRecipeButton />
+                <div className="home-logout">
                     <MyRecipesButton userId={userId} />
+                    <CreateNewRecipeButton />
+                    {userLoggedIn ? (
+                        <LogOutButton />
+                    ) : (
+                        <div>You aren't supposed to be here...</div>
+                    )}
                 </div>
-            </div>
+            </header>
             <section className="welcome">
                 <h1>Welcome to your profile page!</h1>
                 <h3>

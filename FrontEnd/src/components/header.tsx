@@ -5,7 +5,7 @@ export default function Header() {
             <a className="home-logo-wrapper" href="/">
                 <img
                     className="logo"
-                    src="/./src/assets/KKaleido.svg"
+                    src="./../../src/assets/KKaleido.svg"
                     alt="logo"
                 ></img>
             </a>
@@ -15,10 +15,10 @@ export default function Header() {
                         Home
                     </a>
                     <a className="hover-underline-animation" href="#">
-                        About
+                        About (coming soon)
                     </a>
                     <a className="hover-underline-animation" href="#">
-                        Contact
+                        Contact (coming soon)
                     </a>
                     <a className="hover-underline-animation" href="/recipeList">
                         Recipes

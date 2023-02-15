@@ -1,7 +1,11 @@
 import "../styles/Home.scss";
 import GlobeAnimation from "../components/GlobeAnimation";
 import Recipe from "../components/recipe";
-import { LogInButton, SignUpButton } from "../components/Buttons";
+import {
+    LogInButton,
+    ProfileButton,
+    SignUpButton,
+} from "../components/Buttons";
 import Header from "../components/header";
 import { useSelector } from "react-redux";
 import {
@@ -25,8 +29,9 @@ const Home = () => {
                 <Header />
                 {userLoggedIn ? (
                     <div className="home-logout">
-                        <LogOutButton />
+                        <ProfileButton />
                         <MyRecipesButton userId={userId} />
+                        <LogOutButton />
                     </div>
                 ) : (
                     <div className="home-login">

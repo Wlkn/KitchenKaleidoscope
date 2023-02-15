@@ -1,0 +1,28 @@
+.userRecipes-container {
+    min-height: 100vh;
+    color: var(--offwhite);
+    padding-bottom: 150px;
+    height: 100vh;
+    font-family: Montserrat, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+.userRecipes-recipes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 0 20px;
+    margin-top: 50px;
+}
+
+.userRecipes-header-container {
+    padding-top: 7px;
+    padding-bottom: 7px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding-right: 20px;
+}
