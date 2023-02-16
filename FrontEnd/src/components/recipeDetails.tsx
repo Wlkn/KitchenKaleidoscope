@@ -53,9 +53,7 @@ export default function RecipeDetails(formData: any) {
     const currentUserId =
         useSelector(selectCurrentUserId) || localStorage.getItem("userId");
 
-    const { data: CreatorOfRecipe } = useGetCreatorOfRecipeQuery(id, {
-        skip: !currentToken,
-    });
+    const { data: CreatorOfRecipe } = useGetCreatorOfRecipeQuery(id, {});
     const [deleteData, setDeleteData] = useState<DeleteDataType | null>(null);
 
     const [fetchUnits, setFetchUnits] = useState<Unit[]>([]);
@@ -64,10 +62,6 @@ export default function RecipeDetails(formData: any) {
     >([]);
     const requestOptions = {
         method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${currentToken}`,
-        },
     };
 
     const {
@@ -76,13 +70,12 @@ export default function RecipeDetails(formData: any) {
         isSuccess,
         isError,
         error,
-    } = useGetRecipesQuery(id, {
-        skip: !currentToken,
-    });
+    } = useGetRecipesQuery(id, {});
 
-    const { data: ingredientsData } = useFetchIngredientsByRecipeIdQuery(id, {
-        skip: !currentToken,
-    });
+    const { data: ingredientsData } = useFetchIngredientsByRecipeIdQuery(
+        id,
+        {}
+    );
     console.log(ingredientsData);
 
     async function fetchUnitsFromApi() {
@@ -149,38 +142,42 @@ export default function RecipeDetails(formData: any) {
     }, []);
 
     const sendDeleteRequest = async () => {
-        try {
-            await removeRecipe(recipe_id);
-            // console.log(deleteData);
-        } catch (error) {
-            console.error(error);
+        if (currentUserId) {
+            try {
+                await removeRecipe(recipe_id);
+                // console.log(deleteData);
+            } catch (error) {
+                console.error(error);
+            }
+            setTimeout(() => {
+                navigate(`/myrecipes/${currentUserId}`);
+                window.location.reload();
+            }, 1600);
         }
-        setTimeout(() => {
-            navigate(`/myrecipes/${currentUserId}`);
-            window.location.reload();
-        }, 1600);
     };
 
     const sendEditRequest = async (data: any) => {
-        try {
-            const recipeData = await editRecipeMutation({
-                recipe_id,
-                ...data,
-            }).unwrap();
+        if (currentUserId) {
+            try {
+                const recipeData = await editRecipeMutation({
+                    recipe_id,
+                    ...data,
+                }).unwrap();
 
-            dispatch(editRecipe({ recipeData }));
-        } catch (error) {
-            console.error(error);
+                dispatch(editRecipe({ recipeData }));
+            } catch (error) {
+                console.error(error);
+            }
+            setTimeout(() => {
+                navigate(`/myrecipes/${currentUserId}`);
+                window.location.reload();
+            }, 1600);
         }
-        setTimeout(() => {
-            navigate(`/myrecipes/${currentUserId}`);
-            window.location.reload();
-        }, 1600);
     };
     let content;
     if (isLoading) {
         content = <Loader />;
-    } else if (isSuccess && recipeData && CreatorOfRecipe && ingredientsData ) {
+    } else if (isSuccess && recipeData && CreatorOfRecipe && ingredientsData) {
         const { name, description, instructions, imageUrl } = recipeData;
         const { userId, OwnerName } = CreatorOfRecipe;
         const ingredientList = ingredientsData.map((ingredient: any) => {
@@ -210,11 +207,11 @@ export default function RecipeDetails(formData: any) {
                 <div className="recipe-instructions">{instructions}</div>
                 {currentUserId === userId && (
                     <div className="recipe-deleteEdit-buttons">
-                    <DeleteEdit
-                        deleteFunc={sendDeleteRequest}
-                        editFunc={sendEditRequest}
-                        data={formData}
-                    />
+                        <DeleteEdit
+                            deleteFunc={sendDeleteRequest}
+                            editFunc={sendEditRequest}
+                            data={formData}
+                        />
                     </div>
                 )}
                 <div className="recipe-ingredients-title">Ingredients</div>
@@ -232,8 +229,9 @@ export default function RecipeDetails(formData: any) {
             <div className="recipeDetails-header-container">
                 <Header />
                 <div className="recipeDetails-header-buttons">
-                <MyRecipesButton userId={currentUserId} />
-                <TakemeBackButton />
+                    { currentUserId && <MyRecipesButton userId={currentUserId} />}
+                    
+                    <TakemeBackButton />
                 </div>
             </div>
             {content}
