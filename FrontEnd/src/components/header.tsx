@@ -5,7 +5,7 @@ export default function Header() {
             <a className="home-logo-wrapper" href="/">
                 <img
                     className="logo"
-                    src="./../../src/assets/KKaleido.svg"
+                    src={"../../public/KKaleido.svg"}
                     alt="logo"
                 ></img>
             </a>
