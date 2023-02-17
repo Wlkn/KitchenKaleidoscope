@@ -1,7 +1,16 @@
+:root {
+    --main-text-color: #171717;
+    --background-color: #f5f5f5;
+}
+
+.darkmode {
+    --main-text-color: #f5f5f5;
+    --background-color: #171717;
+}
 .recipeInfo-container {
     min-height: 100vh;
-    color: var(--offwhite);
-    padding-bottom: 150px;
+    color: var(--main-text-color);
+    background-color: var(--background-color);
     height: 100vh;
     font-family: Montserrat, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -34,13 +43,11 @@
 .recipe-ingredients-title {
     font-size: 2rem;
     font-weight: 700;
-    margin-bottom: 1rem;
     margin-top: 2rem;
 }
 .recipe-ingredients {
     font-size: 1.2rem;
     font-weight: 400;
-    margin-bottom: 2rem;
     margin-top: 2rem;
     // add space between list items
     list-style-type: disc;
@@ -88,12 +95,11 @@
 
 .recipeDetails-container {
     min-height: 100vh;
-    color: var(--offwhite);
+    color: var(--main-text-color);
     padding-bottom: 150px;
     height: 100vh;
     font-family: Montserrat, sans-serif;
     -webkit-font-smoothing: antialiased;
-   
 }
 .recipeDetails-header-container {
     padding-top: 7px;

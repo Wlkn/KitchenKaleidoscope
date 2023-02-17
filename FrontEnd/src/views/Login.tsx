@@ -27,6 +27,7 @@ import { useRef, useState, useEffect } from "react";
 import { setCredentials } from "../redux/reducers/auth";
 import { useLoginMutation } from "../redux/slices/auth";
 import Loader from "../components/Loader";
+import Header from "../components/header";
 //REDUX
 
 function Copyright(props: any) {
@@ -49,7 +50,6 @@ function SignIn() {
     const [email, setUser] = useState("");
     const [password, setPwd] = useState("");
     const [errMsg, setErrMsg] = useState("");
-
     const [login, { isLoading }] = useLoginMutation();
     const dispatch = useDispatch();
 
@@ -96,101 +96,132 @@ function SignIn() {
         setPwd(e.target.value);
         //console.log(password);
     };
+    let darkMode = localStorage.getItem("darkMode");
+
+    if (darkMode === "enabled") {
+        document.body.classList.add("darkMode");
+    }
+
+    const whiteBackground = "#f5f5f5";
+    const darkBackground = "";
 
     const content = isLoading ? (
         <Loader />
     ) : (
-        <Container component="main" maxWidth="xs" className="Login-container">
-            <p
-                ref={errRef}
-                className={errMsg ? "errmsg" : "offscreen"}
-                aria-live="assertive"
+        <div className="loginContainer">
+            {/* <Header /> */}
+            <Container
+                component="main"
+                maxWidth="xs"
+                className="Login-container"
             >
-                {errMsg}
-            </p>
-            <CssBaseline />
-            <Box
-                sx={{
-                    marginTop: 8,
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    color: "#f5f5f5",
-                }}
-            >
-                <Avatar sx={{ m: 1, bgcolor: "error.main" }}>
-                    <LockOutlinedIcon />
-                </Avatar>
-                <Typography
-                    component="h1"
-                    variant="h5"
-                    className="sign-in-text"
-                    sx={{ color: "#f5f5f5" }}
-                >
-                    Sign in
-                </Typography>
+                <CssBaseline />
                 <Box
-                    component="form"
-                    onSubmit={handleSubmit}
-                    noValidate
-                    sx={{ mt: 1, color: "#f5f5f5" }}
+                    sx={{
+                        marginTop: 8,
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        color: "#f5f5f5",
+                    }}
                 >
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        ref={userRef}
-                        autoFocus
-                        value={email}
-                        onChange={handleUserInput}
-                        className="sign-in-form"
-                        sx={{ input: { color: "#f5f5f5" } }}
-                        color="primary"
-                        focused
-                        variant="outlined"
-                    />
-                    <TextField
-                        margin="normal"
-                        required
-                        focused
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
-                        value={password}
-                        onChange={handlePwdInput}
-                        sx={{ input: { color: "#f5f5f5" } }}
-                    />
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
-                        className="sign-in-remember"
-                        sx={{ color: "#f5f5f5" }}
-                    />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
+                    <Avatar sx={{ m: 1, bgcolor: "error.main", mt: "64px" }}>
+                        <LockOutlinedIcon />
+                    </Avatar>
+                    <Typography
+                        component="h1"
+                        variant="h5"
+                        className="sign-in-text"
+                        sx={{}}
                     >
-                        Sign In
-                    </Button>
-                    <Grid container>
-                        <Grid item>
-                            <Link href="/auth/signup" variant="body2">
-                                {"Don't have an account? Sign Up"}
-                            </Link>
+                        Sign in
+                    </Typography>
+                    <Box
+                        component="form"
+                        onSubmit={handleSubmit}
+                        noValidate
+                        sx={{ mt: 1, color: "#f5f5f5" }}
+                    >
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="email"
+                            label="Email Address"
+                            name="email"
+                            ref={userRef}
+                            autoFocus
+                            value={email}
+                            onChange={handleUserInput}
+                            className="sign-in-form"
+                            sx={{
+                                input: {
+                                    color:
+                                        darkMode === "enabled"
+                                            ? "#f5f5f5"
+                                            : "#171717",
+                                },
+                            }}
+                            color="primary"
+                            focused
+                            variant="outlined"
+                        />
+                        <TextField
+                            margin="normal"
+                            required
+                            focused
+                            fullWidth
+                            name="password"
+                            label="Password"
+                            type="password"
+                            id="password"
+                            autoComplete="current-password"
+                            value={password}
+                            onChange={handlePwdInput}
+                            sx={{
+                                input: {
+                                    color:
+                                        darkMode === "enabled"
+                                            ? "#f5f5f5"
+                                            : "#171717",
+                                },
+                            }}
+                            variant="outlined"
+                        />
+                        <FormControlLabel
+                            control={
+                                <Checkbox value="remember" color="primary" />
+                            }
+                            label="Remember me"
+                            className="sign-in-remember"
+                            sx={
+                                darkMode === "enabled"
+                                    ? { color: "#f5f5f5" }
+                                    : {
+                                          color: "#171717",
+                                      }
+                            }
+                        />
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                        >
+                            Sign In
+                        </Button>
+                        <Grid container>
+                            <Grid item>
+                                <Link href="/auth/signup" variant="body2">
+                                    {"Don't have an account? Sign Up"}
+                                </Link>
+                            </Grid>
                         </Grid>
-                    </Grid>
+                    </Box>
                 </Box>
-            </Box>
-            <Copyright sx={{ mt: 8, mb: 4 }} />
-        </Container>
+                <Copyright sx={{ mt: 8, mb: 4 }} />
+            </Container>
+        </div>
     );
     return content;
 }

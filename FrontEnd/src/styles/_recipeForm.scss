@@ -13,11 +13,6 @@ $third-color: #23395b;
         border-radius: 10px;
     }
 
-    h1 {
-        color: $third-color;
-        margin-bottom: 20px;
-    }
-
     .formInput {
         padding: 10px;
         margin-bottom: 10px;
@@ -32,31 +27,31 @@ $third-color: #23395b;
         
     }
 
-    textarea {
-        padding: 10px;
-        margin-bottom: 10px;
-        border-radius: 5px;
-        border: none;
-        font-size: 16px;
-        width: 100%;
-        box-sizing: border-box;
-        min-height: 100px;
-        background-color: #fff;
-        color: $third-color;
-        border: 1px solid $third-color;
-        resize: none;
-    }
+    // textarea {
+    //     padding: 10px;
+    //     margin-bottom: 10px;
+    //     border-radius: 5px;
+    //     border: none;
+    //     font-size: 16px;
+    //     width: 100%;
+    //     box-sizing: border-box;
+    //     min-height: 100px;
+    //     background-color: #fff;
+    //     color: $third-color;
+    //     border: 1px solid $third-color;
+    //     resize: none;
+    // }
 
-    label {
-        font-size: 18px;
-        font-weight: bold;
-        margin-bottom: 10px;
-        color: $third-color;
-        &.new {
-            font-weight: normal;
-            color: $secondary-color;
-        }
-    }
+    // label {
+    //     font-size: 18px;
+    //     font-weight: bold;
+    //     margin-bottom: 10px;
+    //     color: $third-color;
+    //     &.new {
+    //         font-weight: normal;
+    //         color: $secondary-color;
+    //     }
+    
 
     select {
         padding: 10px;

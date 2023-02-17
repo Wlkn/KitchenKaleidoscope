@@ -11,7 +11,6 @@
 }
 .MuiButton-root {
     border-radius: 50px;
-    background: linear-gradient(-45deg, #ffa63d, #ff3d77, #338aff, #3cf0c5);
     background-size: 600%;
     animation: anime 16s linear infinite;
     position: absolute;
@@ -32,9 +31,7 @@
     border-radius: 10px;
 }
 .MuiButton-root:hover {
-    background-position: right center;
-    -webkit-transition: all 1s ease-in-out;
-    transition: all 1s ease-in-out;
+    box-shadow: 0 0 60px #eee;
 }
 .like-button {
     background-image: linear-gradient(

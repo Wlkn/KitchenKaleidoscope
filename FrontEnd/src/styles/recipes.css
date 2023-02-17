@@ -27,7 +27,7 @@
 }
 .recipeListPage-container {
     min-height: 100vh;
-    color: var(--offwhite);
+    color: #f5f5f5;
     padding-bottom: 150px;
     height: 100vh;
     font-family: Montserrat, sans-serif;

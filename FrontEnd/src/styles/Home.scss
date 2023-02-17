@@ -5,22 +5,34 @@ body {
     margin: 0;
 }
 :root {
-    --offwhite: #eee;
-    --blueish: #7ccbe1;
-    --regular: 400;
-    --semibold: 600;
-    --bold: 700;
     padding: 0;
     margin: 0;
     min-height: 100vh;
     max-width: 2200px;
     width: 100%;
     box-sizing: border-box;
+    overflow-x: hidden;
+    --regular: 400;
+    --semibold: 600;
+    --bold: 700;
     --border-radius: 50%;
+    --text-color: #050505;
+    --blueish: #002593;
+    --green: rgba(33, 195, 98, 0.592);
+    --blue: rgb(29, 72, 109);
+    --dark-blue: rgb(19, 53, 81);
+    --shadow-color: rgba(255, 255, 255, 0.132);
+    --card-color: #c2c2c2b9;
+}
+
+.darkmode {
+    --blueish: #7ccbe1;
     --green: rgba(69, 255, 143, 0.592);
     --blue: rgba(42, 100, 151);
     --dark-blue: rgb(24, 70, 107);
-    overflow-x: hidden;
+    --text-color: #eee;
+    --shadow-color: #171717;
+    --card-color: #494949;
 }
 @keyframes rotate {
     from {
@@ -54,7 +66,7 @@ body {
 
 .home {
     min-height: 100vh;
-    color: var(--offwhite);
+    color: var(--text-color);
     padding-bottom: 150px;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.1);
@@ -96,7 +108,7 @@ body {
     font-size: 18px;
     margin-right: 55px;
     text-decoration: none;
-    color: var(--offwhite);
+    color: var(--text-color);
     margin: 10px;
 }
 .home-navigation {
@@ -106,7 +118,7 @@ body {
         font-size: 18px;
         margin-right: 55px;
         text-decoration: none;
-        color: var(--offwhite);
+        color: var(--text-color);
     }
 }
 .home-logout {
@@ -174,7 +186,7 @@ body {
     margin-top: 20px;
     font-weight: var(--bold);
     text-align: center;
-    color: var(--offwhite);
+    color: var(--text-color);
     padding-bottom: 30px;
     max-width: 670px;
 }
@@ -282,7 +294,7 @@ h1 .world .world-globe svg path {
 
 .card {
     height: 280px;
-    background-color: #3e3e3e;
+    background-color: var(--card-color);
     border-radius: 10px;
     padding: 0px;
     box-shadow: 2px 2px 10px #016fff;
@@ -292,7 +304,6 @@ h1 .world .world-globe svg path {
     transition: opacity 0.3s;
     position: relative;
     overflow: hidden;
-    color: var(--maindark);
     border-radius: 8px;
 }
 
@@ -316,5 +327,5 @@ h1 .world .world-globe svg path {
     width: 100%;
     height: 400px;
     pointer-events: none;
-    background: linear-gradient(rgba(0, 0, 0, 0) 0%, #171717 100%);
+    background: linear-gradient(rgba(0, 0, 0, 0) 0%, var(--shadow-color) 100%);
 }

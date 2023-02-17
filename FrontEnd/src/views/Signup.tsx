@@ -11,7 +11,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-
+import "../styles/signup.scss";
 function Copyright(props: any) {
     return (
         <Typography
@@ -32,8 +32,6 @@ function Copyright(props: any) {
         </Typography>
     );
 }
-
-const theme = createTheme();
 
 export default function Signup() {
     const navigate = useNavigate();
@@ -72,9 +70,13 @@ export default function Signup() {
             console.error(error);
         }
     };
+    let darkMode = localStorage.getItem("darkMode");
 
+    if (darkMode === "enabled") {
+        document.body.classList.add("darkMode");
+    }
     return (
-        <ThemeProvider theme={theme}>
+        <div className="signupContainer">
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box
@@ -91,7 +93,13 @@ export default function Signup() {
                     <Typography
                         component="h1"
                         variant="h5"
-                        sx={{ color: "#f5f5f5" }}
+                        sx={
+                            darkMode === "enabled"
+                                ? { color: "#f5f5f5" }
+                                : {
+                                      color: "#171717",
+                                  }
+                        }
                     >
                         Sign up
                     </Typography>
@@ -110,7 +118,14 @@ export default function Signup() {
                             name="name"
                             autoComplete="name"
                             autoFocus
-                            sx={{ input: { color: "#f5f5f5" } }}
+                            sx={{
+                                input: {
+                                    color:
+                                        darkMode === "enabled"
+                                            ? "#f5f5f5"
+                                            : "#171717",
+                                },
+                            }}
                             color="primary"
                             focused
                             variant="outlined"
@@ -123,7 +138,14 @@ export default function Signup() {
                             label="Email Address"
                             name="email"
                             autoComplete="email"
-                            sx={{ input: { color: "#f5f5f5" } }}
+                            sx={{
+                                input: {
+                                    color:
+                                        darkMode === "enabled"
+                                            ? "#f5f5f5"
+                                            : "#171717",
+                                },
+                            }}
                             focused
                         />
                         <TextField
@@ -135,7 +157,14 @@ export default function Signup() {
                             type="password"
                             id="password"
                             autoComplete="current-password"
-                            sx={{ input: { color: "#f5f5f5" } }}
+                            sx={{
+                                input: {
+                                    color:
+                                        darkMode === "enabled"
+                                            ? "#f5f5f5"
+                                            : "#171717",
+                                },
+                            }}
                             focused
                         />
                         <Button
@@ -157,6 +186,6 @@ export default function Signup() {
                 </Box>
                 <Copyright sx={{ mt: 8, mb: 4, color: "#1976d2" }} />
             </Container>
-        </ThemeProvider>
+        </div>
     );
 }

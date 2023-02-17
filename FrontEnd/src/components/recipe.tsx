@@ -120,9 +120,14 @@ export default function MediaCard(Recipe: {
     //==========================================JSX=====================================================
     //==================================================================================================
     //==================================================================================================
+    const darkMode = localStorage.getItem("darkMode");
+
     return (
         <StyledEngineProvider injectFirst>
-            <Card sx={{ maxWidth: 345 }} className="recipe-item">
+            <Card
+                sx={{ maxWidth: 345, background: "#a4a4a4" }}
+                className="recipe-item"
+            >
                 <CardMedia
                     sx={{ height: 140 }}
                     image={Recipe.imageUrl}

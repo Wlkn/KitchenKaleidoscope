@@ -1,4 +1,33 @@
-.CreateRecipe-container, .ErrorPage-container, .Home-container, .LoggedInHome-container, .Login-container, .Profile-container, .Recipe-container, .RecipeEdit-container, .RecipeList-container, .Register-container, .Search-container, .SearchResults-container, .UserRecipes-container, html, body, #root, .MuiContainer-root, .MuiContainer-root, .MuiContainer-maxWidthXs, .Login-container, .css-nzinn5-MuiContainer-root {
-    background-color: #171717;
+:root {
+    --background-color: #f5f5f5;
 }
 
+.darkmode {
+    --background-color: #171717;
+}
+
+.CreateRecipe-container,
+.ErrorPage-container,
+.Home-container,
+.LoggedInHome-container,
+.Login-container,
+.Profile-container,
+.Recipe-container,
+.RecipeEdit-container,
+.RecipeList-container,
+.Register-container,
+.Search-container,
+.SearchResults-container,
+.UserRecipes-container,
+html,
+body,
+#root,
+.MuiContainer-root,
+.MuiContainer-root,
+.MuiContainer-maxWidthXs,
+.Login-container,
+.css-nzinn5-MuiContainer-root {
+    // background-color: #171717;
+
+    background-color: var(--background-color);
+}

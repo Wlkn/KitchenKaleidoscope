@@ -12,6 +12,7 @@ import { HomeButton } from "../components/Buttons";
 import Loader from "../components/Loader";
 import { LogOutButton } from "../components/Buttons";
 import { MyRecipesButton } from "../components/Buttons";
+import { colors } from "material-ui/styles";
 export default function RecipeList() {
     const [recipes, setRecipes] = useState<Array<any>>([]);
     const { data, isLoading, isSuccess, isError } = useGetAllRecipesQuery({
@@ -67,6 +68,7 @@ export default function RecipeList() {
                 ) : (
                     recipes.map((recipe: any) => (
                         <MediaCard
+                        
                             key={recipe._id}
                             _id={recipe._id}
                             name={recipe.name}
