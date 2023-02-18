@@ -97,16 +97,6 @@ body {
     // margin-left: 15px;
 }
 
-@media only screen and (max-width: 1250px) {
-    .home .home-navigation .home-links a {
-        margin-right: 30px;
-        font-size: 16px;
-    }
-
-    .home .home-navigation .home-links a:last-child {
-        margin-right: 0;
-    }
-}
 //make the burger menu appear when the screen is small
 
 .burger-button {
@@ -124,7 +114,6 @@ body {
     transition: all 0.3s;
     color: white;
     transform: translateY(2px);
- 
 }
 .burger-button:hover {
     background: #2c2c2c;
@@ -136,18 +125,6 @@ body {
     height: 24px;
     display: block;
     fill: var(--text-color);
-}
-@media only screen and (max-width: 1000px) {
-    .home .home-navigation {
-        display: none;
-    }
-    .burger-button {
-        display: block;
-    }
-    .home .home-logo-wrapper {
-        margin-right: 0;
-        padding-right: 0;
-    }
 }
 
 .home-login a {
@@ -397,4 +374,76 @@ h1 .world .world-globe svg path {
     margin-right: 20px;
     overflow-clip-margin: content-box;
     overflow: clip;
+}
+@media only screen and (max-width: 800px) {
+    .home .home-navigation {
+        display: none;
+    }
+    .burger-button {
+        display: block;
+    }
+    .home .home-logo-wrapper {
+        margin-right: 0;
+        padding-right: 0;
+    }
+    .home-page-hero .circle-1 {
+        top: -24px;
+        left: 105px;
+    }
+    .home-page-hero .circle-3 {
+        display: none;
+    }
+    .home-page-hero .circle-4 {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 950px) {
+    .home .home-navigation {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 30px;
+    }
+    .burger-button {
+        display: block;
+    }
+    .home-page {
+        display: none;
+    }
+    .home .home-logo-wrapper {
+        margin-right: 0;
+        padding-right: 0;
+    }
+    .home-page-hero .circle-1 {
+        top: -24px;
+        left: 105px;
+    }
+    .home-page-hero .circle-3 {
+        top: 30px;
+        left: 650px;
+    }
+    .home-page-hero .circle-4 {
+        top: 200px;
+        left: 300px;
+    }
+}
+@media only screen and (max-width: 1250px) {
+    .home .home-navigation .home-links a {
+        margin-right: 30px;
+        font-size: 16px;
+    }
+
+    .home .home-navigation .home-links a:last-child {
+        margin-right: 0;
+    }
+    .home-page-hero .circle-3 {
+        top: 30px;
+        left: 650px;
+    }
+    .home-page-hero .circle-4 {
+        top: 200px;
+        left: 300px;
+    }
 }
