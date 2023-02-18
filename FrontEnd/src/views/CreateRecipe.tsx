@@ -172,6 +172,7 @@ const RecipeForm: React.FC = () => {
                 imageUrl,
                 isPublic,
             }).unwrap();
+            console.log(recipeData);
             dispatch(
                 addRecipe({
                     ...recipeData,
@@ -187,7 +188,8 @@ const RecipeForm: React.FC = () => {
             setDescription("");
             setInstructions("");
             setImageUrl("");
-            setIsPublic(false);
+            
+
             handleSubmitIngredients(recipeData);
 
             // setIsPublic(false);
@@ -479,7 +481,7 @@ const RecipeForm: React.FC = () => {
                         <input
                             type="checkbox"
                             checked={isPublic}
-                            onChange={handleIsPublicChange}
+                            onChange={() => setIsPublic(!isPublic)}
                         />
                         <label>Private</label>
                     </div>
