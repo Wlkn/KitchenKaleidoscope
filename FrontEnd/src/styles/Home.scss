@@ -93,20 +93,68 @@ body {
 .home-navigation .home-links {
     display: flex;
     align-items: center;
-    margin-right: 20px;
-    margin-left: 15px;
+    // margin-right: 20px;
+    // margin-left: 15px;
 }
 
-@media only screen and (max-width: 1100px) {
+@media only screen and (max-width: 1250px) {
     .home .home-navigation .home-links a {
-        margin-right: 20px;
+        margin-right: 30px;
+        font-size: 16px;
+    }
+
+    .home .home-navigation .home-links a:last-child {
+        margin-right: 0;
     }
 }
+//make the burger menu appear when the screen is small
+
+.burger-button {
+    display: none;
+    // display: none;
+    position: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 3px 10px 3px 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 200px;
+    transition: all 0.3s;
+    color: white;
+    transform: translateY(2px);
+ 
+}
+.burger-button:hover {
+    background: #2c2c2c;
+}
+
+.burger-button svg {
+    margin-right: 0;
+    width: 24px px;
+    height: 24px;
+    display: block;
+    fill: var(--text-color);
+}
+@media only screen and (max-width: 1000px) {
+    .home .home-navigation {
+        display: none;
+    }
+    .burger-button {
+        display: block;
+    }
+    .home .home-logo-wrapper {
+        margin-right: 0;
+        padding-right: 0;
+    }
+}
+
 .home-login a {
     display: inline-block;
     font-weight: var(--semibold);
     font-size: 18px;
-    margin-right: 55px;
+    // margin-right: 55px;
     text-decoration: none;
     color: var(--text-color);
     margin: 10px;
@@ -116,7 +164,7 @@ body {
         display: inline-block;
         font-weight: var(--semibold);
         font-size: 18px;
-        margin-right: 55px;
+        margin-right: 60px;
         text-decoration: none;
         color: var(--text-color);
     }
@@ -166,7 +214,7 @@ body {
     left: 0;
     transform-origin: bottom right;
     transition: transform 0.25s ease-out;
-    background-color: #eee;
+    background-color: var(--text-color);
 }
 
 .home-page-hero {
@@ -328,4 +376,25 @@ h1 .world .world-globe svg path {
     height: 400px;
     pointer-events: none;
     background: linear-gradient(rgba(0, 0, 0, 0) 0%, var(--shadow-color) 100%);
+}
+
+.dark-mode-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 100;
+
+    border: 2px solid currentColor;
+    padding: 4px;
+    background: #f5f5f5;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 40px;
+    height: 40px;
+
+    transform: translateY(3px);
+    margin-right: 20px;
+    overflow-clip-margin: content-box;
+    overflow: clip;
 }

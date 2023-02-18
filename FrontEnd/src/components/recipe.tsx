@@ -119,6 +119,8 @@ export default function MediaCard(Recipe: {
     //==================================================================================================
     //==========================================JSX=====================================================
     //==================================================================================================
+    const userLoggedIn = localStorage.getItem("userId") ? true : false;
+
     //==================================================================================================
     const darkMode = localStorage.getItem("darkMode");
 
@@ -144,9 +146,11 @@ export default function MediaCard(Recipe: {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <Button size="small" onClick={handleLike}>
-                        {isLoading ? "----" : isLiked ? "Unlike" : "Like"}
-                    </Button>
+                    {userLoggedIn ? (
+                        <Button size="small" onClick={handleLike}>
+                            {isLoading ? "----" : isLiked ? "Unlike" : "Like"}
+                        </Button>
+                    ) : null}
 
                     <Button size="small" onClick={handleComments}>
                         Comments

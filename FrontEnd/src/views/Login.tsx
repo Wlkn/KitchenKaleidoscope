@@ -190,7 +190,16 @@ function SignIn() {
                         />
                         <FormControlLabel
                             control={
-                                <Checkbox value="remember" color="primary" />
+                                <Checkbox
+                                    value="remember"
+                                    color="primary"
+                                    style={{
+                                        color:
+                                            darkMode === "enabled"
+                                                ? "#f5f5f5"
+                                                : "#171717",
+                                    }}
+                                />
                             }
                             label="Remember me"
                             className="sign-in-remember"

@@ -62,13 +62,16 @@ export default function RecipeList() {
             </header>
             <div className="RecipeList-container">
                 {isLoading ? (
-                    <Loader />
+                    <div>
+                        Sorry, the servers are very slow, please wait a
+                        moment...
+                        <Loader />
+                    </div>
                 ) : isError ? (
                     <div>error</div>
                 ) : (
                     recipes.map((recipe: any) => (
                         <MediaCard
-                        
                             key={recipe._id}
                             _id={recipe._id}
                             name={recipe.name}
