@@ -8,6 +8,7 @@ const recipeSlice = createSlice({
         instructions: null,
         imageUrl: null,
         recipeId: null,
+        isPublic: null,
     },
     reducers: {
         addRecipe: (state, action) => {
@@ -17,12 +18,14 @@ const recipeSlice = createSlice({
                 instructions,
                 imageUrl,
                 recipeId,
+                isPublic,
             } = action.payload;
             state.recipeName = recipeName;
             state.description = description;
             state.instructions = instructions;
             state.imageUrl = imageUrl;
             state.recipeId = recipeId;
+            state.isPublic = isPublic;
         },
         removeRecipe: (state) => {
             state.recipeName = null;
@@ -30,6 +33,7 @@ const recipeSlice = createSlice({
             state.instructions = null;
             state.imageUrl = null;
             state.recipeId = null;
+            state.isPublic = null;
         },
         editRecipe: (state, action) => {
             const {
@@ -38,12 +42,14 @@ const recipeSlice = createSlice({
                 instructions,
                 imageUrl,
                 recipeId,
+                isPublic,
             } = action.payload;
             state.recipeName = recipeName;
             state.description = description;
             state.instructions = instructions;
             state.imageUrl = imageUrl;
             state.recipeId = recipeId;
+            state.isPublic = isPublic;
         },
     },
 });

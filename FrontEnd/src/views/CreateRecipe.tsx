@@ -43,6 +43,7 @@ const RecipeForm: React.FC = () => {
     const [imageUrl, setImageUrl] = useState<string>("");
     const [recipeName, setRecipeName] = useState<string>("");
     const [description, setDescription] = useState<string>("");
+    const [isPublic, setIsPublic] = useState<boolean>(false);
     const [instructions, setInstructions] = useState<string>("");
     const [fetchUnits, setFetchUnits] = useState<Unit[]>([]);
     const [fetchIngredients, setFetchIngredients] = useState<
@@ -169,7 +170,7 @@ const RecipeForm: React.FC = () => {
                 description,
                 instructions,
                 imageUrl,
-                // isPublic,
+                isPublic,
             }).unwrap();
             dispatch(
                 addRecipe({
@@ -178,6 +179,7 @@ const RecipeForm: React.FC = () => {
                     description,
                     instructions,
                     imageUrl,
+                    isPublic,
                 })
             );
             //console.log(recipeData.recipeId);
@@ -185,6 +187,7 @@ const RecipeForm: React.FC = () => {
             setDescription("");
             setInstructions("");
             setImageUrl("");
+            setIsPublic(false);
             handleSubmitIngredients(recipeData);
 
             // setIsPublic(false);
@@ -231,11 +234,10 @@ const RecipeForm: React.FC = () => {
         setImageUrl(e.target.value);
     };
 
-    // const handleIsPublicChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     setIsPublic(e.target.checked);
-    // };
-    //todo
-    //
+    const handleIsPublicChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setIsPublic(e.target.checked);
+        console.log(isPublic);
+    };
 
     //====================================================================================================
     //-ADD NEW THING HANDLERS-
@@ -472,6 +474,16 @@ const RecipeForm: React.FC = () => {
                             <br />
                         </div>
                     ))}
+                    {/* add a checkbox for private or not */}
+                    <div className="isPublic-checkbox">
+                        <input
+                            type="checkbox"
+                            checked={isPublic}
+                            onChange={handleIsPublicChange}
+                        />
+                        <label>Private</label>
+                    </div>
+
                     <button
                         className="button"
                         type="button"
