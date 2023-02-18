@@ -11,6 +11,7 @@ router.post("/", (req, res, next) => {
         description: req.body.description,
         instructions: req.body.instructions,
         imageUrl: req.body.imageUrl,
+        isPublic: req.body.isPublic,
     });
 
     recipe

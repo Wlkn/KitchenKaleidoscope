@@ -2,7 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 // import { setCredentials, logOut } from "../reducers/auth"
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: "https://kitchenkaleidoscope-server.onrender.com/",
+    // baseUrl: "https://kitchenkaleidoscope-server.onrender.com/",
+    baseUrl: "http://localhost:4000/",
     //attempt at bypassin cors
     credentials: "omit",
 

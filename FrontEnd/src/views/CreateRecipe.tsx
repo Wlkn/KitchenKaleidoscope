@@ -43,7 +43,6 @@ const RecipeForm: React.FC = () => {
     const [imageUrl, setImageUrl] = useState<string>("");
     const [recipeName, setRecipeName] = useState<string>("");
     const [description, setDescription] = useState<string>("");
-    const [isPublic, setIsPublic] = useState<boolean>(false);
     const [instructions, setInstructions] = useState<string>("");
     const [fetchUnits, setFetchUnits] = useState<Unit[]>([]);
     const [fetchIngredients, setFetchIngredients] = useState<
@@ -170,9 +169,8 @@ const RecipeForm: React.FC = () => {
                 description,
                 instructions,
                 imageUrl,
-                isPublic,
+                // isPublic,
             }).unwrap();
-            console.log(recipeData);
             dispatch(
                 addRecipe({
                     ...recipeData,
@@ -180,7 +178,6 @@ const RecipeForm: React.FC = () => {
                     description,
                     instructions,
                     imageUrl,
-                    isPublic,
                 })
             );
             //console.log(recipeData.recipeId);
@@ -188,10 +185,8 @@ const RecipeForm: React.FC = () => {
             setDescription("");
             setInstructions("");
             setImageUrl("");
-            
-
             handleSubmitIngredients(recipeData);
-
+            console.log(...recipeData);
             // setIsPublic(false);
         } catch (error) {
             console.log("error");
@@ -236,10 +231,11 @@ const RecipeForm: React.FC = () => {
         setImageUrl(e.target.value);
     };
 
-    const handleIsPublicChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setIsPublic(e.target.checked);
-        console.log(isPublic);
-    };
+    // const handleIsPublicChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     setIsPublic(e.target.checked);
+    // };
+    //todo
+    //
 
     //====================================================================================================
     //-ADD NEW THING HANDLERS-
@@ -476,15 +472,6 @@ const RecipeForm: React.FC = () => {
                             <br />
                         </div>
                     ))}
-                    {/* add a checkbox for private or not */}
-                    <div className="isPublic-checkbox">
-                        <input
-                            type="checkbox"
-                            checked={isPublic}
-                            onChange={() => setIsPublic(!isPublic)}
-                        />
-                        <label>Private</label>
-                    </div>
 
                     <button
                         className="button"

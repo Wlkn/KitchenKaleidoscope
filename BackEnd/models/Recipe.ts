@@ -7,7 +7,7 @@ const recipeSchema = Schema({
     description: { type: String, required: true },
     instructions: { type: String, required: true },
     imageUrl: { type: String },
-    isPublic: { type: Boolean },
+    isPublic: { type: Boolean, required: true },
 });
 
 module.exports = mongoose.model("Recipe", recipeSchema);
