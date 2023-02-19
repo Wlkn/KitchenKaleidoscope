@@ -26,10 +26,6 @@ KitchenKaleidoscope is a fully functional online recipe book application that al
 -   MaterialUI: A popular React UI library that provides a range of customizable components.
 -   ViteJS: A build tool that provides fast and efficient development and production builds for modern web applications.
 
-## API
-
-The recipe sharing web application features a custom-made API created using ExpressJS. The API handles all data management in the application, including user authentication, recipe creation, and ingredient management. To further enhance my skills, I experimented with using two different databases - MongoDB for non-relational data hosted on Atlas, and PostGreSQL for relational data hosted on Render.
-
 ## Getting Started
 
 To get started with the Recipe Sharing App, simply clone the repository and run `npm install` to install the necessary dependencies. Then, run `npm run dev` to start the Front end development server. To run the Back end one you should run `npm run start-dev`.
