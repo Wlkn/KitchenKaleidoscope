@@ -1,6 +1,6 @@
-# Recipe Sharing App
+# KitchenKaleidoscope
 
-Welcome to the Recipe Sharing App! This full-stack web application allows users to share recipes, like and comment on others' recipes, and even switch between dark and light mode. The app is built using a range of cutting-edge technologies, including TypeScript, Sass, React, Redux, ExpressJS, Mongoose, MongoDB, PostGreSQL, and MaterialUI.
+Welcome to KitchenKaleidoscope! This full-stack web application allows users to share recipes, like and comment on others' recipes, and even switch between dark and light mode. The app is built using a range of cutting-edge technologies, including TypeScript, Sass, React, Redux, ExpressJS, Mongoose, MongoDB, PostGreSQL, and MaterialUI.
 
 ## Features
 
@@ -20,6 +20,7 @@ Welcome to the Recipe Sharing App! This full-stack web application allows users 
 -   MongoDB: A NoSQL document database that stores data in JSON-like documents.
 -   PostGreSQL: A powerful, open-source relational database management system.
 -   MaterialUI: A popular React UI library that provides a range of customizable components.
+-   ViteJS: A build tool that provides fast and efficient development and production builds for modern web applications.
 
 ## API
 
