@@ -4,6 +4,7 @@ KitchenKaleidoscope is a fully functional online recipe book application that al
 
 ## Features
 
+-   Recipe CRUD functionality
 -   Share and view recipes with other users
 -   Like and comment on recipes
 -   Toggle between dark and light mode
@@ -11,7 +12,6 @@ KitchenKaleidoscope is a fully functional online recipe book application that al
 -   User authentication and authorization with login and signup, including hashed passwords
 -   Recipe privacy options - users can choose to keep their recipe private or publish it publicly
 -   Create ingredients and units for everyone to use
--   CRUD - The App allows you to Create, Read, Update and Delete recipes.
 
 ## Technologies Used
 
