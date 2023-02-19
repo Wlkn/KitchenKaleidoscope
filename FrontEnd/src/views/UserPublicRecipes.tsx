@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useGetUserRecipesQuery } from "../redux/slices/recipes";
 import { useGetUserNameQuery } from "../redux/slices/auth";
 import MediaCard from "../components/recipe";
-import "../styles/usersPageRecipes.scss";
+import "../styles/UsersPageRecipes.scss";
 import Header from "../components/header";
 import { useEffect, useState } from "react";
 import Loader from "../components/Loader";
