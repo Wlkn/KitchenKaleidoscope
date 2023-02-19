@@ -1,6 +1,6 @@
 # KitchenKaleidoscope
 
-Welcome to KitchenKaleidoscope, a fully functional online recipe book application! This app allows users to share, like, and comment on recipes and much more. They can then see all their favorite recipes. KitchenKaleidoscope features user authentication and authorization with login and signup, including hashed passwords, and recipe privacy options, allowing users to choose whether to keep their recipe private or publish it publicly. The app also allows users to create ingredients and units for everyone to use. The app is fully responsive and includes a custom API hosted on Render.
+KitchenKaleidoscope is a fully functional online recipe book application that allows users to store and organize their favorite recipes. The application allows users to create an account, login, create, view, update, and delete their own recipes. It also allows users to search for and view recipes created by other users. Other features include the ability to create and manage ingredients and units for everyone to use. Finally, the app is fully responsive and can be used both from a computer or a smartphone.
 
 ## Features
 
