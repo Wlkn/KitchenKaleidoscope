@@ -1,5 +1,3 @@
-import MediaCard from "../components/recipe";
-import { useEffect, useState } from "react";
 import "../styles/recipes.css";
 import Header from "../components/header";
 import { useSelector } from "react-redux";
@@ -8,22 +6,33 @@ import {
     selectCurrentUserId,
 } from "../redux/reducers/auth";
 import { useGetAllRecipesQuery } from "../redux/slices/recipes";
-
+import { useEffect, useState } from "react";
 import Loader from "../components/Loader";
 import { LogOutButton } from "../components/Buttons";
 import { MyRecipesButton } from "../components/Buttons";
+import MediaCard from "../components/recipe";
 
 export default function RecipeList() {
     const [recipes, setRecipes] = useState<Array<any>>([]);
+    const [searchTerm, setSearchTerm] = useState<string>("");
     const { data, isLoading, isSuccess, isError } = useGetAllRecipesQuery({
         skip: false,
     });
 
     useEffect(() => {
         if (isSuccess && data) {
-            setRecipes(data.filter((recipe: any) => recipe.isPublic)); // Only show recipes that are marked as public
+            setRecipes(
+                data.filter(
+                    (recipe: any) =>
+                        recipe.isPublic &&
+                        recipe.name
+                            .toLowerCase()
+                            .includes(searchTerm.toLowerCase()) // Only show recipes that are marked as public and match the search term
+                )
+            );
         }
-    }, [data, isSuccess]);
+    }, [data, isSuccess, searchTerm]);
+
     const currentToken =
         localStorage.getItem("token") || useSelector(selectCurrentToken);
 
@@ -37,10 +46,18 @@ export default function RecipeList() {
         <div className="recipeListPage-container">
             <header className="RecipeList-header-container">
                 <Header />
+                <div className="search-container">
+                    <input
+                        type="text"
+                        placeholder="Search for recipes..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                </div>
                 {userLoggedIn ? (
                     <div className="home-logout">
-                        <LogOutButton />
                         <MyRecipesButton userId={userId} />
+                        <LogOutButton />
                     </div>
                 ) : (
                     <div className="home-login">
@@ -68,7 +85,7 @@ export default function RecipeList() {
                         <Loader />
                     </div>
                 ) : isError ? (
-                    <div>error</div>
+                    <div className="errorText">Error view console</div>
                 ) : (
                     recipes.map((recipe: any) => (
                         <MediaCard

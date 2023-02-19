@@ -2,6 +2,38 @@
     top: 0;
     margin-top: 2px;
 } */
+.search-container {
+    
+    margin: 10px 0;
+}
+
+.search-container input {
+    padding: 5px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    font-size: 16px;
+    margin-right: 10px;
+    width: 200px;
+    border: 2px solid var(--text-color);
+}
+
+.search-container input:focus {
+    outline: none;
+    border-bottom: 2px solid #0086b3;
+}
+
+.search-container button {
+    padding: 8px;
+    background-color: #0086b3;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search-container button:hover {
+    background-color: #006799;
+}
 
 .h1-userRecipes {
     text-align: center;

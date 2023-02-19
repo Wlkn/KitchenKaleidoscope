@@ -196,6 +196,28 @@ router.delete("/", (req, res, next) => {
             console.log(error);
         });
 });
+//get name of user from id
+router.get("/name/:user_id", (req, res, next) => {
+    User.findOne({ _id: req.params.user_id })
 
+        .then((user) => {
+            if (!user) {
+                return res.status(404).json({
+                    error: Error,
+                    message: "User not found",
+                });
+            }
+            res.status(200).json({
+                name: user.name,
+            });
+        })
+
+        .catch((error: Error) => {
+            res.status(500).json({
+                error: error,
+                message: "Something wrong happened.",
+            });
+        });
+});
 
 module.exports = router;

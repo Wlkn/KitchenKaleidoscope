@@ -9,9 +9,14 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 body: { ...credentials },
             }),
         }),
+        getUserName: builder.query({
+            query: (userId) => ({
+                url: `/api/recipes/name/${userId}`,
+                method: "GET",
+            }),
+        }),
     }),
 });
 
-export const {
-    useLoginMutation
-} = authApiSlice
+export const { useLoginMutation } = authApiSlice;
+export const { useGetUserNameQuery } = authApiSlice;

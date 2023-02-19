@@ -10,14 +10,17 @@
 
 .about-container {
     min-height: 100vh;
+
     background-color: var(--primary-color)-about;
     color: var(--secondary-color-about);
     font-family: Montserrat, sans-serif;
     -webkit-font-smoothing: antialiased;
-    padding-left: 40px;
-    padding-bottom: 80px;
+    // padding-left: 40px;
+    // padding-bottom: 80px;
 }
-
+.about-text {
+    padding-left: 40px;
+}
 .linkedin-icon {
     //place icon on the middle
     display: flex;

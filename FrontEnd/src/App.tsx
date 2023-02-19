@@ -13,7 +13,7 @@ import RecipeDetails from "./components/recipeDetails";
 import Comments from "./components/Comments";
 import UserRecipes from "./views/UserRecipes";
 import About from "./views/About";
-
+import UserPublicRecipes from "./views/UserPublicRecipes";
 function App() {
     return (
         <Router basename="/">
@@ -33,7 +33,7 @@ function App() {
                     <Route path="/myrecipes/:id" element={<UserRecipes />} />
                     <Route path="/recipelist" element={<RecipeList />} />
                     <Route path="/about" element={<About />} />
-
+                    <Route path="/user/:id" element={<UserPublicRecipes />} />
                     {/* PRIVATE ROUTES */}
                     <Route element={<RequireAuth />}></Route>
                 </Route>

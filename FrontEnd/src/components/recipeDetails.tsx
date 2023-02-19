@@ -1,8 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentRecipeId } from "../redux/reducers/recipes";
-import {
-    selectCurrentUserId,
-} from "../redux/reducers/auth";
+import { selectCurrentUserId } from "../redux/reducers/auth";
 import {
     useGetRecipesQuery,
     useGetCreatorOfRecipeQuery,
@@ -47,7 +45,6 @@ export default function RecipeDetails(formData: any) {
     const [removeRecipe] = useDeleteRecipeMutation();
     const [editRecipeMutation] = useEditRecipeMutation();
 
-   
     const currentUserId =
         useSelector(selectCurrentUserId) || localStorage.getItem("userId");
 
@@ -193,7 +190,9 @@ export default function RecipeDetails(formData: any) {
         content = (
             <div className="recipeInfo-container">
                 <div className="recipe-title">{name}</div>
-                <div className="recipe-author">Made By: {OwnerName}</div>
+                <a href={`/user/${userId}`} className="recipe-author">
+                    Made By: {OwnerName}
+                </a>
                 <div className="recipe-description">{description}</div>
                 <div>ADD A LIKE NUMBER AND LIKE BUTTON</div>
                 <img
@@ -227,8 +226,10 @@ export default function RecipeDetails(formData: any) {
             <div className="recipeDetails-header-container">
                 <Header />
                 <div className="recipeDetails-header-buttons">
-                    { currentUserId && <MyRecipesButton userId={currentUserId} />}
-                    
+                    {currentUserId && (
+                        <MyRecipesButton userId={currentUserId} />
+                    )}
+
                     <TakemeBackButton />
                 </div>
             </div>

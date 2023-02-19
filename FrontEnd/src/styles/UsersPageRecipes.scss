@@ -1,0 +1,18 @@
+.userPageRecipes-container {
+    min-height: 100vh;
+    color: white;
+    padding-bottom: 150px;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.1);
+    font-family: Montserrat, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+.userPageRecipes-header-container {
+    padding-top: 7px;
+    padding-bottom: 7px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}

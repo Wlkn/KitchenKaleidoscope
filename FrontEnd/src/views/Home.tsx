@@ -41,7 +41,7 @@ const Home = () => {
                         >
                             Login
                         </a>
-                        <span>or</span>
+                        <span className="or-text-home">or</span>
                         <a
                             className="hover-underline-animation"
                             href="/auth/signup"

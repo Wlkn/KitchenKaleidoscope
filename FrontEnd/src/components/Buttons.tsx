@@ -36,6 +36,7 @@ export const CreateNewRecipeButton = () => {
             color="primary"
             component={Link}
             to="/newRecipe"
+            sx={{ ml: "1rem" }}
         >
             Create a new recipe
         </Button>
@@ -150,6 +151,7 @@ export const LogOutButton = () => {
             component={Link}
             to="/"
             onClick={handleLogout}
+            sx={{ ml: "1rem" }}
         >
             Log Out
         </Button>
@@ -163,6 +165,7 @@ export const MyRecipesButton = (userId: any) => {
             color="primary"
             component={Link}
             to={`/myrecipes/${userId.userId}`}
+            sx={{ ml: "1rem" }}
         >
             Your Recipes
         </Button>
