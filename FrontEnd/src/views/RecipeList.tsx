@@ -78,6 +78,7 @@ export default function RecipeList() {
                             description={recipe.description}
                             instructions={recipe.instructions}
                             imageUrl={recipe.imageUrl}
+                            isPublic={!recipe.isPublic}
                         />
                     ))
                 )}
