@@ -40,6 +40,7 @@ let requestOptions: object = {
 const RecipeForm: React.FC = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [isPublic, setIsPublic] = useState<boolean>(true);
     const [imageUrl, setImageUrl] = useState<string>("");
     const [recipeName, setRecipeName] = useState<string>("");
     const [description, setDescription] = useState<string>("");
@@ -169,7 +170,7 @@ const RecipeForm: React.FC = () => {
                 description,
                 instructions,
                 imageUrl,
-                // isPublic,
+                isPublic,
             }).unwrap();
             dispatch(
                 addRecipe({
@@ -178,6 +179,7 @@ const RecipeForm: React.FC = () => {
                     description,
                     instructions,
                     imageUrl,
+                    isPublic,
                 })
             );
             //console.log(recipeData.recipeId);
@@ -231,11 +233,11 @@ const RecipeForm: React.FC = () => {
         setImageUrl(e.target.value);
     };
 
-    // const handleIsPublicChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     setIsPublic(e.target.checked);
-    // };
-    //todo
-    //
+    const handleIsPublicChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const checked = e.target.checked;
+        console.log(checked);
+        checked ? setIsPublic(false) : setIsPublic(true);
+    };
 
     //====================================================================================================
     //-ADD NEW THING HANDLERS-
@@ -472,6 +474,13 @@ const RecipeForm: React.FC = () => {
                             <br />
                         </div>
                     ))}
+                    <div className="isPublic-checkbox">
+                        <input
+                            type="checkbox"
+                            onChange={handleIsPublicChange}
+                        />
+                        <label>Private</label>
+                    </div>
 
                     <button
                         className="button"

@@ -3,6 +3,7 @@
 
 body {
     margin: 0;
+    
 }
 :root {
     padding: 0;
@@ -307,7 +308,7 @@ h1 .world .world-globe svg path {
     color: #fff;
     font-weight: bold;
     transition: all 0.3s;
-    border: 2px solid #004196;
+    border: 2px solid  var(--shadow-color);
     user-select: none;
     font-size: 16px;
     border-radius: 200px;

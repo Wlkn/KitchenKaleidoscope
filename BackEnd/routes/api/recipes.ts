@@ -13,6 +13,7 @@ router.post("/", (req, res, next) => {
         imageUrl: req.body.imageUrl,
         isPublic: req.body.isPublic,
     });
+    console.log(req.body.isPublic);
 
     recipe
         .save()
@@ -178,5 +179,23 @@ router.get("/myrecipes/:user_id", (req, res, next) => {
             });
         });
 });
+
+//delete all the recipes keep commented for now
+router.delete("/", (req, res, next) => {
+    Recipe.deleteMany({})
+        .then(() => {
+            res.status(200).json({
+                message: "All recipes have been deleted.",
+            });
+            console.log("All recipes have been deleted.");
+        })
+        .catch((error) => {
+            res.status(400).json({
+                error: error,
+            });
+            console.log(error);
+        });
+});
+
 
 module.exports = router;

@@ -21,7 +21,7 @@ export default function RecipeList() {
 
     useEffect(() => {
         if (isSuccess && data) {
-            setRecipes(data);
+            setRecipes(data.filter((recipe: any) => recipe.isPublic)); // Only show recipes that are marked as public
         }
     }, [data, isSuccess]);
     const currentToken =

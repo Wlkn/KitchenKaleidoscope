@@ -122,12 +122,38 @@ export default function MediaCard(Recipe: {
     const userLoggedIn = localStorage.getItem("userId") ? true : false;
 
     //==================================================================================================
-    const darkMode = localStorage.getItem("darkMode");
+    const [darkMode, setDarkMode] = useState(true);
+    console.log(darkMode);
+    useEffect(() => {
+        const bodyClassList = document.body.classList;
+        const isDarkMode = bodyClassList.contains("darkMode");
+        setDarkMode(isDarkMode);
+
+        const observer = new MutationObserver((mutations) => {
+            const isDarkMode = bodyClassList.contains("darkmode");
+            setDarkMode(isDarkMode);
+        });
+
+        observer.observe(document.body, {
+            attributes: true,
+            attributeFilter: ["class"],
+        });
+
+        return () => {
+            observer.disconnect();
+        };
+    }, []);
+
+    //make the darkmode change if the user changes the darkmode in the settings
 
     return (
         <StyledEngineProvider injectFirst>
             <Card
-                sx={{ maxWidth: 345, background: "#a4a4a4" }}
+                // sx={{ width: 350, background: "#a4a4a4" }}
+                sx={{
+                    width: 350,
+                    background: darkMode == false ? "#f5f5f5" : "#171717",
+                }}
                 className="recipe-item"
             >
                 <CardMedia
@@ -138,10 +164,26 @@ export default function MediaCard(Recipe: {
                     className="MuiCardMediaCustom"
                 />
                 <CardContent className="MuiCardContentCustom">
-                    <Typography gutterBottom variant="h5" component="div">
+                    <Typography
+                        gutterBottom
+                        variant="h5"
+                        component="div"
+                        sx={
+                            darkMode == false
+                                ? { color: "#171717" }
+                                : { color: "#f5f5f5" }
+                        }
+                    >
                         {Recipe.name}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography
+                        variant="body2"
+                        sx={
+                            darkMode == false
+                                ? { color: "#171717" }
+                                : { color: "#f5f5f5" }
+                        }
+                    >
                         {Recipe.description}
                     </Typography>
                 </CardContent>
