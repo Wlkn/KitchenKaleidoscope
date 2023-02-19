@@ -22,7 +22,7 @@ KitchenKaleidoscope is a fully functional online recipe book application that al
 -   ExpressJS: A fast, unopinionated web framework for Node.js.
 -   Mongoose: An Object Data Modeling (ODM) library for MongoDB and Node.js.
 -   MongoDB: A NoSQL document database that stores data in JSON-like documents.
--   PostGreSQL: A powerful, open-source relational database management system.
+-   PostgreSQL: A powerful, open-source relational database management system.
 -   MaterialUI: A popular React UI library that provides a range of customizable components.
 -   ViteJS: A build tool that provides fast and efficient development and production builds for modern web applications.
 
