@@ -12,19 +12,17 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useGetUserLikesQuery } from "../redux/slices/recipes";
 import { StyledEngineProvider } from "@mui/styled-engine-sc";
-
+import { useGetCreatorOfRecipeQuery } from "../redux/slices/recipes";
 export default function MediaCard(Recipe: {
     _id: any;
     name: string;
     description: string;
     instructions: string;
     imageUrl: string;
+    isPublic: boolean;
 }) {
     //==================================================================================================
-    //==================================================================================================
-    //========================================HANDLE LIKES=============================================
-    //==================================================================================================
-    //==================================================================================================
+
     const [isLiked, setIsLiked] = useState(false);
     const [likeData, setLikeData] = useState({});
     const dispatch = useDispatch();
@@ -45,6 +43,13 @@ export default function MediaCard(Recipe: {
             skip: !currentUserId,
         }
     );
+
+    //for each recipe fetch the creator of the recipe and display it
+    const { data: CreatorOfRecipe } = useGetCreatorOfRecipeQuery(Recipe._id, {
+        skip: !Recipe._id,
+    });
+
+    console.log(CreatorOfRecipe);
 
     useEffect(() => {
         if (!isLoading && userLikedData) {
@@ -92,41 +97,37 @@ export default function MediaCard(Recipe: {
             }
         }
     };
-    //==================================================================================================
-    //==================================================================================================
-    //========================================HANDLE LIKES==============================================
-    //==================================================================================================
-    //==================================================================================================
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    //==================================================================================================
-    //==================================================================================================
-    //=======================================HANDLE COMMENTS============================================
-    //==================================================================================================
-    //==================================================================================================
+
     function handleComments() {
         navigate(`/recipe/${Recipe._id}/comments`);
     }
     //==================================================================================================
-    //==================================================================================================
+
     //=======================================HANDLE COMMENTS============================================
-    //==================================================================================================
     //==================================================================================================
     function handleLearnMore() {
         navigate(`/recipe/${Recipe._id}`);
     }
-    //==================================================================================================
-    //==================================================================================================
-    //==========================================JSX=====================================================
+
     //==================================================================================================
     const userLoggedIn = localStorage.getItem("userId") ? true : false;
 
     //==================================================================================================
-    const [darkMode, setDarkMode] = useState(true);
-    console.log(darkMode);
+    const darkModeLocal =
+        localStorage.getItem("darkMode") == "enabled" ? true : false;
+
+    console.log(darkModeLocal);
+
+    let [darkMode, setDarkMode] = useState(darkModeLocal);
+
     useEffect(() => {
         const bodyClassList = document.body.classList;
-        const isDarkMode = bodyClassList.contains("darkMode");
+        const isDarkMode =
+            bodyClassList.contains("darkMode") ||
+            localStorage.getItem("darkMode") == "enabled"
+                ? true
+                : false;
+        console.log(isDarkMode);
         setDarkMode(isDarkMode);
 
         const observer = new MutationObserver((mutations) => {
@@ -149,55 +150,97 @@ export default function MediaCard(Recipe: {
     return (
         <StyledEngineProvider injectFirst>
             <Card
-                // sx={{ width: 350, background: "#a4a4a4" }}
                 sx={{
                     width: 350,
-                    background: darkMode == false ? "#f5f5f5" : "#171717",
+                    height: 380, // set a fixed height for the card
+                    background:
+                        darkMode == false ? "#f5f5f5" : "rgb(30, 41, 59)",
+                    border: Recipe.isPublic ? "4px solid lightblue  " : "none",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between", // align content to bottom
                 }}
                 className="recipe-item"
             >
                 <CardMedia
-                    sx={{ height: 140 }}
+                    sx={{
+                        height: 200,
+                        // set a fixed aspect ratio for the image
+                    }}
                     image={Recipe.imageUrl}
                     title={Recipe.name}
                     component="img"
                     className="MuiCardMediaCustom"
                 />
-                <CardContent className="MuiCardContentCustom">
+                <CardContent
+                    className="MuiCardContentCustom"
+                    sx={{ flexGrow: 1 }}
+                >
                     <Typography
                         gutterBottom
                         variant="h5"
                         component="div"
-                        sx={
-                            darkMode == false
-                                ? { color: "#171717" }
-                                : { color: "#f5f5f5" }
-                        }
+                        sx={{
+                            color: darkMode == false ? "#171717" : "#f5f5f5",
+                            textOverflow: "ellipsis", // truncate long text
+                            overflow: "hidden",
+                            whiteSpace: "nowrap",
+                        }}
                     >
                         {Recipe.name}
                     </Typography>
                     <Typography
+                        variant="subtitle2"
+                        sx={{
+                            color: darkMode == false ? "#171717" : "#f5f5f5",
+                            textOverflow: "ellipsis", // truncate long text
+                            overflow: "hidden",
+                            whiteSpace: "nowrap",
+                        }}
+                    >
+                        by {CreatorOfRecipe ? CreatorOfRecipe.OwnerName : " "}
+                    </Typography>
+                    <Typography
                         variant="body2"
-                        sx={
-                            darkMode == false
-                                ? { color: "#171717" }
-                                : { color: "#f5f5f5" }
-                        }
+                        sx={{
+                            color: darkMode == false ? "#171717" : "#f5f5f5",
+                            textOverflow: "ellipsis", // truncate long text
+                            overflow: "hidden",
+                            whiteSpace: "wrap",
+                        }}
                     >
                         {Recipe.description}
                     </Typography>
                 </CardContent>
                 <CardActions>
                     {userLoggedIn ? (
-                        <Button size="small" onClick={handleLike}>
-                            {isLoading ? "----" : isLiked ? "Unlike" : "Like"}
+                        <Button
+                            size="small"
+                            onClick={handleLike}
+                            style={{
+                                border: "2px dashed rgba(173, 216, 230, 0.7)",
+                            }}
+                        >
+                            {isLoading ? "  " : isLiked ? "Unlike" : "Like"}
                         </Button>
                     ) : null}
 
-                    <Button size="small" onClick={handleComments}>
+                    <Button
+                        size="small"
+                        onClick={handleComments}
+                        style={{
+                            border: "2px dashed rgba(173, 216, 230, 0.7)",
+                        }}
+                    >
                         Comments
                     </Button>
-                    <Button size="small" onClick={handleLearnMore}>
+                    <Button
+                        size="small"
+                        onClick={handleLearnMore}
+                        style={{
+                            border: "2px dashed rgba(173, 216, 230, 0.7)",
+                        }}
+                    >
                         Learn more
                     </Button>
                 </CardActions>

@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentRecipeId } from "../redux/reducers/recipes";
 import {
-    selectCurrentToken,
     selectCurrentUserId,
 } from "../redux/reducers/auth";
 import {
@@ -48,8 +47,7 @@ export default function RecipeDetails(formData: any) {
     const [removeRecipe] = useDeleteRecipeMutation();
     const [editRecipeMutation] = useEditRecipeMutation();
 
-    const currentToken =
-        useSelector(selectCurrentToken) || localStorage.getItem("token");
+   
     const currentUserId =
         useSelector(selectCurrentUserId) || localStorage.getItem("userId");
 

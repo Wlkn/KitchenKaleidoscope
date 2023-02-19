@@ -21,6 +21,12 @@ export const RecipeApiSlice = apiSlice.injectEndpoints({
                 method: "GET",
             }),
         }),
+        getAllRecipeCreators: builder.query({
+            query: () => ({
+                url: "/api/recipes/users",
+                method: "GET",
+            }),
+        }),
         getAllRecipes: builder.query({
             query: () => ({
                 url: "/api/recipes",

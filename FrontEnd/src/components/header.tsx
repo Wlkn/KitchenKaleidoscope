@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "../styles/Home.scss";
 
 export default function Header() {
@@ -70,8 +70,8 @@ export default function Header() {
                     <a className="hover-underline-animation" href="/">
                         Home
                     </a>
-                    <a className="hover-underline-animation" href="#">
-                        About (coming soon)
+                    <a className="hover-underline-animation" href="/about">
+                        About
                     </a>
                     <a className="hover-underline-animation" href="/recipeList">
                         Recipes

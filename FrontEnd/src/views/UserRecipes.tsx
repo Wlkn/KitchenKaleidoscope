@@ -10,21 +10,21 @@ import {
     CreateNewRecipeButton,
     ProfileButton,
     LogOutButton,
-
 } from "../components/Buttons";
 import Loader from "../components/Loader";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
     selectCurrentToken,
     selectCurrentUserId,
 } from "../redux/reducers/auth";
+
 interface UserCreatedRecipesProps {
     _id: string;
     name: string;
     description: string;
     instructions: string;
     imageUrl: string;
+    isPublic: boolean;
 }
 
 const UserRecipes: React.FC = () => {
@@ -35,7 +35,6 @@ const UserRecipes: React.FC = () => {
     const userLoggedIn = currentUserId && currentToken ? true : false;
     const { id } = useParams();
     const user_id = id?.toString();
-    //console.log(user_id);
     const [UserCreatedRecipes, setUserRecipes] = useState<Array<any>>([]);
     const { data, isLoading, error, isSuccess } = useGetUserRecipesQuery(
         user_id,
@@ -52,7 +51,7 @@ const UserRecipes: React.FC = () => {
 
     if (isLoading) return <Loader />;
     if (error) return <div>Error</div>;
-    //console.log(UserCreatedRecipes);
+
     return (
         <div className="userRecipes-container">
             <div className="userRecipes-header-container">
@@ -76,14 +75,18 @@ const UserRecipes: React.FC = () => {
                     (UserCreatedRecipes: UserCreatedRecipesProps) => {
                         if (!UserCreatedRecipes) return null;
                         return (
-                            <MediaCard
-                                key={UserCreatedRecipes._id}
-                                _id={UserCreatedRecipes._id}
-                                name={UserCreatedRecipes.name}
-                                description={UserCreatedRecipes.description}
-                                instructions={UserCreatedRecipes.instructions}
-                                imageUrl={UserCreatedRecipes.imageUrl}
-                            />
+                            <div key={UserCreatedRecipes._id}>
+                                <MediaCard
+                                    _id={UserCreatedRecipes._id}
+                                    name={UserCreatedRecipes.name}
+                                    description={UserCreatedRecipes.description}
+                                    instructions={
+                                        UserCreatedRecipes.instructions
+                                    }
+                                    imageUrl={UserCreatedRecipes.imageUrl}
+                                    isPublic={!UserCreatedRecipes.isPublic}
+                                />
+                            </div>
                         );
                     }
                 )}

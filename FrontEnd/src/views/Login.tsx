@@ -27,7 +27,7 @@ import { useRef, useState, useEffect } from "react";
 import { setCredentials } from "../redux/reducers/auth";
 import { useLoginMutation } from "../redux/slices/auth";
 import Loader from "../components/Loader";
-import Header from "../components/header";
+
 //REDUX
 
 function Copyright(props: any) {
@@ -102,8 +102,7 @@ function SignIn() {
         document.body.classList.add("darkMode");
     }
 
-    const whiteBackground = "#f5f5f5";
-    const darkBackground = "";
+  
 
     const content = isLoading ? (
         <Loader />

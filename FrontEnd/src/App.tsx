@@ -12,6 +12,7 @@ import CreateRecipe from "./views/CreateRecipe";
 import RecipeDetails from "./components/recipeDetails";
 import Comments from "./components/Comments";
 import UserRecipes from "./views/UserRecipes";
+import About from "./views/About";
 
 function App() {
     return (
@@ -31,6 +32,7 @@ function App() {
                     <Route path="/recipe/:id/comments" element={<Comments />} />
                     <Route path="/myrecipes/:id" element={<UserRecipes />} />
                     <Route path="/recipelist" element={<RecipeList />} />
+                    <Route path="/about" element={<About />} />
 
                     {/* PRIVATE ROUTES */}
                     <Route element={<RequireAuth />}></Route>
