@@ -66,7 +66,7 @@ export default function UserPublicRecipes() {
                     )} */}
                 </div>
             </header>
-            <h1>More from {} </h1>
+            <h1>More from {userName?.name} </h1>
             {usersRecipesFiltered?.map((usersRecipes: UserRecipesProps) => {
                 if (!usersRecipes) return null;
                 return (
