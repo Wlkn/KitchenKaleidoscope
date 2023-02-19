@@ -8,6 +8,9 @@ KitchenKaleidoscope is a fully functional online recipe book application that al
 -   Like and comment on recipes
 -   Toggle between dark and light mode
 -   Fully responsive design
+-   User authentication and authorization with login and signup, including hashed passwords
+-   Recipe privacy options - users can choose to keep their recipe private or publish it publicly
+-   Create ingredients and units for everyone to use
 
 ## Technologies Used
 
@@ -24,7 +27,7 @@ KitchenKaleidoscope is a fully functional online recipe book application that al
 
 ## API
 
-The app also features a custom API that enables users to easily share and access recipes. The API is hosted on Render, a cloud platform that makes it easy to deploy and scale web applications.
+The recipe sharing web application features a custom-made API created using ExpressJS. The API handles all data management in the application, including user authentication, recipe creation, and ingredient management. To further enhance my skills, I experimented with using two different databases - MongoDB for non-relational data hosted on Atlas, and PostGreSQL for relational data hosted on Render.
 
 ## Getting Started
 
