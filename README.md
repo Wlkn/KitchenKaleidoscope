@@ -25,6 +25,7 @@ KitchenKaleidoscope is a fully functional online recipe book application that al
 -   PostGreSQL: A powerful, open-source relational database management system.
 -   MaterialUI: A popular React UI library that provides a range of customizable components.
 -   ViteJS: A build tool that provides fast and efficient development and production builds for modern web applications.
+-   Figma: Used Figma to create some of the website's components.
 
 ## Getting Started
 
