@@ -155,7 +155,6 @@ export default function MediaCard(Recipe: {
                     height: 380, // set a fixed height for the card
                     background:
                         darkMode == false ? "#f5f5f5" : "rgb(30, 41, 59)",
-                    border: Recipe.isPublic ? "4px solid lightblue  " : "none",
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "space-between", // align content to bottom
@@ -189,6 +188,7 @@ export default function MediaCard(Recipe: {
                     >
                         {Recipe.name}
                     </Typography>
+
                     <Typography
                         variant="subtitle2"
                         sx={{
@@ -243,6 +243,45 @@ export default function MediaCard(Recipe: {
                     >
                         Learn more
                     </Button>
+                    {Recipe.isPublic && (
+                        <div
+                            style={{
+                                position: "relative",
+                                top: 0,
+                                left: 0,
+                                bottom: 0,
+                                right: 0,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                            }}
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke={
+                                    darkMode == false ? "darkblue" : "lightgray"
+                                }
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="feather feather-lock"
+                            >
+                                <rect
+                                    x="3"
+                                    y="11"
+                                    width="18"
+                                    height="11"
+                                    rx="2"
+                                    ry="2"
+                                ></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                        </div>
+                    )}
                 </CardActions>
             </Card>
         </StyledEngineProvider>
