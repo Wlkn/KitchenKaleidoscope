@@ -1,6 +1,6 @@
 # KitchenKaleidoscope
 
-Welcome to KitchenKaleidoscope! This app allows users to share, like, and comment on recipes and much more. They can then see all their favorite recipes. The app features a range of cutting-edge technologies including TypeScript, Sass, React, Redux, ExpressJS, Mongoose, MongoDB, PostGreSQL, and MaterialUI, as well as ViteJS as a build tool. KitchenKaleidoscope features user authentication and authorization with login and signup, including hashed passwords, and recipe privacy options, allowing users to choose whether to keep their recipe private or publish it publicly. The app also allows users to create ingredients and units for everyone to use. The app is fully responsive and includes a custom API hosted on Render.
+Welcome to KitchenKaleidoscope,a fully functional online recipe book application! This app allows users to share, like, and comment on recipes and much more. They can then see all their favorite recipes. KitchenKaleidoscope features user authentication and authorization with login and signup, including hashed passwords, and recipe privacy options, allowing users to choose whether to keep their recipe private or publish it publicly. The app also allows users to create ingredients and units for everyone to use. The app is fully responsive and includes a custom API hosted on Render.
 
 ## Features
 
