@@ -227,99 +227,104 @@ export default function RecipeDetails(formData: any) {
         content = (
             <div className="recipeInfo-container">
                 <div className="recipe-title">{name}</div>
-                <div className="recipe-public">
-                    {isPublic ? (
-                        <span className="recipe-private">
-                            <div
-                                style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "flex-start",
-                                    width: "100%",
-                                    height: "100%",
-                                    marginBottom: "2px",
-                                }}
-                            >
-                                <div className="private-text">
-                                    The recipe is public, everyone can see it.
-                                </div>
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="feather feather-lock"
+                {currentUserId === userId ? (
+                    <div className="recipe-public">
+                        {isPublic ? (
+                            <span className="recipe-private">
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "flex-start",
+                                        width: "100%",
+                                        height: "100%",
+                                        marginBottom: "2px",
+                                    }}
                                 >
-                                    <rect
-                                        x="3"
-                                        y="11"
-                                        width="18"
-                                        height="11"
-                                        rx="2"
-                                        ry="2"
-                                    ></rect>
-                                    <path d="M7 11V7a5 5 0 0 1 10 0"></path>
-                                </svg>
-                            </div>
-                            <div
-                                className="changeIsPublic"
-                                onClick={handleChangeIsPublic}
-                            >
-                                Make the recipe private
-                            </div>
-                        </span>
-                    ) : (
-                        <span className="recipe-private">
-                            <div
-                                style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "flex-start",
-                                    width: "100%",
-                                    height: "100%",
-                                    marginBottom: "2px",
-                                }}
-                            >
-                                <div className="private-text">
-                                    The recipe is private, only you can see it.
+                                    <div className="private-text">
+                                        The recipe is public, everyone can see
+                                        it.
+                                    </div>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className="feather feather-lock"
+                                    >
+                                        <rect
+                                            x="3"
+                                            y="11"
+                                            width="18"
+                                            height="11"
+                                            rx="2"
+                                            ry="2"
+                                        ></rect>
+                                        <path d="M7 11V7a5 5 0 0 1 10 0"></path>
+                                    </svg>
                                 </div>
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="feather feather-lock"
+                                <div
+                                    className="changeIsPublic"
+                                    onClick={handleChangeIsPublic}
                                 >
-                                    <rect
-                                        x="3"
-                                        y="11"
-                                        width="18"
-                                        height="11"
-                                        rx="2"
-                                        ry="2"
-                                    ></rect>
-                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                                </svg>
-                            </div>
-                            <div
-                                className="changeIsPublic"
-                                onClick={handleChangeIsPublic}
-                            >
-                                Make the recipe public
-                            </div>
-                        </span>
-                    )}
-                </div>
+                                    Make the recipe private
+                                </div>
+                            </span>
+                        ) : (
+                            <span className="recipe-private">
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "flex-start",
+                                        width: "100%",
+                                        height: "100%",
+                                        marginBottom: "2px",
+                                    }}
+                                >
+                                    <div className="private-text">
+                                        The recipe is private, only you can see
+                                        it.
+                                    </div>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className="feather feather-lock"
+                                    >
+                                        <rect
+                                            x="3"
+                                            y="11"
+                                            width="18"
+                                            height="11"
+                                            rx="2"
+                                            ry="2"
+                                        ></rect>
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                    </svg>
+                                </div>
+                                <div
+                                    className="changeIsPublic"
+                                    onClick={handleChangeIsPublic}
+                                >
+                                    Make the recipe public
+                                </div>
+                            </span>
+                        )}
+                    </div>
+                ) : null}
+
                 <a href={`/user/${userId}`} className="recipe-author">
                     Made By: {OwnerName}
                 </a>
