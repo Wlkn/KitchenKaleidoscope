@@ -155,9 +155,11 @@ export default function RecipeDetails(formData: any) {
         if (currentUserId) {
             try {
                 const recipeData = await editRecipeMutation({
-                    recipe_id,
                     ...data,
+                    recipe_id: data._id,
                 }).unwrap();
+                console.log(data);
+                console.log(recipeData);
 
                 dispatch(editRecipe({ recipeData }));
             } catch (error) {
@@ -169,11 +171,26 @@ export default function RecipeDetails(formData: any) {
             }, 1600);
         }
     };
+
+    const handleChangeIsPublic = (e: any) => {
+        //this request will only change the isPublic value of the recipe
+        //so we can send the normal recipe data without the ingredients and just add the isPublic value
+        console.log(recipeData);
+        console.log(recipeData?.isPublic);
+        const isPublic = !recipeData?.isPublic;
+        console.log(isPublic);
+        const data = { ...recipeData, isPublic };
+        console.log(data);
+        console.log("isPublic changed");
+        sendEditRequest(data);
+    };
+
     let content;
     if (isLoading) {
         content = <Loader />;
     } else if (isSuccess && recipeData && CreatorOfRecipe && ingredientsData) {
-        const { name, description, instructions, imageUrl } = recipeData;
+        const { name, description, instructions, imageUrl, isPublic } =
+            recipeData;
         const { userId, OwnerName } = CreatorOfRecipe;
         const ingredientList = ingredientsData.map((ingredient: any) => {
             const { quantity, unit_id, ingredient_id } = ingredient;
@@ -190,6 +207,56 @@ export default function RecipeDetails(formData: any) {
         content = (
             <div className="recipeInfo-container">
                 <div className="recipe-title">{name}</div>
+                <div className="recipe-public">
+                    {isPublic ? (
+                        "This recipe is public"
+                    ) : (
+                        <span className="recipe-private">
+                            <div
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "flex-start",
+                                    width: "100%",
+                                    height: "100%",
+                                    marginBottom: "2px",
+                                }}
+                            >
+                                <div className="private-text">
+                                    Private Recipe, only you can see it.
+                                </div>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    className="feather feather-lock"
+                                >
+                                    <rect
+                                        x="3"
+                                        y="11"
+                                        width="18"
+                                        height="11"
+                                        rx="2"
+                                        ry="2"
+                                    ></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                            </div>
+                            <div
+                                className="changeIsPublic"
+                                onClick={handleChangeIsPublic}
+                            >
+                                Make the recipe public
+                            </div>
+                        </span>
+                    )}
+                </div>
                 <a href={`/user/${userId}`} className="recipe-author">
                     Made By: {OwnerName}
                 </a>
@@ -208,6 +275,7 @@ export default function RecipeDetails(formData: any) {
                             deleteFunc={sendDeleteRequest}
                             editFunc={sendEditRequest}
                             data={formData}
+                            recipeData={recipeData}
                         />
                     </div>
                 )}

@@ -32,6 +32,8 @@ export default function Header() {
         }
     };
 
+    const userConnected = localStorage.getItem("userId");
+
     return (
         <header className="home-header-container">
             <a className="home-logo-wrapper" href="/">
@@ -66,17 +68,40 @@ export default function Header() {
                         ></path>
                     </svg>
                 </button>
-                <div className="home-links">
-                    <a className="hover-underline-animation" href="/">
-                        Home
-                    </a>
-                    <a className="hover-underline-animation" href="/about">
-                        About
-                    </a>
-                    <a className="hover-underline-animation" href="/recipeList">
-                        Recipes
-                    </a>
-                </div>
+                {userConnected ? (
+                    <div className="home-links">
+                        <a
+                            className="hover-underline-animation"
+                            href={`/myrecipes/${userConnected}`}
+                        >
+                            Home
+                        </a>
+                        <a className="hover-underline-animation" href="/about">
+                            About
+                        </a>
+                        <a
+                            className="hover-underline-animation"
+                            href="/recipeList"
+                        >
+                            Recipes
+                        </a>
+                    </div>
+                ) : (
+                    <div className="home-links">
+                        <a className="hover-underline-animation" href="/">
+                            Home
+                        </a>
+                        <a className="hover-underline-animation" href="/about">
+                            About
+                        </a>
+                        <a
+                            className="hover-underline-animation"
+                            href="/recipeList"
+                        >
+                            Recipes
+                        </a>
+                    </div>
+                )}
             </nav>
             <button className="burger-button">
                 <svg

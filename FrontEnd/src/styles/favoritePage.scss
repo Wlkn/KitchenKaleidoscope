@@ -1,0 +1,38 @@
+.favoritePage-container {
+    min-height: 100vh;
+    color: var(--text-color);
+    padding-bottom: 150px;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.1);
+    font-family: Montserrat, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+.favoritePage-header {
+    padding-top: 7px;
+    padding-bottom: 7px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+.favoritePage-title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 80px;
+}
+.favoritePage-body {
+    display: flex;
+    justify-content: center;
+
+    height: 100%;
+}
+
+.favoritePage-card {
+    margin-right: 20px;
+}

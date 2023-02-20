@@ -49,7 +49,7 @@ export default function MediaCard(Recipe: {
         skip: !Recipe._id,
     });
 
-    console.log(CreatorOfRecipe);
+    // console.log(CreatorOfRecipe);
 
     useEffect(() => {
         if (!isLoading && userLikedData) {
@@ -116,7 +116,7 @@ export default function MediaCard(Recipe: {
     const darkModeLocal =
         localStorage.getItem("darkMode") == "enabled" ? true : false;
 
-    console.log(darkModeLocal);
+    // console.log(darkModeLocal);
 
     let [darkMode, setDarkMode] = useState(darkModeLocal);
 
@@ -127,7 +127,7 @@ export default function MediaCard(Recipe: {
             localStorage.getItem("darkMode") == "enabled"
                 ? true
                 : false;
-        console.log(isDarkMode);
+        // console.log(isDarkMode);
         setDarkMode(isDarkMode);
 
         const observer = new MutationObserver((mutations) => {
@@ -157,7 +157,11 @@ export default function MediaCard(Recipe: {
                         darkMode == false ? "#f5f5f5" : "rgb(30, 41, 59)",
                     display: "flex",
                     flexDirection: "column",
-                    justifyContent: "space-between", // align content to bottom
+                    justifyContent: "space-between",
+                    boxShadow:
+                        darkMode === true
+                            ? "0px 1px 2.22px rgb(0 0 0 / 22%)"
+                            : "0px 1px 2.22px rgba(0, 0, 0, 0.16)", // align content to bottom
                 }}
                 className="recipe-item"
             >
@@ -217,8 +221,14 @@ export default function MediaCard(Recipe: {
                         <Button
                             size="small"
                             onClick={handleLike}
-                            style={{
-                                border: "2px dashed rgba(173, 216, 230, 0.7)",
+                            sx={{
+                                border: "1px solid rgba(173, 216, 230, 0.7)",
+                                "&:hover": {
+                                    backgroundColor:
+                                        darkMode == false
+                                            ? "#d1d1d1"
+                                            : "#3b5073",
+                                },
                             }}
                         >
                             {isLoading ? "  " : isLiked ? "Unlike" : "Like"}
@@ -228,8 +238,12 @@ export default function MediaCard(Recipe: {
                     <Button
                         size="small"
                         onClick={handleComments}
-                        style={{
-                            border: "2px dashed rgba(173, 216, 230, 0.7)",
+                        sx={{
+                            border: "1px solid rgba(173, 216, 230, 0.7)",
+                            "&:hover": {
+                                backgroundColor:
+                                    darkMode == false ? "#d1d1d1" : "#3b5073",
+                            },
                         }}
                     >
                         Comments
@@ -237,8 +251,12 @@ export default function MediaCard(Recipe: {
                     <Button
                         size="small"
                         onClick={handleLearnMore}
-                        style={{
-                            border: "2px dashed rgba(173, 216, 230, 0.7)",
+                        sx={{
+                            border: "1px solid rgba(173, 216, 230, 0.7)",
+                            "&:hover": {
+                                backgroundColor:
+                                    darkMode == false ? "#d1d1d1" : "#3b5073",
+                            },
                         }}
                     >
                         Learn more

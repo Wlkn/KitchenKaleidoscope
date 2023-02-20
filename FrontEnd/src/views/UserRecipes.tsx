@@ -5,7 +5,7 @@ import MediaCard from "../components/recipe";
 import "../styles/userRecipes.scss";
 import Header from "../components/header";
 import { useParams } from "react-router-dom";
-import "../styles/recipes.css";
+import "../styles/recipes.scss";
 import {
     CreateNewRecipeButton,
     ProfileButton,
@@ -68,8 +68,48 @@ const UserRecipes: React.FC = () => {
             </div>
             <p className="h1-userRecipes">Theses are your recipes!</p>
             <p className="h2-LearnMore">
-                Click on learn more to edit, or delete the recipes.
+                Click on learn more to edit, delete or see the recipes.
             </p>
+
+            <div
+                style={{
+                    position: "relative",
+                    top: 0,
+                    left: 0,
+                    bottom: 0,
+                    right: 0,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                }}
+            >
+                <div className="lock-explanation">
+                    This lock symbol means that the recipe is private. Only you
+                    can see it. You can change this in the Learn More page.
+                </div>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="coral"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="feather feather-lock"
+                >
+                    <rect
+                        x="3"
+                        y="11"
+                        width="18"
+                        height="11"
+                        rx="2"
+                        ry="2"
+                    ></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+            </div>
             <div className="userRecipes-recipes">
                 {UserCreatedRecipes.map(
                     (UserCreatedRecipes: UserCreatedRecipesProps) => {

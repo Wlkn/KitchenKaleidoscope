@@ -71,7 +71,7 @@ const About = () => {
                 </p>
                 <div>
                     <a
-                        href="[Your LinkedIn URL Here]"
+                        href="https://www.linkedin.com/in/mohamedalibachar/"
                         className="linkedin-icon"
                     >
                         <FontAwesomeIcon
@@ -83,7 +83,7 @@ const About = () => {
                         />
                     </a>
 
-                    <a href="[Your Github URL Here]" className="github-icon">
+                    <a href="https://github.com/Wlkn" className="github-icon">
                         <FontAwesomeIcon
                             icon={faGithub}
                             size="2x"

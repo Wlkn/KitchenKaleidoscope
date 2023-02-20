@@ -14,6 +14,7 @@ import Comments from "./components/Comments";
 import UserRecipes from "./views/UserRecipes";
 import About from "./views/About";
 import UserPublicRecipes from "./views/UserPublicRecipes";
+import FavoritePage from "./views/FavoritePage";
 function App() {
     return (
         <Router basename="/">
@@ -34,7 +35,12 @@ function App() {
                     <Route path="/recipelist" element={<RecipeList />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/user/:id" element={<UserPublicRecipes />} />
+
                     {/* PRIVATE ROUTES */}
+                    <Route
+                        path="/favorites/:id"
+                        element={<FavoritePage />}
+                    ></Route>
                     <Route element={<RequireAuth />}></Route>
                 </Route>
             </Routes>

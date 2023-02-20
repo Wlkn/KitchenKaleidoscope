@@ -10,16 +10,17 @@ type Props = {
     deleteFunc: () => void;
     editFunc: (data: any) => void;
     data: any;
+    recipeData: any;
 };
 
-const DeleteEdit = ({ deleteFunc, editFunc, data }: Props) => {
+const DeleteEdit = ({ deleteFunc, editFunc, data, recipeData }: Props) => {
     const [deleteMode, setDeleteMode] = useState(false);
     const [editMode, setEditMode] = useState(false);
-    const [formData, setFormData] = useState(data || {});
+    const [formData, setFormData] = useState(recipeData || {});
     const navigate = useNavigate();
     const currentUserId =
         localStorage.getItem("userId") || useSelector(selectCurrentUserId);
-
+    console.log(data);
     const handleSubmit = (event: any) => {
         MySwal.fire({
             title: <p>The Recipe has been successfully edited!</p>,
@@ -77,6 +78,7 @@ const DeleteEdit = ({ deleteFunc, editFunc, data }: Props) => {
                         type="text"
                         name="description"
                         onChange={handleChange}
+                        placeholder="Description"
                         value={formData.description || ""}
                     />
                     <br />
@@ -86,6 +88,7 @@ const DeleteEdit = ({ deleteFunc, editFunc, data }: Props) => {
                         type="text"
                         name="instructions"
                         onChange={handleChange}
+                        placeholder="Instructions"
                         value={formData.instructions || ""}
                     />
                     <br />
@@ -93,6 +96,7 @@ const DeleteEdit = ({ deleteFunc, editFunc, data }: Props) => {
                     <input
                         type="text"
                         name="imageUrl"
+                        placeholder="Image URL"
                         onChange={handleChange}
                         value={formData.imageUrl || ""}
                     />

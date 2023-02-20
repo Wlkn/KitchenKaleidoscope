@@ -36,7 +36,7 @@ export const CreateNewRecipeButton = () => {
             color="primary"
             component={Link}
             to="/newRecipe"
-            sx={{ ml: "1rem" }}
+            sx={{ ml: "1rem", maxHeight: "50px" }}
         >
             Create a new recipe
         </Button>
@@ -151,7 +151,7 @@ export const LogOutButton = () => {
             component={Link}
             to="/"
             onClick={handleLogout}
-            sx={{ ml: "1rem" }}
+            sx={{ ml: "1rem", maxHeight: "50px" }}
         >
             Log Out
         </Button>
@@ -165,9 +165,30 @@ export const MyRecipesButton = (userId: any) => {
             color="primary"
             component={Link}
             to={`/myrecipes/${userId.userId}`}
-            sx={{ ml: "1rem" }}
+            sx={{ ml: "1rem", maxHeight: "50px" }}
         >
             Your Recipes
+        </Button>
+    );
+};
+
+export const FavoriteRecipesButton = (userId: any) => {
+    const handleFavoriteRecipes = () => {
+        setTimeout(() => {
+            window.location.reload();
+        }, 1500);
+    };
+
+    return (
+        <Button
+            variant="contained"
+            color="primary"
+            component={Link}
+            onClick={handleFavoriteRecipes}
+            to={`/favorites/${userId.userId}`}
+            sx={{ ml: "1rem", maxHeight: "50px" }}
+        >
+            Favorite Recipes
         </Button>
     );
 };

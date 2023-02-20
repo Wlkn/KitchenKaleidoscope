@@ -13,6 +13,7 @@ import {
     CreateNewRecipeButton,
     MyRecipesButton,
     LogOutButton,
+    FavoriteRecipesButton,
 } from "../components/Buttons";
 import {
     useGetUserRecipesQuery,
@@ -42,9 +43,9 @@ const Profile = () => {
     );
 
     const numberOfRecipes = filteredRecipes?.length || 0;
-    const numberOfPrivateRecipes = filteredRecipes?.filter(
-        (Recipe: any) => Recipe.isPublic === false
-    ).length || 0;
+    const numberOfPrivateRecipes =
+        filteredRecipes?.filter((Recipe: any) => Recipe.isPublic === false)
+            .length || 0;
     const numberOfPublicRecipes = numberOfRecipes - numberOfPrivateRecipes;
 
     const token: string =
@@ -65,6 +66,8 @@ const Profile = () => {
                 <div className="home-logout">
                     <MyRecipesButton userId={userId} />
                     <CreateNewRecipeButton />
+                    <FavoriteRecipesButton userId={userId} />
+
                     {userLoggedIn ? (
                         <LogOutButton />
                     ) : (
