@@ -5,9 +5,9 @@ const Pool = require("pg").Pool;
 const pool = new Pool({
     connectionTimeoutMillis: 200000,
     idleTimeoutMillis: 300000,
-    host: "dpg-cfe8j2pmbjsqnjlhiai0-a.ohio-postgres.render.com",
+    host: process.env.POSTGRE_HOST_STRING,
     user: "admin",
-    password: "ABQjs9LlWAeGb9JIyz0W9yNkyhl7VZbl",
+    password: process.env.POSTGRE_PASSWORD,
     database: "kitchenkaleidoscope", //KitchenKaleidoscope Database
     port: 5432,
     ssl: true,
@@ -23,6 +23,5 @@ pool.on("error", (err, client) => {
 pool.on("connect", () => {
     console.log("Connected to the database successfully! - postGres.ts");
 });
-
 
 module.exports = pool;

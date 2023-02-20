@@ -8,16 +8,18 @@ import {
 import { useParams } from "react-router-dom";
 import { MyRecipesButton, TakemeBackButton } from "../components/Buttons";
 import Loader from "./Loader";
-
 import DeleteEdit from "./DeleteEdit";
 import { useEditRecipeMutation } from "../redux/slices/recipes";
 import { useDeleteRecipeMutation } from "../redux/slices/recipes";
-
 import { useNavigate } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { editRecipe } from "../redux/reducers/recipes";
 import Header from "./header";
 import "../styles/recipeDetails.scss";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { useFetchIngredientsByRecipeIdQuery } from "../redux/slices/ingredients";
+
 interface DeleteDataType {
     success: boolean;
     message?: string;
@@ -32,25 +34,19 @@ interface IngredientOption {
     name: string;
 }
 
-import { useFetchIngredientsByRecipeIdQuery } from "../redux/slices/ingredients";
-
 export default function RecipeDetails(formData: any) {
+    const MySwal = withReactContent(Swal);
     let { id } = useParams();
     const currentRecipeId = useSelector(selectCurrentRecipeId);
     const recipe_id: string = currentRecipeId || id;
-    // console.log(id);
-    // console.log(formData);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [removeRecipe] = useDeleteRecipeMutation();
     const [editRecipeMutation] = useEditRecipeMutation();
-
     const currentUserId =
         useSelector(selectCurrentUserId) || localStorage.getItem("userId");
-
     const { data: CreatorOfRecipe } = useGetCreatorOfRecipeQuery(id, {});
     const [deleteData, setDeleteData] = useState<DeleteDataType | null>(null);
-
     const [fetchUnits, setFetchUnits] = useState<Unit[]>([]);
     const [fetchIngredients, setFetchIngredients] = useState<
         IngredientOption[]
@@ -58,7 +54,12 @@ export default function RecipeDetails(formData: any) {
     const requestOptions = {
         method: "GET",
     };
-
+    //DATA FETCHING
+    //DATA FETCHING
+    //DATA FETCHING
+    //DATA FETCHING
+    //DATA FETCHING
+    //DATA FETCHING
     const {
         data: recipeData,
         isLoading,
@@ -71,7 +72,6 @@ export default function RecipeDetails(formData: any) {
         id,
         {}
     );
-    console.log(ingredientsData);
 
     async function fetchUnitsFromApi() {
         try {
@@ -98,7 +98,6 @@ export default function RecipeDetails(formData: any) {
                 name: unit.name,
             }));
             setFetchUnits(units);
-            console.log(units);
         }
 
         fetchData();
@@ -131,11 +130,23 @@ export default function RecipeDetails(formData: any) {
                 })
             );
             setFetchIngredients(ingredients);
-            console.log(ingredients);
         }
         fetchData();
     }, []);
-
+    //DATA FETCHING
+    //DATA FETCHING
+    //DATA FETCHING
+    //DATA FETCHING
+    //DATA FETCHING
+    //DATA FETCHING
+    //
+    //
+    //
+    //
+    //
+    //HANDLING
+    //HANDLING
+    //HANDLING
     const sendDeleteRequest = async () => {
         if (currentUserId) {
             try {
@@ -173,17 +184,26 @@ export default function RecipeDetails(formData: any) {
     };
 
     const handleChangeIsPublic = (e: any) => {
-        //this request will only change the isPublic value of the recipe
-        //so we can send the normal recipe data without the ingredients and just add the isPublic value
-        console.log(recipeData);
-        console.log(recipeData?.isPublic);
         const isPublic = !recipeData?.isPublic;
-        console.log(isPublic);
+        MySwal.fire({
+            title: (
+                <p>
+                    The Recipe has been successfully made{" "}
+                    {isPublic ? "Public" : "Private"}!
+                </p>
+            ),
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1500,
+        });
+
         const data = { ...recipeData, isPublic };
-        console.log(data);
-        console.log("isPublic changed");
+
         sendEditRequest(data);
     };
+    //HANDLING
+    //HANDLING
+    //HANDLING
 
     let content;
     if (isLoading) {
@@ -209,7 +229,50 @@ export default function RecipeDetails(formData: any) {
                 <div className="recipe-title">{name}</div>
                 <div className="recipe-public">
                     {isPublic ? (
-                        "This recipe is public"
+                        <span className="recipe-private">
+                            <div
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "flex-start",
+                                    width: "100%",
+                                    height: "100%",
+                                    marginBottom: "2px",
+                                }}
+                            >
+                                <div className="private-text">
+                                    The recipe is public, everyone can see it.
+                                </div>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    className="feather feather-lock"
+                                >
+                                    <rect
+                                        x="3"
+                                        y="11"
+                                        width="18"
+                                        height="11"
+                                        rx="2"
+                                        ry="2"
+                                    ></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0"></path>
+                                </svg>
+                            </div>
+                            <div
+                                className="changeIsPublic"
+                                onClick={handleChangeIsPublic}
+                            >
+                                Make the recipe private
+                            </div>
+                        </span>
                     ) : (
                         <span className="recipe-private">
                             <div
@@ -223,7 +286,7 @@ export default function RecipeDetails(formData: any) {
                                 }}
                             >
                                 <div className="private-text">
-                                    Private Recipe, only you can see it.
+                                    The recipe is private, only you can see it.
                                 </div>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"

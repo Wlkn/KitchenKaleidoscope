@@ -33,6 +33,13 @@ function Copyright(props: any) {
 }
 
 export default function Signup() {
+    //get the data from the password and email fields
+
+    const [password, setPassword] = React.useState("");
+    const [confirmPassword, setConfirmPassword] = React.useState("");
+    const [PasswordNotMatch, setPasswordNotMatch] = React.useState(false);
+    const [email, setEmail] = React.useState("");
+    const [emailError, setEmailError] = React.useState(false);
     const navigate = useNavigate();
     const handleSignup = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -40,6 +47,7 @@ export default function Signup() {
         const name = data.get("name") as string;
         const email = data.get("email") as string;
         const password = data.get("password") as string;
+        const confirm = data.get("confirmPassword") as string;
         let myHeaders = new Headers();
         const urlencoded = new URLSearchParams();
         urlencoded.append("name", name);
@@ -52,21 +60,26 @@ export default function Signup() {
             body: urlencoded,
             redirect: "follow",
         };
-        try {
-            const response = await fetch(
-                "https://kitchenkaleidoscope-server.onrender.com/auth/signup",
-                requestOptions
-            );
-            if (response.ok) {
-                // const json = await response.json();
-                alert("Signup successful!");
-                navigate("/auth/login");
-                //console.log(json);
-            } else {
-                console.error(response.statusText);
+
+        if (password === confirm) {
+            try {
+                const response = await fetch(
+                    "https://kitchenkaleidoscope-server.onrender.com/auth/signup",
+                    requestOptions
+                );
+                if (response.ok) {
+                    // const json = await response.json();
+                    alert("Signup successful!");
+                    navigate("/auth/login");
+                    //console.log(json);
+                } else {
+                    console.error(response.statusText);
+                }
+            } catch (error) {
+                console.error(error);
             }
-        } catch (error) {
-            console.error(error);
+        } else {
+            alert("Passwords do not match!");
         }
     };
     let darkMode = localStorage.getItem("darkMode");
@@ -74,6 +87,7 @@ export default function Signup() {
     if (darkMode === "enabled") {
         document.body.classList.add("darkMode");
     }
+
     return (
         <div className="signupContainer">
             <Container component="main" maxWidth="xs">
@@ -145,6 +159,23 @@ export default function Signup() {
                                             : "#171717",
                                 },
                             }}
+                            onChange={(e) => {
+                                setEmail(e.target.value);
+
+                                if (
+                                    /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
+                                        e.target.value
+                                    )
+                                ) {
+                                    setEmailError(false);
+                                } else {
+                                    setEmailError(true);
+                                }
+                            }}
+                            error={emailError}
+                            helperText={
+                                emailError ? "Please enter a valid email" : ""
+                            }
                             focused
                         />
                         <TextField
@@ -165,7 +196,41 @@ export default function Signup() {
                                 },
                             }}
                             focused
+                            onChange={(e) => {
+                                setPassword(e.target.value);
+                            }}
                         />
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="confirmPassword"
+                            label="Confirm Password"
+                            type="password"
+                            id="confirmPassword"
+                            autoComplete="current-password"
+                            sx={{
+                                input: {
+                                    color:
+                                        darkMode === "enabled"
+                                            ? "#f5f5f5"
+                                            : "#171717",
+                                },
+                            }}
+                            error={PasswordNotMatch}
+                            helperText={
+                                PasswordNotMatch ? "Passwords do not match" : ""
+                            }
+                            focused
+                            onChange={(e) => {
+                                setConfirmPassword(e.target.value);
+
+                                password !== e.target.value
+                                    ? setPasswordNotMatch(true)
+                                    : setPasswordNotMatch(false);
+                            }}
+                        />
+
                         <Button
                             type="submit"
                             fullWidth

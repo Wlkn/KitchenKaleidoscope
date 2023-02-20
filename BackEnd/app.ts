@@ -4,6 +4,7 @@ const cors = require("cors");
 app.use(express.json()); // for application/json
 app.use(express.urlencoded({ extended: true })); // for application/x-www-form-urlencoded
 app.use(cors());
+require("dotenv").config();
 
 //mongodbn
 import mongoose = require("mongoose");
@@ -19,9 +20,7 @@ mongoose.set("strictQuery", true);
 //todo add the remove,update and get routes for the ingredients. Theses inlude the ingredient_names and units.
 
 mongoose
-    .connect(
-        "mongodb+srv://Wlkn:vrcuITJZyZDemKby@cluster0.ztgyito.mongodb.net/?retryWrites=true&w=majority"
-    )
+    .connect(process.env.MANGODB_CONNECTION_STRING || " ")
     .then(() => {
         console.log("Connected to Mango's Database");
     })
@@ -48,10 +47,10 @@ const likesRoute = require("./models/Likes");
 //ENDPOINTS
 app.use("/auth", userRoute); // Same with this one.
 //mongodb
-app.use("/api/recipes",  recipeRoute); // This targets every that starts with /api/recipes so the :id works too.
-app.use("/api/likes",auth, likesRoute);
+app.use("/api/recipes", recipeRoute); // This targets every that starts with /api/recipes so the :id works too.
+app.use("/api/likes", auth, likesRoute);
 //postgres
-app.use("/api/comments",auth, commentRoute);
+app.use("/api/comments", auth, commentRoute);
 app.use("/api/ingredients", ingredientRoute);
 app.use("/api/ingredientNames", ingredientNamesRoute);
 app.use("/api/units", unitRoute);

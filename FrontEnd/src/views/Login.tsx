@@ -34,7 +34,7 @@ function Copyright(props: any) {
     return (
         <Typography color={"#1976d2"} variant="body2" align="center" {...props}>
             {"Copyright © "}
-            <Link href="https://kitchenkaleidoscope-server.onrender.com/">
+            <Link href="https://kitchenkaleidoscopewebapp.onrender.com/">
                 KitchenKaleidoscope
             </Link>{" "}
             {new Date().getFullYear()}
@@ -75,7 +75,7 @@ function SignIn() {
             } else if (err.status === 400) {
                 setErrMsg("Missing Username or Password");
             } else if (err.status === 401) {
-                setErrMsg("Wrong password or email");
+                setErrMsg("Wrong password");
             } else if (err.status === 404) {
                 setErrMsg("User not found");
             } else if (err.status === 500) {
@@ -83,7 +83,6 @@ function SignIn() {
             } else {
                 setErrMsg("Login Failed");
             }
-            errRef.current.focus();
         }
     };
 
@@ -101,8 +100,6 @@ function SignIn() {
     if (darkMode === "enabled") {
         document.body.classList.add("darkMode");
     }
-
-  
 
     const content = isLoading ? (
         <Loader />
@@ -185,6 +182,8 @@ function SignIn() {
                                             : "#171717",
                                 },
                             }}
+                            error={errMsg ? true : false}
+                            helperText={errMsg}
                             variant="outlined"
                         />
                         <FormControlLabel

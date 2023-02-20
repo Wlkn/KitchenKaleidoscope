@@ -13,14 +13,14 @@ type Props = {
     recipeData: any;
 };
 
-const DeleteEdit = ({ deleteFunc, editFunc, data, recipeData }: Props) => {
+const DeleteEdit = ({ deleteFunc, editFunc, recipeData }: Props) => {
     const [deleteMode, setDeleteMode] = useState(false);
     const [editMode, setEditMode] = useState(false);
     const [formData, setFormData] = useState(recipeData || {});
     const navigate = useNavigate();
     const currentUserId =
         localStorage.getItem("userId") || useSelector(selectCurrentUserId);
-    console.log(data);
+
     const handleSubmit = (event: any) => {
         MySwal.fire({
             title: <p>The Recipe has been successfully edited!</p>,
