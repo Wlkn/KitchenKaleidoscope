@@ -63,10 +63,8 @@ export default function FavoritePage() {
             <div className="favoritePage-title">Favorite Recipes</div>
             <div className="favoritePage-body">
                 {favorites?.length > 0 ? (
-                    favorites.map((favorite: any) => (
-                        <div 
-                            className="favoritePage-card"
-                        key={favorite._id}>
+                    favorites?.map((favorite: any) => (
+                        <div className="favoritePage-card" key={favorite._id}>
                             <MediaCard
                                 _id={favorite._id}
                                 name={favorite.name}

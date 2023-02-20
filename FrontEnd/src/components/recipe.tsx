@@ -98,10 +98,14 @@ export default function MediaCard(Recipe: {
         }
     };
 
+    function handleCreator() {
+        navigate(`/user/${CreatorOfRecipe.userId}`);
+    }
+
+    //==================================================================================================
     function handleComments() {
         navigate(`/recipe/${Recipe._id}/comments`);
     }
-    //==================================================================================================
 
     //=======================================HANDLE COMMENTS============================================
     //==================================================================================================
@@ -195,11 +199,16 @@ export default function MediaCard(Recipe: {
 
                     <Typography
                         variant="subtitle2"
+                        onClick={handleCreator}
                         sx={{
-                            color: darkMode == false ? "#171717" : "#f5f5f5",
+                            color: darkMode == false ? "#2746E6" : "#2B4EFF",
                             textOverflow: "ellipsis", // truncate long text
                             overflow: "hidden",
                             whiteSpace: "nowrap",
+                            cursor: "pointer",
+
+                            textDecoration: "underline",
+                            textDecorationColor: "lightblue",
                         }}
                     >
                         by {CreatorOfRecipe ? CreatorOfRecipe.OwnerName : " "}

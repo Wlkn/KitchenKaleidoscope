@@ -158,7 +158,7 @@ export default function RecipeDetails(formData: any) {
             setTimeout(() => {
                 navigate(`/myrecipes/${currentUserId}`);
                 window.location.reload();
-            }, 1600);
+            }, 500);
         }
     };
 
@@ -169,8 +169,8 @@ export default function RecipeDetails(formData: any) {
                     ...data,
                     recipe_id: data._id,
                 }).unwrap();
-                console.log(data);
-                console.log(recipeData);
+                // console.log(data);
+                // console.log(recipeData);
 
                 dispatch(editRecipe({ recipeData }));
             } catch (error) {
@@ -179,7 +179,7 @@ export default function RecipeDetails(formData: any) {
             setTimeout(() => {
                 navigate(`/myrecipes/${currentUserId}`);
                 window.location.reload();
-            }, 1600);
+            }, 500);
         }
     };
 

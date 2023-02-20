@@ -142,7 +142,7 @@ export const LogOutButton = () => {
 
         setTimeout(() => {
             window.location.reload();
-        }, 1500);
+        }, 500);
     };
     return (
         <Button
@@ -173,10 +173,12 @@ export const MyRecipesButton = (userId: any) => {
 };
 
 export const FavoriteRecipesButton = (userId: any) => {
+    const navigate = useNavigate();
     const handleFavoriteRecipes = () => {
+        navigate(`/favorites/${userId.userId}`);
         setTimeout(() => {
             window.location.reload();
-        }, 1500);
+        }, 2000);
     };
 
     return (
