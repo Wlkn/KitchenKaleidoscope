@@ -10,40 +10,39 @@ router.post("/", (req, res) => {
                 throw error;
             }
 
-            if (req.body.ingredientsList !== undefined) {
-                for (let i = 0; i < req.body.ingredientsList.length; i++) {
-                    let ingredientId = req.body.ingredientsList[i].ingredientId;
-                    let unitId = req.body.ingredientsList[i].unitId;
-                    let quantity = req.body.ingredientsList[i].quantity;
-                    let newIngredient =
-                        req.body.ingredientsList[i].newIngredient;
-                    let newUnit = req.body.ingredientsList[i].newUnit;
-
-                    // if unitId = -1 then its a completly new unit, we know this because the unitId is set to -1 in the front end
-                    if (unitId === -1) {
-                        unitId = await addNewUnit(newUnit);
-                        //make the unitId the id of the new unit
-                        //  getUnitId(newUnit);
-                    }
-
-                    //if ingredientId = '' then its a completly new ingredient, we know this because the ingredientId is set to '' in the front end
-                    if (ingredientId === -1) {
-                        //check if it indeed is a new ingredient
-                        ingredientId = await addNewIngredient(newIngredient);
-                        //make the ingredientId the id of the new ingredient
-                        //  getIngredientId(newIngredient);
-                    }
-
-                    pool.query(
-                        "INSERT INTO ingredients (recipe_id, ingredient_id, unit_id, quantity) VALUES ($1, $2, $3, $4)",
-                        [req.body.recipeId, ingredientId, unitId, quantity],
-                        (error: Error, results: any) => {
-                            if (error) {
-                                throw error;
-                            }
-                        }
-                    );
+            if (req.body !== undefined) {
+                // for (let i = 0; i < req.body.length; i++) {
+                let ingredientId = req.body.ingredientId;
+                let unitId = req.body.unitId;
+                let quantity = req.body.quantity;
+                let newIngredient = req.body.newIngredient;
+                let newUnit = req.body.newUnit;
+                //todo change back to req.body.ingredientId and [i]
+                // if unitId = -1 then its a completly new unit, we know this because the unitId is set to -1 in the front end
+                if (unitId === -1) {
+                    unitId = await addNewUnit(newUnit);
+                    //make the unitId the id of the new unit
+                    //  getUnitId(newUnit);
                 }
+
+                //if ingredientId = '' then its a completly new ingredient, we know this because the ingredientId is set to '' in the front end
+                if (ingredientId === -1) {
+                    //check if it indeed is a new ingredient
+                    ingredientId = await addNewIngredient(newIngredient);
+                    //make the ingredientId the id of the new ingredient
+                    //  getIngredientId(newIngredient);
+                }
+
+                pool.query(
+                    "INSERT INTO ingredients (recipe_id, ingredient_id, unit_id, quantity) VALUES ($1, $2, $3, $4)",
+                    [req.body.recipeId, ingredientId, unitId, quantity],
+                    (error: Error, results: any) => {
+                        if (error) {
+                            throw error;
+                        }
+                    }
+                );
+                // }
                 res.status(201).send("Ingredients added to recipe.");
                 console.log("Ingredients added to recipe.");
             }

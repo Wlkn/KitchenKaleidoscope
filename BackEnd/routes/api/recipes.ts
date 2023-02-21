@@ -103,6 +103,23 @@ router.get("/", (req, res, next) => {
         });
 });
 
+router.get("/page/:page", (req, res, next) => {
+    const page = req.params.page;
+    const limit = 20;
+    const skip = (page - 1) * limit;
+    Recipe.find()
+        .skip(skip)
+        .limit(limit)
+        .then((recipes: Object) => {
+            res.status(200).json(recipes);
+        })
+        .catch((error: Error) => {
+            res.status(400).json({
+                error: error,
+            });
+        });
+});
+
 // GET ROUTE TO GET ONE RECIPE
 // /api/recipes/:id
 router.get("/:id", (req, res, next) => {
