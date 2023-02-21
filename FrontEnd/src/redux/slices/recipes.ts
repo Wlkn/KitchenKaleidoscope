@@ -33,6 +33,12 @@ export const RecipeApiSlice = apiSlice.injectEndpoints({
                 method: "GET",
             }),
         }),
+        getRecipeByPage: builder.query({
+            query: (page) => ({
+                url: `/api/recipes/page/${page}`,
+                method: "GET",
+            }),
+        }),
         getUserRecipes: builder.query({
             query: (user_id) => ({
                 url: `/api/recipes/myrecipes/${user_id}`,
@@ -126,6 +132,8 @@ export const { useLikeRecipeMutation } = LikesApiSlice;
 //============================================
 //recipes slices
 export const { useGetAllRecipesQuery } = RecipeApiSlice;
+
+export const { useGetRecipeByPageQuery } = RecipeApiSlice;
 
 export const { useGetCreatorOfRecipeQuery } = RecipeApiSlice;
 

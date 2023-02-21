@@ -1,37 +1,52 @@
-import "../styles/recipes.scss";
 import Header from "../components/header";
 import { useSelector } from "react-redux";
 import {
     selectCurrentToken,
     selectCurrentUserId,
 } from "../redux/reducers/auth";
-import { useGetAllRecipesQuery } from "../redux/slices/recipes";
-import { useEffect, useState } from "react";
+import { useGetRecipeByPageQuery } from "../redux/slices/recipes";
+import { useEffect, useState, memo } from "react";
 import Loader from "../components/Loader";
 import { LogOutButton } from "../components/Buttons";
 import { MyRecipesButton } from "../components/Buttons";
 import MediaCard from "../components/recipe";
-
+import InfiniteScroll from "react-infinite-scroll-component";
+import { debounce } from "lodash";
 export default function RecipeList() {
-    const [recipes, setRecipes] = useState<Array<any>>([]);
+    const [recipes, setRecipes] = useState<any[]>([]);
     const [searchTerm, setSearchTerm] = useState<string>("");
-    const { data, isLoading, isSuccess, isError } = useGetAllRecipesQuery({
+    const [hasMore, setHasMore] = useState<boolean>(true);
+    const [page, setPage] = useState<number>(1);
+
+    const { data, isSuccess } = useGetRecipeByPageQuery(page, {
         skip: false,
     });
+    console.log(page);
+
+    const MemoizedMediaCard = memo(MediaCard);
+
+    const debouncedSetSearchTerm = debounce(
+        (value) => setSearchTerm(value),
+        500
+    );
 
     useEffect(() => {
         if (isSuccess && data) {
-            setRecipes(
-                data.filter(
+            setRecipes((prevRecipes) => [
+                ...prevRecipes,
+                ...data.filter(
                     (recipe: any) =>
                         recipe.isPublic &&
                         recipe.name
                             .toLowerCase()
-                            .includes(searchTerm.toLowerCase()) // Only show recipes that are marked as public and match the search term
-                )
-            );
+                            .includes(searchTerm.toLowerCase())
+                ),
+            ]);
+            if (data.length < 10) {
+                setHasMore(false);
+            }
         }
-    }, [data, isSuccess, searchTerm]);
+    }, [data, searchTerm]);
 
     const currentToken =
         localStorage.getItem("token") || useSelector(selectCurrentToken);
@@ -45,8 +60,8 @@ export default function RecipeList() {
     return (
         <div className="recipeListPage-container">
             <header className="RecipeList-header-container">
+                {" "}
                 <Header />
-
                 {userLoggedIn ? (
                     <div className="home-logout">
                         <div className="search-container">
@@ -55,7 +70,9 @@ export default function RecipeList() {
                                 placeholder=" "
                                 className="search-input"
                                 value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
+                                onChange={(e) =>
+                                    debouncedSetSearchTerm(e.target.value)
+                                }
                             />
                             <div>
                                 <svg>
@@ -88,18 +105,24 @@ export default function RecipeList() {
                 )}
             </header>
             <div className="RecipeList-container">
-                {isLoading ? (
-                    <div>
-                        Sorry, the servers are very slow, please wait a
-                        moment...
-                        <Loader />
-                    </div>
-                ) : isError ? (
-                    <div className="errorText">Error view console</div>
-                ) : (
-                    recipes.map((recipe: any) => (
-                        <div className="favoritePage-card" key={recipe._id}>
-                            <MediaCard
+                <InfiniteScroll
+                    dataLength={recipes.length}
+                    next={() => setPage((prevPage) => prevPage + 1)}
+                    hasMore={hasMore}
+                    loader={<Loader />}
+                    endMessage={
+                        <div style={{ textAlign: "center" }}>
+                            <div>Yay! You have seen it all</div>
+                        </div>
+                    }
+                    className="RecipeList-container"
+                >
+                    {recipes.map((recipe: any) => (
+                        <div
+                            className="favoritePage-card"
+                            key={recipe._id + page}
+                        >
+                            <MemoizedMediaCard
                                 _id={recipe._id}
                                 name={recipe.name}
                                 description={recipe.description}
@@ -108,8 +131,8 @@ export default function RecipeList() {
                                 isPublic={!recipe.isPublic}
                             />
                         </div>
-                    ))
-                )}
+                    ))}
+                </InfiniteScroll>
             </div>
         </div>
     );
