@@ -12,6 +12,8 @@ router.post("/", (req, res, next) => {
         instructions: req.body.instructions,
         imageUrl: req.body.imageUrl,
         isPublic: req.body.isPublic,
+        category: req.body.category,
+        area: req.body.area,
     });
     console.log(req.body.isPublic);
 
@@ -45,6 +47,8 @@ router.put("/:id", (req, res, next) => {
                 instructions: req.body.instructions,
                 imageUrl: req.body.imageUrl,
                 isPublic: req.body.isPublic,
+                category: req.body.category,
+                area: req.body.area,
             },
         }
     )

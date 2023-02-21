@@ -78,4 +78,18 @@ router.get("/", (req, res) => {
     );
 });
 
+router.get("/:name", (req, res) => {
+    const name = req.params.name;
+    pool.query(
+        "SELECT * FROM ingredient_names WHERE name = $1",
+        [name],
+        async (error: Error, results: any) => {
+            if (error) {
+                throw error;
+            }
+            res.status(200).json(results.rows);
+        }
+    );
+});
+
 module.exports = router;
