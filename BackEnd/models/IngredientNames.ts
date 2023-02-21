@@ -21,7 +21,7 @@ router.post("/", (req, res) => {
                         throw error;
                     }
                     const { rows } = await results;
-                    res.json(rows[0].id);
+                    res.json({ ingredientId: rows[0].id });
                     res.status(201).send(
                         `Ingredient added with ID: ${rows[0].id}`
                     );

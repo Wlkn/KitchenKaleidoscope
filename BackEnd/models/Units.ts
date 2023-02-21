@@ -20,7 +20,7 @@ router.post("/", (req, res) => {
                     if (error) {
                         throw error;
                     }
-                    res.json(results.rows[0].id);
+                    res.json({unitId: results.rows[0].id});
                     res.status(201).send(
                         `Unit added with ID: ${results.rows[0].id}`
                     );
