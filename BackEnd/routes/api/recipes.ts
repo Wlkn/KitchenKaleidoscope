@@ -119,6 +119,18 @@ router.get("/page/:page", (req, res, next) => {
             });
         });
 });
+//get 10 random recipes
+router.get("/random", (req, res, next) => {
+    Recipe.aggregate([{ $sample: { size: 10 } }])
+        .then((recipes: Object) => {
+            res.status(200).json(recipes);
+        })
+        .catch((error: Error) => {
+            res.status(400).json({
+                error: error,
+            });
+        });
+});
 
 // GET ROUTE TO GET ONE RECIPE
 // /api/recipes/:id

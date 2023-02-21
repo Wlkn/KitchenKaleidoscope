@@ -13,6 +13,8 @@ import {
     selectCurrentUserId,
 } from "../redux/reducers/auth";
 import { LogOutButton, MyRecipesButton } from "../components/Buttons";
+import { useGet10RandomRecipesQuery } from "../redux/slices/recipes";
+import { useEffect, useState } from "react";
 const Home = () => {
     const currentToken =
         localStorage.getItem("token") || useSelector(selectCurrentToken);
@@ -22,6 +24,18 @@ const Home = () => {
 
     const userId = currentUserId;
     const userLoggedIn = currentUserId && currentToken ? true : false;
+    const [recipes, setRecipes] = useState<any[]>([]);
+
+    const { data, isSuccess } = useGet10RandomRecipesQuery({
+        skip: false,
+    });
+
+    useEffect(() => {
+        if (isSuccess && data) {
+            setRecipes(data);
+            console.log(data);
+        }
+    }, [data]);
 
     return (
         <div className="home">

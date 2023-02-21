@@ -39,6 +39,12 @@ export const RecipeApiSlice = apiSlice.injectEndpoints({
                 method: "GET",
             }),
         }),
+        get10RandomRecipes: builder.query({
+            query: () => ({
+                url: "/api/recipes/random",
+                method: "GET",
+            }),
+        }),
         getUserRecipes: builder.query({
             query: (user_id) => ({
                 url: `/api/recipes/myrecipes/${user_id}`,
@@ -134,6 +140,8 @@ export const { useLikeRecipeMutation } = LikesApiSlice;
 export const { useGetAllRecipesQuery } = RecipeApiSlice;
 
 export const { useGetRecipeByPageQuery } = RecipeApiSlice;
+
+export const { useGet10RandomRecipesQuery } = RecipeApiSlice;
 
 export const { useGetCreatorOfRecipeQuery } = RecipeApiSlice;
 
