@@ -11,7 +11,6 @@ router.post("/", (req, res) => {
             if (error) {
                 throw error;
             }
-            
 
             const { name } = req.body;
             pool.query(
@@ -21,6 +20,7 @@ router.post("/", (req, res) => {
                     if (error) {
                         throw error;
                     }
+                    res.json(results.rows[0].id);
                     res.status(201).send(
                         `Unit added with ID: ${results.rows[0].id}`
                     );
@@ -36,7 +36,7 @@ router.get("/", (req, res) => {
         if (error) {
             throw error;
         }
-       
+
         res.status(200).json(results.rows);
     });
 });
