@@ -85,6 +85,12 @@ export default function Header() {
                         >
                             Recipes
                         </a>
+                        <a
+                            className="hover-underline-animation"
+                            href={`/favorites/${userConnected}`}
+                        >
+                            Your Favorites
+                        </a>
                     </div>
                 ) : (
                     <div className="home-links">

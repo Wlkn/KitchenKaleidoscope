@@ -21,6 +21,7 @@ export default function FavoritePage() {
         data: favoritesData,
         isLoading: favoritesIsLoading,
         error: favoritesError,
+        isSuccess: favoritesIsSuccess,
     } = useGetUserLikesQuery(userId, {
         skip: !userId,
     });
@@ -32,15 +33,15 @@ export default function FavoritePage() {
     }, [recipesData]);
 
     useEffect(() => {
-        if (favoritesData) {
+        if (favoritesData && favoritesIsSuccess && recipes) {
             const favorites = recipes.filter((recipe: any) =>
-                favoritesData?.some(
+                favoritesData.some(
                     (favorite: any) => favorite.recipe_id === recipe._id
                 )
             );
             setFavorites(favorites);
         }
-    }, [favoritesData]);
+    }, [favoritesData, favoritesIsSuccess, recipes]);
 
     return favoritesError ? (
         <div>

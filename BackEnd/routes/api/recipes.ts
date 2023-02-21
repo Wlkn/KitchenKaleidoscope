@@ -6,11 +6,16 @@ const User = require("../../models/User");
 // @route   GET api/recipes
 // POST ROUTE TO ADD RECIPES
 router.post("/", (req, res, next) => {
+    let imageUrl = req.body.imageUrl;
+    if (!imageUrl) {
+        imageUrl =
+            "hhttps://w1.pngwing.com/pngs/543/616/png-transparent-blue-circle-fork-logo-spoon-line-green-cutlery-aqua.png";
+    }
     const recipe = new Recipe({
         name: req.body.recipeName,
         description: req.body.description,
         instructions: req.body.instructions,
-        imageUrl: req.body.imageUrl,
+        imageUrl: imageUrl,
         isPublic: req.body.isPublic,
         category: req.body.category,
         area: req.body.area,
@@ -123,7 +128,7 @@ router.get("/page/:page", (req, res, next) => {
 router.get("/random", (req, res, next) => {
     Recipe.aggregate([
         { $sample: { size: 10 } },
-        { $match: { isPublic: false } },
+        { $match: { isPublic: true } },
     ])
         .then((recipes: Object) => {
             res.status(200).json(recipes);
