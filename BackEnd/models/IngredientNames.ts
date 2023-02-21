@@ -22,10 +22,6 @@ router.post("/", (req, res) => {
                     }
                     const { rows } = await results;
                     res.json({ ingredientId: rows[0].id });
-                    res.status(201).send(
-                        `Ingredient added with ID: ${rows[0].id}`
-                    );
-
                     console.log(`Ingredient added with ID: ${rows[0].id}`);
                     //TODO REMOVE THIS WHEN DONE
                 }

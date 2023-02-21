@@ -21,9 +21,7 @@ router.post("/", (req, res) => {
                         throw error;
                     }
                     res.json({unitId: results.rows[0].id});
-                    res.status(201).send(
-                        `Unit added with ID: ${results.rows[0].id}`
-                    );
+                    
                     console.log(`Unit added with ID: ${results.rows[0].id}`); //TODO REMOVE THIS WHEN DONE
                 }
             );
