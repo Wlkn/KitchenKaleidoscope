@@ -259,7 +259,27 @@ h1 .world .world-globe svg {
 h1 .world .world-globe svg path {
     fill: #6eb4ff;
 }
-
+.home-page-featured-recipes {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    position: relative;
+    margin: 0 auto;
+    height: 260px;
+    padding-top: 15px;
+}
+.loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    margin: 0 auto;
+    height: 260px;
+    padding-top: 15px;
+    background-color: var(--background-color);
+}
 .home-page-subheading {
     display: block;
     font-size: 16px;
@@ -318,12 +338,15 @@ h1 .world .world-globe svg path {
 }
 
 .card {
-    height: 280px;
+    max-height: 260px;
+    max-width: 290px;
     background-color: var(--card-color);
     border-radius: 10px;
     padding: 0px;
+
     box-shadow: 2px 2px 10px #016fff;
-    text-align: center;
+    text-align: start;
+    font-size: 10px;
     cursor: pointer;
     animation: appear16123 0.3s linear forwards;
     transition: opacity 0.3s;

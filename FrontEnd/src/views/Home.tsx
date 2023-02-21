@@ -15,6 +15,8 @@ import {
 import { LogOutButton, MyRecipesButton } from "../components/Buttons";
 import { useGet10RandomRecipesQuery } from "../redux/slices/recipes";
 import { useEffect, useState } from "react";
+import MediaCard from "../components/recipe";
+import Loader from "../components/Loader";
 const Home = () => {
     const currentToken =
         localStorage.getItem("token") || useSelector(selectCurrentToken);
@@ -26,7 +28,7 @@ const Home = () => {
     const userLoggedIn = currentUserId && currentToken ? true : false;
     const [recipes, setRecipes] = useState<any[]>([]);
 
-    const { data, isSuccess } = useGet10RandomRecipesQuery({
+    const { data, isSuccess, isLoading } = useGet10RandomRecipesQuery({
         skip: false,
     });
 
@@ -95,120 +97,27 @@ const Home = () => {
                     </h2>
                 </div>
                 <div className="home-page-featured-recipes">
-                    <div className="featured-recipes">
-                        <div className="card">
-                            <h1 className="home-recipe-name">
-                                Chocolate Chip Cookies
-                            </h1>
-                            <p className="home-recipe-description">
-                                These are the best chocolate chip cookies you
-                                will ever eat. They are soft, chewy, and loaded
-                                with chocolate chips. You will never need
-                                another chocolate chip cookie recipe again!
-                            </p>
+                    {isLoading ? (
+                        <div className="loader">
+                            <Loader />
                         </div>
+                    ) : (
+                        <div className="featured-recipes">
+                            {recipes.map((recipe: any) => (
+                                <div className="card" key={recipe._id}>
+                                    <MediaCard
+                                        _id={recipe._id}
+                                        name={recipe.name}
+                                        description={recipe.description}
+                                        instructions={recipe.instructions}
+                                        imageUrl={recipe.imageUrl}
+                                        isPublic={!recipe.isPublic}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    )}
 
-                        <div className="card">
-                            <h1 className="home-recipe-name">
-                                Chocolate Chip Cookies
-                            </h1>
-                            <p className="home-recipe-description">
-                                These are the best chocolate chip cookies you
-                                will ever eat. They are soft, chewy, and loaded
-                                with chocolate chips. You will never need
-                                another chocolate chip cookie recipe again!
-                            </p>
-                        </div>
-                        <div className="card">
-                            <h1 className="home-recipe-name">
-                                Chocolate Chip Cookies
-                            </h1>
-                            <p className="home-recipe-description">
-                                These are the best chocolate chip cookies you
-                                will ever eat. They are soft, chewy, and loaded
-                                with chocolate chips. You will never need
-                                another chocolate chip cookie recipe again!
-                            </p>
-                        </div>
-                        <div className="card">
-                            <h1 className="home-recipe-name">
-                                Chocolate Chip Cookies
-                            </h1>
-                            <p className="home-recipe-description">
-                                These are the best chocolate chip cookies you
-                                will ever eat. They are soft, chewy, and loaded
-                                with chocolate chips. You will never need
-                                another chocolate chip cookie recipe again!
-                            </p>
-                        </div>
-
-                        <div className="card">
-                            <h1 className="home-recipe-name">
-                                Chocolate Chip Cookies
-                            </h1>
-                            <p className="home-recipe-description">
-                                These are the best chocolate chip cookies you
-                                will ever eat. They are soft, chewy, and loaded
-                                with chocolate chips. You will never need
-                                another chocolate chip cookie recipe again!
-                            </p>
-                        </div>
-                        <div className="card">
-                            <h1 className="home-recipe-name">
-                                Chocolate Chip Cookies
-                            </h1>
-                            <p className="home-recipe-description">
-                                These are the best chocolate chip cookies you
-                                will ever eat. They are soft, chewy, and loaded
-                                with chocolate chips. You will never need
-                                another chocolate chip cookie recipe again!
-                            </p>
-                        </div>
-                        <div className="card">
-                            <h1 className="home-recipe-name">
-                                Chocolate Chip Cookies
-                            </h1>
-                            <p className="home-recipe-description">
-                                These are the best chocolate chip cookies you
-                                will ever eat. They are soft, chewy, and loaded
-                                with chocolate chips. You will never need
-                                another chocolate chip cookie recipe again!
-                            </p>
-                        </div>
-                        <div className="card">
-                            <h1 className="home-recipe-name">
-                                Chocolate Chip Cookies
-                            </h1>
-                            <p className="home-recipe-description">
-                                These are the best chocolate chip cookies you
-                                will ever eat. They are soft, chewy, and loaded
-                                with chocolate chips. You will never need
-                                another chocolate chip cookie recipe again!
-                            </p>
-                        </div>
-                        <div className="card">
-                            <h1 className="home-recipe-name">
-                                Chocolate Chip Cookies
-                            </h1>
-                            <p className="home-recipe-description">
-                                These are the best chocolate chip cookies you
-                                will ever eat. They are soft, chewy, and loaded
-                                with chocolate chips. You will never need
-                                another chocolate chip cookie recipe again!
-                            </p>
-                        </div>
-                        <div className="card">
-                            <h1 className="home-recipe-name">
-                                Chocolate Chip Cookies
-                            </h1>
-                            <p className="home-recipe-description">
-                                These are the best chocolate chip cookies you
-                                will ever eat. They are soft, chewy, and loaded
-                                with chocolate chips. You will never need
-                                another chocolate chip cookie recipe again!
-                            </p>
-                        </div>
-                    </div>
                     <div className="shadow-transition"></div>
                     <a className="home-browse-all-button" href="/recipeList">
                         Browse all the recipes!

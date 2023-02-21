@@ -119,9 +119,12 @@ router.get("/page/:page", (req, res, next) => {
             });
         });
 });
-//get 10 random recipes
+//get 10 random recipes that are public
 router.get("/random", (req, res, next) => {
-    Recipe.aggregate([{ $sample: { size: 10 } }])
+    Recipe.aggregate([
+        { $sample: { size: 10 } },
+        { $match: { isPublic: false } },
+    ])
         .then((recipes: Object) => {
             res.status(200).json(recipes);
         })
@@ -131,6 +134,7 @@ router.get("/random", (req, res, next) => {
             });
         });
 });
+//get 10 random recipes that are public
 
 // GET ROUTE TO GET ONE RECIPE
 // /api/recipes/:id
