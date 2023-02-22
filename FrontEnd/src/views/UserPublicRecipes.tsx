@@ -118,7 +118,7 @@ export default function UserPublicRecipes() {
                                 className="favoritePage-card"
                             >
                                 <MediaCard
-                                    _id={usersRecipes._id + page}
+                                    _id={usersRecipes._id}
                                     name={usersRecipes.name}
                                     description={usersRecipes.description}
                                     instructions={usersRecipes.instructions}
