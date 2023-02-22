@@ -48,8 +48,8 @@ export default function UserPublicRecipes() {
         }
     }, [data, isSuccess]);
 
-    const usersRecipesFiltered = usersRecipes.filter(
-        (usersRecipes: UserRecipesProps) => usersRecipes.isPublic === true
+    const usersRecipesFiltered = usersRecipes?.filter(
+        (usersRecipes: UserRecipesProps) => usersRecipes?.isPublic === true
     );
 
     const userLoggedIn = userId ? true : false;
