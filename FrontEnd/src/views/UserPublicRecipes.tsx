@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useGetUserRecipesQuery } from "../redux/slices/recipes";
+import { useGetUserRecipesByPageQuery } from "../redux/slices/recipes";
 import { useGetUserNameQuery } from "../redux/slices/auth";
 import MediaCard from "../components/recipe";
 import "../styles/UsersPageRecipes.scss";
@@ -11,6 +11,7 @@ import {
     MyRecipesButton,
     CreateNewRecipeButton,
 } from "../components/Buttons";
+import InfiniteScroll from "react-infinite-scroll-component";
 interface UserRecipesProps {
     _id: string;
     name: string;
@@ -24,11 +25,18 @@ export default function UserPublicRecipes() {
     const userId = useParams().id;
     const [usersRecipes, setUsersRecipes] = useState<Array<any>>([]);
     const [CreatorName, setCreatorName] = useState<string>("");
+    const [hasMore, setHasMore] = useState<boolean>(true);
+    const [page, setPage] = useState<number>(1);
+
     console.log(userId);
-    const { data, isLoading, isSuccess, isError, error } =
-        useGetUserRecipesQuery(userId, {
+    let user_id = userId;
+    const { data, isSuccess, isLoading, isError } =
+        useGetUserRecipesByPageQuery({
+            user_id,
+            page,
             skip: false,
         });
+
     const { data: userName, isLoading: userNameLoading } = useGetUserNameQuery(
         userId,
         {
@@ -44,9 +52,17 @@ export default function UserPublicRecipes() {
 
     useEffect(() => {
         if (isSuccess && data) {
-            setUsersRecipes(data.recipes);
+            setUsersRecipes((prevRecipes) => [
+                ...prevRecipes,
+                ...data.filter(
+                    (usersRecipes: UserRecipesProps) => usersRecipes?.isPublic
+                ),
+            ]);
+            if (data.length < 10) {
+                setHasMore(false);
+            }
         }
-    }, [data, isSuccess]);
+    }, [data]);
 
     const usersRecipesFiltered = usersRecipes?.filter(
         (usersRecipes: UserRecipesProps) => usersRecipes?.isPublic === true
@@ -75,21 +91,35 @@ export default function UserPublicRecipes() {
                 More from {userName?.name}{" "}
             </div>
             <div className="RecipeList-container">
-                {usersRecipesFiltered?.map((usersRecipes: UserRecipesProps) => {
-                    if (!usersRecipes) return null;
-                    return (
-                        <div key={usersRecipes._id}>
-                            <MediaCard
-                                _id={usersRecipes._id}
-                                name={usersRecipes.name}
-                                description={usersRecipes.description}
-                                instructions={usersRecipes.instructions}
-                                imageUrl={usersRecipes.imageUrl}
-                                isPublic={!usersRecipes.isPublic}
-                            />
-                        </div>
-                    );
-                })}
+                <InfiniteScroll
+                    dataLength={usersRecipes.length}
+                    next={() => setPage((prevPage) => prevPage + 1)}
+                    hasMore={hasMore}
+                    loader={<Loader />}
+                    endMessage={
+                        <p style={{ textAlign: "center" }}>
+                            <b>Yay! You have seen it all</b>
+                        </p>
+                    }
+                >
+                    {usersRecipesFiltered?.map(
+                        (usersRecipes: UserRecipesProps) => {
+                            if (!usersRecipes) return null;
+                            return (
+                                <div key={usersRecipes._id}>
+                                    <MediaCard
+                                        _id={usersRecipes._id}
+                                        name={usersRecipes.name}
+                                        description={usersRecipes.description}
+                                        instructions={usersRecipes.instructions}
+                                        imageUrl={usersRecipes.imageUrl}
+                                        isPublic={!usersRecipes.isPublic}
+                                    />
+                                </div>
+                            );
+                        }
+                    )}
+                </InfiniteScroll>
             </div>
         </div>
     );

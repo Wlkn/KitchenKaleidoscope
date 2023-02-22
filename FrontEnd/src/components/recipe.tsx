@@ -170,6 +170,8 @@ export default function MediaCard(Recipe: {
                 <Card
                     sx={{
                         width: 350,
+                        minHeight: 380,
+                        maxHeight: 380,
                         height: 380, // set a fixed height for the card
                         background:
                             darkMode == false ? "#f5f5f5" : "rgb(30, 41, 59)",
@@ -237,7 +239,8 @@ export default function MediaCard(Recipe: {
                                     darkMode == false ? "#171717" : "#f5f5f5",
                                 textOverflow: "ellipsis", // truncate long text
                                 overflow: "hidden",
-                                whiteSpace: "wrap",
+                                whiteSpace: "line-clamp",
+                                height: "38px",
                             }}
                         >
                             {Recipe.description}
