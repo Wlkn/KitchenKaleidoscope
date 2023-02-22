@@ -12,30 +12,36 @@ import {
     CreateNewRecipeButton,
 } from "../components/Buttons";
 import InfiniteScroll from "react-infinite-scroll-component";
-interface UserRecipesProps {
-    _id: string;
-    name: string;
-    description: string;
-    instructions: string;
-    imageUrl: string;
-    isPublic: boolean;
-}
+
+// interface UserRecipesProps {
+//     _id: string;
+//     name: string;
+//     description: string;
+//     instructions: string;
+//     imageUrl: string;
+//     isPublic: boolean;
+// }
 
 export default function UserPublicRecipes() {
     const userId = useParams().id;
-    const [usersRecipes, setUsersRecipes] = useState<Array<any>>([]);
+    const [usersRecipes, setUsersRecipes] = useState<any[]>([]);
     const [CreatorName, setCreatorName] = useState<string>("");
     const [hasMore, setHasMore] = useState<boolean>(true);
     const [page, setPage] = useState<number>(1);
 
     console.log(userId);
     let user_id = userId;
-    const { data, isSuccess, isLoading, isError } =
-        useGetUserRecipesByPageQuery({
-            user_id,
-            page,
+    const {
+        data: userRecipesData,
+        isSuccess,
+        isLoading,
+        isError,
+    } = useGetUserRecipesByPageQuery(
+        { page, user_id },
+        {
             skip: false,
-        });
+        }
+    );
 
     const { data: userName, isLoading: userNameLoading } = useGetUserNameQuery(
         userId,
@@ -51,22 +57,23 @@ export default function UserPublicRecipes() {
     }, [userNameLoading, userName]);
 
     useEffect(() => {
-        if (isSuccess && data) {
+        if (isSuccess && userRecipesData) {
+            const filteredRecipes = userRecipesData.recipes.filter(
+                (recipe: any) => recipe !== null && recipe.isPublic === true
+            );
             setUsersRecipes((prevRecipes) => [
                 ...prevRecipes,
-                ...data.filter(
-                    (usersRecipes: UserRecipesProps) => usersRecipes?.isPublic
-                ),
+                ...filteredRecipes,
             ]);
-            if (data.length < 10) {
+            if (userRecipesData.length < 10) {
                 setHasMore(false);
             }
         }
-    }, [data]);
+    }, [userRecipesData]);
 
-    const usersRecipesFiltered = usersRecipes?.filter(
-        (usersRecipes: UserRecipesProps) => usersRecipes?.isPublic === true
-    );
+    // const usersRecipesFiltered = usersRecipes?.filter(
+    //     (usersRecipes: UserRecipesProps) => usersRecipes?.isPublic === true
+    // );
 
     const userLoggedIn = userId ? true : false;
 
@@ -101,24 +108,26 @@ export default function UserPublicRecipes() {
                             <b>Yay! You have seen it all</b>
                         </p>
                     }
+                    className="RecipeList-container"
                 >
-                    {usersRecipesFiltered?.map(
-                        (usersRecipes: UserRecipesProps) => {
-                            if (!usersRecipes) return null;
-                            return (
-                                <div key={usersRecipes._id}>
-                                    <MediaCard
-                                        _id={usersRecipes._id}
-                                        name={usersRecipes.name}
-                                        description={usersRecipes.description}
-                                        instructions={usersRecipes.instructions}
-                                        imageUrl={usersRecipes.imageUrl}
-                                        isPublic={!usersRecipes.isPublic}
-                                    />
-                                </div>
-                            );
-                        }
-                    )}
+                    {usersRecipes.map((usersRecipes) => {
+                        if (!usersRecipes) return null;
+                        return (
+                            <div
+                                key={usersRecipes._id + page}
+                                className="favoritePage-card"
+                            >
+                                <MediaCard
+                                    _id={usersRecipes._id + page}
+                                    name={usersRecipes.name}
+                                    description={usersRecipes.description}
+                                    instructions={usersRecipes.instructions}
+                                    imageUrl={usersRecipes.imageUrl}
+                                    isPublic={!usersRecipes.isPublic}
+                                />
+                            </div>
+                        );
+                    })}
                 </InfiniteScroll>
             </div>
         </div>
