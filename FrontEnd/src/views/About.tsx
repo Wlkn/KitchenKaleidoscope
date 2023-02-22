@@ -38,7 +38,7 @@ const About = () => {
     }, []);
     return (
         <div className="about-container">
-            <header className="RecipeList-header-container">
+            <header className="home-header-container">
                 <Header />
             </header>
             <div className="about-text">

@@ -59,7 +59,7 @@ export default function UserPublicRecipes() {
 
     return (
         <div className="userPageRecipes-container">
-            <header className="RecipeList-header-container">
+            <header className="home-header-container">
                 <Header />
                 <div className="home-logout">
                     <MyRecipesButton userId={userId} />

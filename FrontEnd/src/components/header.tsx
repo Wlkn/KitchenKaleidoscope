@@ -3,9 +3,7 @@ import "../styles/Home.scss";
 
 export default function Header() {
     let darkMode = localStorage.getItem("darkMode");
-    const [logo, setLogo] = useState(
-        darkMode === "enabled" ? "/KKaleido.svg" : "/KKaleido-light.svg"
-    );
+    const [logo, setLogo] = useState("/KKaleido.svg");
 
     const enableDarkMode = () => {
         document.body.classList.add("darkmode");
@@ -24,10 +22,10 @@ export default function Header() {
     const darkModeToggleClick = () => {
         darkMode = localStorage.getItem("darkMode");
         if (darkMode !== "enabled") {
-            setLogo("/KKaleido.svg");
+            // setLogo("/KKaleido.svg");
             enableDarkMode();
         } else {
-            setLogo("/KKaleido-light.svg");
+            // setLogo("/KKaleido-light.svg");
             disableDarkMode();
         }
     };
@@ -35,7 +33,7 @@ export default function Header() {
     const userConnected = localStorage.getItem("userId");
 
     return (
-        <header className="home-header-container">
+        <header className="home-header-containerr">
             <a className="home-logo-wrapper" href="/">
                 <img
                     className="logo"

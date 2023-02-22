@@ -13,6 +13,10 @@ import Typography from "@mui/material/Typography";
 import { useGetUserLikesQuery } from "../redux/slices/recipes";
 import { StyledEngineProvider } from "@mui/styled-engine-sc";
 import { useGetCreatorOfRecipeQuery } from "../redux/slices/recipes";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import IconButton from "@mui/material/IconButton";
+
 import Loader from "./Loader";
 export default function MediaCard(Recipe: {
     _id: any;
@@ -45,9 +49,10 @@ export default function MediaCard(Recipe: {
         });
 
     //for each recipe fetch the creator of the recipe and display it
-    const { data: CreatorOfRecipe } = useGetCreatorOfRecipeQuery(Recipe._id, {
-        skip: !Recipe._id,
-    });
+    const { data: CreatorOfRecipe, isLoading: creatorOfRecipeIsLoading } =
+        useGetCreatorOfRecipeQuery(Recipe._id, {
+            skip: !Recipe._id,
+        });
 
     // console.log(CreatorOfRecipe);
 
@@ -151,7 +156,13 @@ export default function MediaCard(Recipe: {
 
     //make the darkmode change if the user changes the darkmode in the settings
 
-    if (userLikesIsLoading && recipeisLoading) {
+    if (
+        userLikesIsLoading &&
+        recipeisLoading &&
+        creatorOfRecipeIsLoading &&
+        !data &&
+        !error
+    ) {
         return <Loader />;
     } else {
         return (
@@ -234,21 +245,32 @@ export default function MediaCard(Recipe: {
                     </CardContent>
                     <CardActions>
                         {userLoggedIn ? (
-                            <Button
-                                size="small"
-                                onClick={handleLike}
-                                sx={{
-                                    border: "1px solid rgba(173, 216, 230, 0.7)",
-                                    "&:hover": {
-                                        backgroundColor:
-                                            darkMode == false
-                                                ? "#d1d1d1"
-                                                : "#3b5073",
-                                    },
-                                }}
-                            >
-                                {isLiked ? "Favorited ⭐" : "⭐"}
-                            </Button>
+                            // <Button
+                            //     size="small"
+                            //     onClick={handleLike}
+                            //     sx={{
+                            //         border: "none",
+                            //         "&:hover": {
+                            //             backgroundColor:
+                            //                 darkMode == false
+                            //                     ? "#d1d1d1"
+                            //                     : "#3b5073",
+                            //         },
+                            //     }}
+                            // >
+                            //     {isLiked ? "Favorited ⭐" : "⭐"}
+                            // </Button>
+                            <IconButton onClick={handleLike}>
+                                {isLiked ? (
+                                    <FavoriteIcon
+                                        sx={{
+                                            color: "red",
+                                        }}
+                                    />
+                                ) : (
+                                    <FavoriteBorderIcon />
+                                )}
+                            </IconButton>
                         ) : null}
 
                         <Button

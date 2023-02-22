@@ -61,7 +61,7 @@ const Profile = () => {
 
     const content = (
         <div className="home">
-            <header className="RecipeList-header-container">
+            <header className="home-header-container">
                 <Header />
                 <div className="home-logout">
                     <MyRecipesButton userId={userId} />

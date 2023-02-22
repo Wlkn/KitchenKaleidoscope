@@ -45,7 +45,7 @@ export default function FavoritePage() {
     }, [favoritesData, favoritesIsSuccess, recipes]);
 
     return favoritesError ? (
-        <div>
+        <div className="home-header-container">
             <Header />
             <h1>Error loading favorites</h1>
         </div>

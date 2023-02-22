@@ -213,6 +213,7 @@ export default function RecipeDetails(formData: any) {
             recipeData;
         const { userId, OwnerName } = CreatorOfRecipe;
         const ingredientList = ingredientsData.map((ingredient: any) => {
+            console.log(ingredientList);
             const { quantity, unit_id, ingredient_id } = ingredient;
             const unit = fetchUnits.find((unit) => unit.id === unit_id);
             const ingredientName = fetchIngredients.find(
@@ -329,7 +330,6 @@ export default function RecipeDetails(formData: any) {
                     Made By: {OwnerName}
                 </a>
                 <div className="recipe-description">{description}</div>
-                <div>ADD A LIKE NUMBER AND LIKE BUTTON</div>
                 <img
                     className="recipe-image"
                     src={imageUrl}

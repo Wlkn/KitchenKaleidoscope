@@ -17,7 +17,9 @@ import { useGet10RandomRecipesQuery } from "../redux/slices/recipes";
 import { useEffect, useState } from "react";
 import MediaCard from "../components/recipe";
 import Loader from "../components/Loader";
+import { useNavigate } from "react-router-dom";
 const Home = () => {
+    const navigate = useNavigate();
     const currentToken =
         localStorage.getItem("token") || useSelector(selectCurrentToken);
 
@@ -104,7 +106,13 @@ const Home = () => {
                     ) : (
                         <div className="featured-recipes">
                             {recipes.map((recipe: any) => (
-                                <div className="card" key={recipe._id}>
+                                <div
+                                    className="card"
+                                    key={recipe._id}
+                                    onClick={() => {
+                                        navigate(`/recipe/${recipe._id}`);
+                                    }}
+                                >
                                     <MediaCard
                                         _id={recipe._id}
                                         name={recipe.name}

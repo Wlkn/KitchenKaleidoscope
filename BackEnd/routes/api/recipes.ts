@@ -107,14 +107,12 @@ router.get("/", (req, res, next) => {
             });
         });
 });
-
+//get 20 recipes per page that are public and the newest first
 router.get("/page/:page", (req, res, next) => {
-    const page = req.params.page;
-    const limit = 20;
-    const skip = (page - 1) * limit;
-    Recipe.find()
-        .skip(skip)
-        .limit(limit)
+    Recipe.find({ isPublic: true })
+        .sort({ _id: -1 })
+        .skip((req.params.page - 1) * 20)
+        .limit(20)
         .then((recipes: Object) => {
             res.status(200).json(recipes);
         })

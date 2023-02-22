@@ -1,3 +1,14 @@
+.name-created-text {
+    font-size: 16px;
+    color: var(--form-font-color);
+    margin-bottom: 10px;
+}
+
+.comment-text {
+    font-size: 20px;
+    color: var(--form-font-color);
+    margin-bottom: 10px;
+}
 .comments-container-container {
     max-width: 800px;
     margin: 0 auto;
@@ -10,9 +21,9 @@
     .comment {
         margin-bottom: 40px;
         padding: 20px;
-        background-color: lightgray;
+        background-color: var(--background-color);
         border-radius: 10px;
-        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.921);
         text-align: left;
 
         h3 {

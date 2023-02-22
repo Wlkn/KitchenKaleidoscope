@@ -59,7 +59,7 @@ export default function RecipeList() {
 
     return (
         <div className="recipeListPage-container">
-            <header className="RecipeList-header-container">
+            <header className="home-header-container">
                 {" "}
                 <Header />
                 {userLoggedIn ? (

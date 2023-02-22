@@ -54,7 +54,7 @@ const UserRecipes: React.FC = () => {
 
     return (
         <div className="userRecipes-container">
-            <div className="userRecipes-header-container">
+            <div className="home-header-container">
                 <Header />
                 <div className="userRecipes-header-buttons">
                     <ProfileButton />
