@@ -87,6 +87,19 @@ router.get("/:id", (req, res) => {
     );
 });
 
+
+// router.delete("/", (req, res) => {
+//     pool.query(
+//         "DELETE FROM ingredients",
+//         (error: Error, results: any) => {
+//             if (error) {
+//                 throw error;
+//             }
+//             res.status(200).send(`All ingredients deleted`);
+//         }
+//     );
+// });
+
 async function addNewIngredient(newIngredient) {
     try {
         const { rows } = await pool.query(

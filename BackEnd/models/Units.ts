@@ -20,8 +20,8 @@ router.post("/", (req, res) => {
                     if (error) {
                         throw error;
                     }
-                    res.json({unitId: results.rows[0].id});
-                    
+                    res.json({ unitId: results.rows[0].id });
+
                     console.log(`Unit added with ID: ${results.rows[0].id}`); //TODO REMOVE THIS WHEN DONE
                 }
             );
@@ -36,6 +36,16 @@ router.get("/", (req, res) => {
         }
 
         res.status(200).json(results.rows);
+    });
+});
+
+router.delete("/", (req, res) => {
+    pool.query("DELETE FROM units", (error: Error, results: any) => {
+        if (error) {
+            throw error;
+        }
+
+        res.status(200).send(`All units deleted`);
     });
 });
 

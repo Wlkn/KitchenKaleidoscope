@@ -123,7 +123,7 @@ export default function RecipeDetails(formData: any) {
     useEffect(() => {
         async function fetchData() {
             const ingredientsJSON: any = await fetchIngredientsFromApi();
-            const ingredients: IngredientOption[] = ingredientsJSON.map(
+            const ingredients: IngredientOption[] = ingredientsJSON?.map(
                 (ingredient: IngredientOption) => ({
                     id: ingredient.id,
                     name: ingredient.name,
@@ -213,11 +213,10 @@ export default function RecipeDetails(formData: any) {
             recipeData;
         const { userId, OwnerName } = CreatorOfRecipe;
         const ingredientList = ingredientsData.map((ingredient: any) => {
-            console.log(ingredientList);
             const { quantity, unit_id, ingredient_id } = ingredient;
             const unit = fetchUnits.find((unit) => unit.id === unit_id);
             const ingredientName = fetchIngredients.find(
-                (ingredient) => ingredient.id === ingredient_id
+                (ingredient) => ingredient?.id === ingredient_id
             );
             return (
                 <li key={ingredient_id}>
