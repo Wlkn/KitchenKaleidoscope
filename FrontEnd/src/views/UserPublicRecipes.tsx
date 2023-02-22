@@ -6,7 +6,11 @@ import "../styles/UsersPageRecipes.scss";
 import Header from "../components/header";
 import { useEffect, useState } from "react";
 import Loader from "../components/Loader";
-
+import {
+    LogOutButton,
+    MyRecipesButton,
+    CreateNewRecipeButton,
+} from "../components/Buttons";
 interface UserRecipesProps {
     _id: string;
     name: string;
@@ -37,7 +41,6 @@ export default function UserPublicRecipes() {
             setCreatorName(userName?.name);
         }
     }, [userNameLoading, userName]);
-    console.log(userName);
 
     useEffect(() => {
         if (isSuccess && data) {
@@ -49,6 +52,8 @@ export default function UserPublicRecipes() {
         (usersRecipes: UserRecipesProps) => usersRecipes.isPublic === true
     );
 
+    const userLoggedIn = userId ? true : false;
+
     if (isLoading) return <Loader />;
     if (isError) return <div>Error</div>;
 
@@ -57,31 +62,35 @@ export default function UserPublicRecipes() {
             <header className="RecipeList-header-container">
                 <Header />
                 <div className="home-logout">
-                    {/* <MyRecipesButton userId={userId} />
+                    <MyRecipesButton userId={userId} />
                     <CreateNewRecipeButton />
                     {userLoggedIn ? (
                         <LogOutButton />
                     ) : (
                         <div>You aren't supposed to be here...</div>
-                    )} */}
+                    )}
                 </div>
             </header>
-            <h1>More from {userName?.name} </h1>
-            {usersRecipesFiltered?.map((usersRecipes: UserRecipesProps) => {
-                if (!usersRecipes) return null;
-                return (
-                    <div key={usersRecipes._id}>
-                        <MediaCard
-                            _id={usersRecipes._id}
-                            name={usersRecipes.name}
-                            description={usersRecipes.description}
-                            instructions={usersRecipes.instructions}
-                            imageUrl={usersRecipes.imageUrl}
-                            isPublic={!usersRecipes.isPublic}
-                        />
-                    </div>
-                );
-            })}
+            <div className="favoritePage-title">
+                More from {userName?.name}{" "}
+            </div>
+            <div className="RecipeList-container">
+                {usersRecipesFiltered?.map((usersRecipes: UserRecipesProps) => {
+                    if (!usersRecipes) return null;
+                    return (
+                        <div key={usersRecipes._id}>
+                            <MediaCard
+                                _id={usersRecipes._id}
+                                name={usersRecipes.name}
+                                description={usersRecipes.description}
+                                instructions={usersRecipes.instructions}
+                                imageUrl={usersRecipes.imageUrl}
+                                isPublic={!usersRecipes.isPublic}
+                            />
+                        </div>
+                    );
+                })}
+            </div>
         </div>
     );
 }

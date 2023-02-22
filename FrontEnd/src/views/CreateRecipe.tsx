@@ -10,7 +10,8 @@ import "../styles/_recipeForm.scss";
 import { useNavigate } from "react-router-dom";
 import { TakemeBackButton } from "../components/Buttons";
 import Loader from "../components/Loader";
-import "../styles/_base.scss";
+import Header from "../components/header";
+
 interface Ingredient {
     ingredientId: number;
     unitId: number;
@@ -323,12 +324,16 @@ const RecipeForm: React.FC = () => {
         <Loader />
     ) : (
         <div className="CreateRecipe-container">
+            <header className="home-header-container">
+                <Header />
+            </header>
             <TakemeBackButton />
             <div className="form">
                 <form className="formWrapper" onSubmit={handleSubmit}>
                     <label>
-                        Recipe Name
+                        <span className="label-text">Recipe Name</span>
                         <span className="required-star">*</span>
+
                         <input
                             className="formInput"
                             type="text"
@@ -340,7 +345,7 @@ const RecipeForm: React.FC = () => {
                     </label>
                     <br />
                     <label>
-                        Description
+                        <span className="label-text">Description </span>
                         <span className="required-star">*</span>
                         <textarea
                             placeholder="Enter a brief description of the recipe"
@@ -351,7 +356,7 @@ const RecipeForm: React.FC = () => {
                     </label>
                     <br />
                     <label>
-                        Instructions
+                        <span className="label-text">Instructions </span>
                         <span className="required-star">*</span>
                         <textarea
                             placeholder="Enter step-by-step instructions for the recipe"
@@ -362,7 +367,11 @@ const RecipeForm: React.FC = () => {
                     </label>
                     <br />
                     <label>
-                        Recipe's picture URL
+                        <span className="label-text">
+                            {" "}
+                            Recipe's picture URL{" "}
+                        </span>
+
                         <input
                             className="formInput"
                             type="text"
@@ -372,11 +381,11 @@ const RecipeForm: React.FC = () => {
                         />
                     </label>
                     <br />
-                    <h3>Ingredients</h3>
+                    <div className="ingredient-title">Ingredients</div>
                     {ingredientsList.map((ingredient, index) => (
                         <div key={index}>
                             <label>
-                                Ingredient
+                                <span className="label-text">Ingredient </span>
                                 <span className="required-star">*</span>
                                 <select
                                     value={ingredient.ingredientId}
@@ -403,7 +412,9 @@ const RecipeForm: React.FC = () => {
                                 </select>
                                 {ingredient.ingredientId === -1 && (
                                     <label>
-                                        New Ingredient
+                                        <span className="label-text">
+                                            New Ingredient
+                                        </span>
                                         <input
                                             className="newIngredient"
                                             type="text"
@@ -420,7 +431,7 @@ const RecipeForm: React.FC = () => {
                             </label>
                             <br />
                             <label>
-                                Unit
+                                <span className="label-text">Unit </span>
                                 <span className="required-star">*</span>
                                 <select
                                     value={ingredient.unitId}
@@ -438,7 +449,10 @@ const RecipeForm: React.FC = () => {
                                 </select>
                                 {ingredient.unitId === -1 && (
                                     <label>
-                                        New measuring unit
+                                        <span className="label-text">
+                                            New measuring unit
+                                        </span>
+
                                         <input
                                             className="formInput"
                                             type="text"
@@ -452,7 +466,8 @@ const RecipeForm: React.FC = () => {
                             </label>
                             <br />
                             <label>
-                                Quantity
+                                <span className="label-text"> Quantity</span>
+
                                 <span className="required-star">*</span>
                                 <input
                                     className="formInput"
@@ -475,12 +490,52 @@ const RecipeForm: React.FC = () => {
                         </div>
                     ))}
                     <div className="isPublic-checkbox">
-                        <input
-                            type="checkbox"
-                            onChange={handleIsPublicChange}
-                        />
-                        <label>Private</label>
+                        <span className="label-text">Make the recipe private?</span>
+                        <label className="checkbox">
+                            <input
+                                type="checkbox"
+                                onChange={handleIsPublicChange}
+                            />
+                            <svg viewBox="0 0 21 18">
+                                <symbol
+                                    id="tick-path"
+                                    viewBox="0 0 21 18"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        d="M5.22003 7.26C5.72003 7.76 7.57 9.7 8.67 11.45C12.2 6.05 15.65 3.5 19.19 1.69"
+                                        fill="none"
+                                    />
+                                </symbol>
+                                <defs>
+                                    <mask id="tick">
+                                        <use
+                                            className="tick mask"
+                                            href="#tick-path"
+                                        />
+                                    </mask>
+                                </defs>
+                                <use
+                                    className="tick"
+                                    href="#tick-path"
+                                    stroke="currentColor"
+                                />
+                                <path
+                                    fill="white"
+                                    mask="url(#tick)"
+                                    d="M18 9C18 10.4464 17.9036 11.8929 17.7589 13.1464C17.5179 15.6054 15.6054 17.5179 13.1625 17.7589C11.8929 17.9036 10.4464 18 9 18C7.55357 18 6.10714 17.9036 4.85357 17.7589C2.39464 17.5179 0.498214 15.6054 0.241071 13.1464C0.0964286 11.8929 0 10.4464 0 9C0 7.55357 0.0964286 6.10714 0.241071 4.8375C0.498214 2.39464 2.39464 0.482143 4.85357 0.241071C6.10714 0.0964286 7.55357 0 9 0C10.4464 0 11.8929 0.0964286 13.1625 0.241071C15.6054 0.482143 17.5179 2.39464 17.7589 4.8375C17.9036 6.10714 18 7.55357 18 9Z"
+                                />
+                            </svg>
+                            
+                            <svg className="lines" viewBox="0 0 11 11">
+                                <path d="M5.88086 5.89441L9.53504 4.26746" />
+                                <path d="M5.5274 8.78838L9.45391 9.55161" />
+                                <path d="M3.49371 4.22065L5.55387 0.79198" />
+                            </svg>
+                            
+                        </label>
                     </div>
+                    
 
                     <button
                         className="button"

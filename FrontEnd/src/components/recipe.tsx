@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import { useGetUserLikesQuery } from "../redux/slices/recipes";
 import { StyledEngineProvider } from "@mui/styled-engine-sc";
 import { useGetCreatorOfRecipeQuery } from "../redux/slices/recipes";
+import Loader from "./Loader";
 export default function MediaCard(Recipe: {
     _id: any;
     name: string;
@@ -29,7 +30,8 @@ export default function MediaCard(Recipe: {
     const navigate = useNavigate();
     const currentUserId =
         useSelector(selectCurrentUserId) || localStorage.getItem("userId");
-    const [likeRecipe, { data, error, isSuccess }] = useLikeRecipeMutation();
+    const [likeRecipe, { data, error, isSuccess, isLoading: recipeisLoading }] =
+        useLikeRecipeMutation();
 
     if (data && isSuccess && data !== likeData) {
         setLikeData(data);
@@ -37,12 +39,10 @@ export default function MediaCard(Recipe: {
         //console.log(error);
     }
 
-    const { data: userLikedData, isLoading } = useGetUserLikesQuery(
-        currentUserId,
-        {
+    const { data: userLikedData, isLoading: userLikesIsLoading } =
+        useGetUserLikesQuery(currentUserId, {
             skip: !currentUserId,
-        }
-    );
+        });
 
     //for each recipe fetch the creator of the recipe and display it
     const { data: CreatorOfRecipe } = useGetCreatorOfRecipeQuery(Recipe._id, {
@@ -52,7 +52,7 @@ export default function MediaCard(Recipe: {
     // console.log(CreatorOfRecipe);
 
     useEffect(() => {
-        if (!isLoading && userLikedData) {
+        if (!userLikesIsLoading && userLikedData) {
             const likedRecipes =
                 userLikedData.length > 0
                     ? userLikedData.map((like: any) => like.recipe_id)
@@ -151,85 +151,109 @@ export default function MediaCard(Recipe: {
 
     //make the darkmode change if the user changes the darkmode in the settings
 
-    return (
-        <StyledEngineProvider injectFirst>
-            <Card
-                sx={{
-                    width: 350,
-                    height: 380, // set a fixed height for the card
-                    background:
-                        darkMode == false ? "#f5f5f5" : "rgb(30, 41, 59)",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    boxShadow:
-                        darkMode === true
-                            ? "0px 1px 2.22px rgb(0 0 0 / 22%)"
-                            : "0px 1px 2.22px rgba(0, 0, 0, 0.16)", // align content to bottom
-                }}
-                className="recipe-item"
-            >
-                <CardMedia
+    if (userLikesIsLoading && recipeisLoading) {
+        return <Loader />;
+    } else {
+        return (
+            <StyledEngineProvider injectFirst>
+                <Card
                     sx={{
-                        height: 200,
-                        // set a fixed aspect ratio for the image
+                        width: 350,
+                        height: 380, // set a fixed height for the card
+                        background:
+                            darkMode == false ? "#f5f5f5" : "rgb(30, 41, 59)",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-between",
+                        boxShadow:
+                            darkMode === true
+                                ? "0px 1px 2.22px rgb(0 0 0 / 22%)"
+                                : "0px 1px 2.22px rgba(0, 0, 0, 0.16)", // align content to bottom
                     }}
-                    image={Recipe.imageUrl}
-                    title={Recipe.name}
-                    component="img"
-                    className="MuiCardMediaCustom"
-                />
-                <CardContent
-                    className="MuiCardContentCustom"
-                    sx={{ flexGrow: 1 }}
+                    className="recipe-item"
                 >
-                    <Typography
-                        gutterBottom
-                        variant="h5"
-                        component="div"
+                    <CardMedia
                         sx={{
-                            color: darkMode == false ? "#171717" : "#f5f5f5",
-                            textOverflow: "ellipsis", // truncate long text
-                            overflow: "hidden",
-                            whiteSpace: "nowrap",
+                            height: 200,
+                            // set a fixed aspect ratio for the image
                         }}
+                        image={Recipe.imageUrl}
+                        title={Recipe.name}
+                        component="img"
+                        className="MuiCardMediaCustom"
+                    />
+                    <CardContent
+                        className="MuiCardContentCustom"
+                        sx={{ flexGrow: 1 }}
                     >
-                        {Recipe.name}
-                    </Typography>
+                        <Typography
+                            gutterBottom
+                            variant="h5"
+                            component="div"
+                            sx={{
+                                color:
+                                    darkMode == false ? "#171717" : "#f5f5f5",
+                                textOverflow: "ellipsis", // truncate long text
+                                overflow: "hidden",
+                                whiteSpace: "nowrap",
+                            }}
+                        >
+                            {Recipe.name}
+                        </Typography>
 
-                    <Typography
-                        variant="subtitle2"
-                        onClick={handleCreator}
-                        sx={{
-                            color: darkMode == false ? "#2746E6" : "#2B4EFF",
-                            textOverflow: "ellipsis", // truncate long text
-                            overflow: "hidden",
-                            whiteSpace: "nowrap",
-                            cursor: "pointer",
+                        <Typography
+                            variant="subtitle2"
+                            onClick={handleCreator}
+                            sx={{
+                                color:
+                                    darkMode == false ? "#2746E6" : "#2B4EFF",
+                                textOverflow: "ellipsis", // truncate long text
+                                overflow: "hidden",
+                                whiteSpace: "nowrap",
+                                cursor: "pointer",
 
-                            textDecoration: "underline",
-                            textDecorationColor: "lightblue",
-                        }}
-                    >
-                        by {CreatorOfRecipe ? CreatorOfRecipe.OwnerName : " "}
-                    </Typography>
-                    <Typography
-                        variant="body2"
-                        sx={{
-                            color: darkMode == false ? "#171717" : "#f5f5f5",
-                            textOverflow: "ellipsis", // truncate long text
-                            overflow: "hidden",
-                            whiteSpace: "wrap",
-                        }}
-                    >
-                        {Recipe.description}
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    {userLoggedIn ? (
+                                textDecoration: "underline",
+                                textDecorationColor: "lightblue",
+                            }}
+                        >
+                            by{" "}
+                            {CreatorOfRecipe ? CreatorOfRecipe.OwnerName : " "}
+                        </Typography>
+                        <Typography
+                            variant="body2"
+                            sx={{
+                                color:
+                                    darkMode == false ? "#171717" : "#f5f5f5",
+                                textOverflow: "ellipsis", // truncate long text
+                                overflow: "hidden",
+                                whiteSpace: "wrap",
+                            }}
+                        >
+                            {Recipe.description}
+                        </Typography>
+                    </CardContent>
+                    <CardActions>
+                        {userLoggedIn ? (
+                            <Button
+                                size="small"
+                                onClick={handleLike}
+                                sx={{
+                                    border: "1px solid rgba(173, 216, 230, 0.7)",
+                                    "&:hover": {
+                                        backgroundColor:
+                                            darkMode == false
+                                                ? "#d1d1d1"
+                                                : "#3b5073",
+                                    },
+                                }}
+                            >
+                                {isLiked ? "Favorited ⭐" : "⭐"}
+                            </Button>
+                        ) : null}
+
                         <Button
                             size="small"
-                            onClick={handleLike}
+                            onClick={handleComments}
                             sx={{
                                 border: "1px solid rgba(173, 216, 230, 0.7)",
                                 "&:hover": {
@@ -240,75 +264,63 @@ export default function MediaCard(Recipe: {
                                 },
                             }}
                         >
-                            {isLoading ? "  " : isLiked ? "Unlike" : "Like"}
+                            Comments
                         </Button>
-                    ) : null}
-
-                    <Button
-                        size="small"
-                        onClick={handleComments}
-                        sx={{
-                            border: "1px solid rgba(173, 216, 230, 0.7)",
-                            "&:hover": {
-                                backgroundColor:
-                                    darkMode == false ? "#d1d1d1" : "#3b5073",
-                            },
-                        }}
-                    >
-                        Comments
-                    </Button>
-                    <Button
-                        size="small"
-                        onClick={handleLearnMore}
-                        sx={{
-                            border: "1px solid rgba(173, 216, 230, 0.7)",
-                            "&:hover": {
-                                backgroundColor:
-                                    darkMode == false ? "#d1d1d1" : "#3b5073",
-                            },
-                        }}
-                    >
-                        Learn more
-                    </Button>
-                    {Recipe.isPublic && (
-                        <div
-                            style={{
-                                position: "relative",
-                                top: 0,
-                                left: 0,
-                                bottom: 0,
-                                right: 0,
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
+                        <Button
+                            size="small"
+                            onClick={handleLearnMore}
+                            sx={{
+                                border: "1px solid rgba(173, 216, 230, 0.7)",
+                                "&:hover": {
+                                    backgroundColor:
+                                        darkMode == false
+                                            ? "#d1d1d1"
+                                            : "#3b5073",
+                                },
                             }}
                         >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="coral"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="feather feather-lock"
+                            Learn more
+                        </Button>
+                        {Recipe.isPublic && (
+                            <div
+                                style={{
+                                    position: "relative",
+                                    top: 0,
+                                    left: 0,
+                                    bottom: 0,
+                                    right: 0,
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                }}
                             >
-                                <rect
-                                    x="3"
-                                    y="11"
-                                    width="18"
-                                    height="11"
-                                    rx="2"
-                                    ry="2"
-                                ></rect>
-                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                            </svg>
-                        </div>
-                    )}
-                </CardActions>
-            </Card>
-        </StyledEngineProvider>
-    );
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="17"
+                                    height="24"
+                                    viewBox="0 0 22 29"
+                                    fill="none"
+                                    stroke="coral"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    className="feather feather-lock"
+                                >
+                                    <rect
+                                        x="3"
+                                        y="11"
+                                        width="18"
+                                        height="11"
+                                        rx="2"
+                                        ry="2"
+                                    ></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                            </div>
+                        )}
+                    </CardActions>
+                </Card>
+            </StyledEngineProvider>
+        );
+    }
 }

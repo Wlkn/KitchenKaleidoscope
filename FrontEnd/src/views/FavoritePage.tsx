@@ -8,6 +8,7 @@ import MediaCard from "../components/recipe";
 import Header from "../components/header";
 import "../styles/favoritePage.scss";
 import { LogOutButton } from "../components/Buttons";
+import Loader from "../components/Loader";
 
 export default function FavoritePage() {
     const userId = localStorage.getItem("userId");
@@ -45,11 +46,13 @@ export default function FavoritePage() {
 
     return favoritesError ? (
         <div>
-            <Header /> Error loading favorites
+            <Header />
+            <h1>Error loading favorites</h1>
         </div>
     ) : favoritesIsLoading || recipesIsLoading ? (
         <div>
-            <Header /> Loading...
+            <Header />
+            <Loader />
         </div>
     ) : (
         <div className="favoritePage-container">
