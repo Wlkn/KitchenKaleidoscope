@@ -12,7 +12,7 @@ import { MyRecipesButton } from "../components/Buttons";
 import MediaCard from "../components/recipe";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { debounce } from "lodash";
-import { useGetSearchedRecipesQuery } from "../redux/slices/recipes";
+
 export default function RecipeList() {
     const [recipes, setRecipes] = useState<any[]>([]);
     const [searchTerm, setSearchTerm] = useState<string>("");
@@ -22,41 +22,48 @@ export default function RecipeList() {
     const { data, isSuccess } = useGetRecipeByPageQuery(page, {
         skip: false,
     });
-    console.log(page);
-
-    const { data: searchRecipes, isSuccess: searchSuccess } =
-        useGetSearchedRecipesQuery(searchTerm, {
-            skip: false,
-        });
 
     const MemoizedMediaCard = memo(MediaCard);
 
     useEffect(() => {
         if (isSuccess && data) {
-            setRecipes((prevRecipes) => [
-                ...prevRecipes,
-                ...data.filter((recipe: any) => recipe.isPublic === true),
-            ]);
-            if (data.length < 10) {
+            const newRecipes = data.filter(
+                (recipe: any) => recipe.isPublic === true
+            );
+            setRecipes((prevRecipes) => [...prevRecipes, ...newRecipes]);
+            if (newRecipes.length < 10) {
                 setHasMore(false);
             }
         }
-    }, [data]);
+    }, [isSuccess, data]);
 
-    useEffect(() => {
-        if (searchSuccess && searchRecipes) {
-            console.log(searchRecipes);
-            setRecipes((prevRecipes) => [
-                ...prevRecipes,
-                ...searchRecipes.filter(
-                    (recipe: any) => recipe.isPublic === true
-                ),
-            ]);
-            if (searchRecipes.length < 10) {
-                setHasMore(false);
+    function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
+        const value = e.target.value;
+        setSearchTerm(value);
+        const debouncedFn = debounce(async () => {
+            if (value !== "") {
+                try {
+                    const response = await fetch(
+                        `https://kitchenkaleidoscope-server.onrender.com/api/recipes/search/${value}`
+                    );
+                    if (!response.ok) {
+                        throw new Error("Failed to fetch recipes");
+                    }
+                    const data = await response.json();
+                    setRecipes(data);
+                    setHasMore(false);
+                } catch (error) {
+                    console.error(error);
+                }
+            } else {
+                setPage(1);
+                setRecipes([]);
+                setHasMore(true);
             }
-        }
-    }, [searchTerm]);
+        }, 1000);
+
+        debouncedFn();
+    }
 
     const currentToken =
         localStorage.getItem("token") || useSelector(selectCurrentToken);
@@ -80,7 +87,7 @@ export default function RecipeList() {
                                 placeholder=" "
                                 className="search-input"
                                 value={searchTerm}
-                                onChange={(e) => e.target.value}
+                                onChange={handleSearch}
                             />
                             <div>
                                 <svg>
@@ -128,7 +135,7 @@ export default function RecipeList() {
                     {recipes.map((recipe: any) => (
                         <div
                             className="favoritePage-card"
-                            key={recipe._id + page}
+                            key={recipe._id + recipe.name}
                         >
                             <MemoizedMediaCard
                                 _id={recipe._id}
