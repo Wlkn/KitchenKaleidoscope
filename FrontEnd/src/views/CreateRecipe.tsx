@@ -12,6 +12,8 @@ import { TakemeBackButton } from "../components/Buttons";
 import Loader from "../components/Loader";
 import Header from "../components/header";
 import Avatar from "@mui/material/Avatar";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
 interface Ingredient {
     ingredientId: number;
     unitId: number;
@@ -278,10 +280,8 @@ const RecipeForm: React.FC = () => {
         ]);
     };
 
-    const handleIngredientChange = (
-        e: React.ChangeEvent<HTMLSelectElement>,
-        index: number
-    ) => {
+    const handleIngredientChange = (e: any, index: number) => {
+        console.log(e.target.value);
         const newIngredientsList = [...ingredientsList];
         newIngredientsList[index].ingredientId = parseInt(e.target.value);
         setIngredientsList(newIngredientsList);
@@ -396,13 +396,13 @@ const RecipeForm: React.FC = () => {
                             <label>
                                 <span className="label-text">Ingredient </span>
                                 <span className="required-star">*</span>
-                                <select
+                                {/* <select
                                     value={ingredient.ingredientId}
                                     onChange={(e) =>
                                         handleIngredientChange(e, index)
                                     }
-                                >
-                                    <option value={0} disabled>
+                                > */}
+                                {/* <option value={0} disabled>
                                         Select an ingredient or enter a new one
                                     </option>
                                     {fetchIngredients.map(
@@ -417,10 +417,63 @@ const RecipeForm: React.FC = () => {
                                     )}
                                     <option value={-1}>
                                         Add a new Ingredient!
-                                    </option>
-                                </select>
-                                {ingredient.ingredientId === -1 && (
-                                    <label>
+                                    </option> */}
+                                {/* </select> */}
+                            </label>
+                            <label>
+                                <Autocomplete
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            label="Select an ingredient or enter a new one"
+                                            variant="outlined"
+                                            sx={{ color: "white" }}
+                                        />
+                                    )}
+                                    options={[
+                                        ...fetchIngredients.map(
+                                            (ingredientName) => ({
+                                                id: ingredientName.id,
+                                                name: ingredientName.name,
+                                            })
+                                        ),
+                                        { id: -1, name: "New Ingredient" },
+                                    ]}
+                                    getOptionLabel={(option) => option.name}
+                                    value={
+                                        ingredient.ingredientId
+                                            ? fetchIngredients.find(
+                                                  (ingredientName) =>
+                                                      ingredientName.id ===
+                                                      ingredient.ingredientId
+                                              )
+                                            : { id: -1, name: "New Ingredient" }
+                                    }
+                                    fullWidth
+                                    sx={{ color: "white" }}
+                                    renderOption={(props, option) => (
+                                        <li {...props}>
+                                            {option.name ===
+                                            "New Ingredient" ? (
+                                                <span className="label-text">
+                                                    {option.name}
+                                                </span>
+                                            ) : (
+                                                option.name
+                                            )}
+                                        </li>
+                                    )}
+                                    onChange={(e, value) => {
+                                        if (value) {
+                                            handleIngredientChange(
+                                                value,
+                                                index
+                                            );
+                                        }
+                                    }}
+                                />
+                                {/* {ingredient.ingredientId === -1 && (
+                                    <>
                                         <span className="label-text">
                                             New Ingredient
                                         </span>
@@ -435,9 +488,10 @@ const RecipeForm: React.FC = () => {
                                                 )
                                             }
                                         />
-                                    </label>
-                                )}
+                                    </>
+                                )} */}
                             </label>
+
                             <br />
                             <label>
                                 <span className="label-text">Unit </span>

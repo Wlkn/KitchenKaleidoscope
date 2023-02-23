@@ -126,7 +126,7 @@ export default function RecipeList() {
         }).toString();
 
         const response = await fetch(
-            `https://kitchenkaleidoscope-server.onrender.com/api/recipes/sort?${query}`
+            `https://kitchenkaleidoscope-server.onrender.com/api/recipes/filter?${query}`
         );
         const data = await response.json();
 
