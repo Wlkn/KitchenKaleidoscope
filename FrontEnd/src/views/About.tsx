@@ -4,7 +4,13 @@ import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
 import { useState, useEffect } from "react";
 import "../styles/about.scss";
 import Header from "../components/header";
+import { LogOutButton } from "../components/Buttons";
+import { useNavigate } from "react-router-dom";
+import Avatar from "@mui/material/Avatar";
 const About = () => {
+    const userLoggedIn = localStorage.getItem("token") ? true : false;
+    const navigate = useNavigate();
+    const name = localStorage.getItem("name");
     const darkModeLocal =
         localStorage.getItem("darkMode") == "enabled" ? true : false;
 
@@ -40,6 +46,33 @@ const About = () => {
         <div className="about-container">
             <header className="home-header-container">
                 <Header />
+                {userLoggedIn ? (
+                    <div className="home-logout">
+                        <LogOutButton />
+                        <Avatar
+                            sx={{ ml: 2 }}
+                            onClick={() => navigate(`/profile/`)}
+                        >
+                            {name && name[0]}
+                        </Avatar>
+                    </div>
+                ) : (
+                    <div className="home-login">
+                        <a
+                            className="hover-underline-animation"
+                            href="/auth/login"
+                        >
+                            Login
+                        </a>
+                        <span className="or-text-home">or</span>
+                        <a
+                            className="hover-underline-animation"
+                            href="/auth/signup"
+                        >
+                            Sign up
+                        </a>
+                    </div>
+                )}
             </header>
             <div className="about-text">
                 <h1>About Our Recipe Sharing Website</h1>

@@ -130,6 +130,7 @@ export const LogOutButton = () => {
         localStorage.removeItem("userId");
         localStorage.removeItem("email");
         localStorage.removeItem("user");
+        localStorage.removeItem("name");
 
         dispatch(logOut);
 

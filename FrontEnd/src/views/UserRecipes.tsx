@@ -17,7 +17,8 @@ import {
     selectCurrentToken,
     selectCurrentUserId,
 } from "../redux/reducers/auth";
-
+import { useNavigate } from "react-router-dom";
+import Avatar from "@mui/material/Avatar";
 interface UserCreatedRecipesProps {
     _id: string;
     name: string;
@@ -28,6 +29,8 @@ interface UserCreatedRecipesProps {
 }
 
 const UserRecipes: React.FC = () => {
+    const name = localStorage.getItem("name");
+    const navigate = useNavigate();
     const currentToken =
         localStorage.getItem("token") || useSelector(selectCurrentToken);
     const currentUserId =
@@ -56,15 +59,35 @@ const UserRecipes: React.FC = () => {
         <div className="userRecipes-container">
             <div className="home-header-container">
                 <Header />
-                <div className="userRecipes-header-buttons">
-                    <ProfileButton />
-                    <CreateNewRecipeButton />
-                    {userLoggedIn ? (
+                {userLoggedIn ? (
+                    <div className="home-logout">
+                        <ProfileButton />
+                        <CreateNewRecipeButton />
                         <LogOutButton />
-                    ) : (
-                        <div>You aren't supposed to be here...</div>
-                    )}
-                </div>
+                        <Avatar
+                            sx={{ ml: 2 }}
+                            onClick={() => navigate(`/profile/`)}
+                        >
+                            {name && name[0]}
+                        </Avatar>
+                    </div>
+                ) : (
+                    <div className="home-login">
+                        <a
+                            className="hover-underline-animation"
+                            href="/auth/login"
+                        >
+                            Login
+                        </a>
+                        <span className="or-text-home">or</span>
+                        <a
+                            className="hover-underline-animation"
+                            href="/auth/signup"
+                        >
+                            Sign up
+                        </a>
+                    </div>
+                )}
             </div>
             <p className="h1-userRecipes">Theses are your recipes!</p>
             <p className="h2-LearnMore">

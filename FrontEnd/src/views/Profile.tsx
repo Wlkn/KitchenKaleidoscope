@@ -19,7 +19,10 @@ import {
     useGetUserRecipesQuery,
     useGetUserLikesQuery,
 } from "../redux/slices/recipes";
+import Avatar from "@mui/material/Avatar";
+import { useNavigate } from "react-router-dom";
 const Profile = () => {
+    const navigate = useNavigate();
     const SelectedUserId =
         useSelector(selectCurrentUserId) || localStorage.getItem("userId");
     const userId = SelectedUserId;
@@ -63,17 +66,36 @@ const Profile = () => {
         <div className="home">
             <header className="home-header-container">
                 <Header />
-                <div className="home-logout">
-                    <MyRecipesButton userId={userId} />
-                    <CreateNewRecipeButton />
-                    <FavoriteRecipesButton userId={userId} />
-
-                    {userLoggedIn ? (
+                {userLoggedIn ? (
+                    <div className="home-logout">
+                        <MyRecipesButton userId={userId} />
+                        <CreateNewRecipeButton />
+                        <FavoriteRecipesButton userId={userId} />
                         <LogOutButton />
-                    ) : (
-                        <div>You aren't supposed to be here...</div>
-                    )}
-                </div>
+                        <Avatar
+                            sx={{ ml: 2 }}
+                            onClick={() => navigate(`/profile/`)}
+                        >
+                            {name && name[0]}
+                        </Avatar>
+                    </div>
+                ) : (
+                    <div className="home-login">
+                        <a
+                            className="hover-underline-animation"
+                            href="/auth/login"
+                        >
+                            Login
+                        </a>
+                        <span className="or-text-home">or</span>
+                        <a
+                            className="hover-underline-animation"
+                            href="/auth/signup"
+                        >
+                            Sign up
+                        </a>
+                    </div>
+                )}
             </header>
             <section className="welcome">
                 <h1>Welcome to your profile page!</h1>

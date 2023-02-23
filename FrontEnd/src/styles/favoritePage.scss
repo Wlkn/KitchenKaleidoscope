@@ -2,7 +2,6 @@
     min-height: 100vh;
     color: var(--background-color);
     padding-bottom: 150px;
-    height: 100vh;
     font-family: Montserrat, sans-serif;
     -webkit-font-smoothing: antialiased;
 }
@@ -24,6 +23,7 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 80px;
+    margin-top: 80px;
 }
 .favoritePage-body {
     display: flex;

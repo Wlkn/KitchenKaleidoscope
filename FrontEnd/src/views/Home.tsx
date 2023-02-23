@@ -1,10 +1,10 @@
 import "../styles/Home.scss";
 import GlobeAnimation from "../components/GlobeAnimation";
-import Recipe from "../components/recipe";
+
 import {
-    LogInButton,
+  
     ProfileButton,
-    SignUpButton,
+  
 } from "../components/Buttons";
 import Header from "../components/header";
 import { useSelector } from "react-redux";
@@ -18,6 +18,7 @@ import { useEffect, useState } from "react";
 import MediaCard from "../components/recipe";
 import Loader from "../components/Loader";
 import { useNavigate } from "react-router-dom";
+import Avatar from "@mui/material/Avatar";
 const Home = () => {
     const navigate = useNavigate();
     const currentToken =
@@ -29,7 +30,7 @@ const Home = () => {
     const userId = currentUserId;
     const userLoggedIn = currentUserId && currentToken ? true : false;
     const [recipes, setRecipes] = useState<any[]>([]);
-
+    const userName = localStorage.getItem("name");
     const { data, isSuccess, isLoading } = useGet10RandomRecipesQuery({
         skip: false,
     });
@@ -50,6 +51,12 @@ const Home = () => {
                         <ProfileButton />
                         <MyRecipesButton userId={userId} />
                         <LogOutButton />
+                        <Avatar
+                            sx={{ ml: 2 }}
+                            onClick={() => navigate(`/profile/`)}
+                        >
+                            {userName && userName[0]}
+                        </Avatar>
                     </div>
                 ) : (
                     <div className="home-login">

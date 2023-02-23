@@ -15,7 +15,16 @@
 .search-container {
     display: table;
 }
-
+.filters {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 1em;
+    margin: 0 auto;
+    padding: 0 20px;
+    margin-top: 50px;
+    -webkit-font-smoothing: antialiased;
+}
 .search-container input {
     background: none;
     border: none;
@@ -23,6 +32,7 @@
     width: 28px;
     min-width: 0;
     padding: 0;
+    padding-top: 20px;
     z-index: 1;
     position: relative;
     line-height: 18px;
@@ -67,7 +77,6 @@
         }
     }
 }
-
 
 .h1-userRecipes {
     text-align: center;

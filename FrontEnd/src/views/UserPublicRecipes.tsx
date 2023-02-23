@@ -12,7 +12,8 @@ import {
     CreateNewRecipeButton,
 } from "../components/Buttons";
 import InfiniteScroll from "react-infinite-scroll-component";
-
+import { useNavigate } from "react-router-dom";
+import Avatar from "@mui/material/Avatar";
 // interface UserRecipesProps {
 //     _id: string;
 //     name: string;
@@ -23,6 +24,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 // }
 
 export default function UserPublicRecipes() {
+    const name = localStorage.getItem("name");
+    const navigate = useNavigate();
     const userId = useParams().id;
     const [usersRecipes, setUsersRecipes] = useState<any[]>([]);
     const [CreatorName, setCreatorName] = useState<string>("");
@@ -84,15 +87,35 @@ export default function UserPublicRecipes() {
         <div className="userPageRecipes-container">
             <header className="home-header-container">
                 <Header />
-                <div className="home-logout">
-                    <MyRecipesButton userId={userId} />
-                    <CreateNewRecipeButton />
-                    {userLoggedIn ? (
+                {userLoggedIn ? (
+                    <div className="home-logout">
+                        <MyRecipesButton userId={userId} />
+                        <CreateNewRecipeButton />
                         <LogOutButton />
-                    ) : (
-                        <div>You aren't supposed to be here...</div>
-                    )}
-                </div>
+                        <Avatar
+                            sx={{ ml: 2 }}
+                            onClick={() => navigate(`/profile/`)}
+                        >
+                            {name && name[0]}
+                        </Avatar>
+                    </div>
+                ) : (
+                    <div className="home-login">
+                        <a
+                            className="hover-underline-animation"
+                            href="/auth/login"
+                        >
+                            Login
+                        </a>
+                        <span className="or-text-home">or</span>
+                        <a
+                            className="hover-underline-animation"
+                            href="/auth/signup"
+                        >
+                            Sign up
+                        </a>
+                    </div>
+                )}
             </header>
             <div className="favoritePage-title">
                 More from {userName?.name}{" "}

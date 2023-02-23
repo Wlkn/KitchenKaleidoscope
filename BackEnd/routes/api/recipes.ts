@@ -313,4 +313,77 @@ router.get("/search/:search", (req, res, next) => {
         });
 });
 
+// get all the categories that the receipes have
+router.get("/category/all", (req, res, next) => {
+    Recipe.find({ isPublic: true })
+        .then((recipes: any) => {
+            const categories = recipes.map((recipe) => recipe.category);
+            const uniqueCategories = [...new Set(categories)];
+            res.status(200).json(uniqueCategories);
+        })
+        .catch((error: Error) => {
+            res.status(400).json({
+                error: error,
+            });
+        });
+});
+
+//get recipes by page of 20 of the received category
+//todo
+router.get("/category/:categories", (req, res, next) => {
+    Recipe.find({ isPublic: true })
+        .then((recipes: any) => {
+            const categories = req.params.categories.split(",");
+            const filteredRecipes = recipes.filter((recipe) => {
+                return categories.some((category) => {
+                    return recipe.category
+                        .toLowerCase()
+                        .includes(category.toLowerCase());
+                });
+            });
+            res.status(200).json(filteredRecipes);
+        })
+        .catch((error: Error) => {
+            res.status(400).json({
+                error: error,
+            });
+        });
+});
+
+//get recipes by page of 20 of the received area
+router.get("/area/all", (req, res, next) => {
+    Recipe.find({ isPublic: true })
+        .then((recipes: any) => {
+            const areas = recipes.map((recipe) => recipe.area);
+            const uniqueAreas = [...new Set(areas)];
+            res.status(200).json(uniqueAreas);
+        })
+        .catch((error: Error) => {
+            res.status(400).json({
+                error: error,
+            });
+        });
+});
+
+//todo
+router.get("/area/:areas", (req, res, next) => {
+    Recipe.find({ isPublic: true })
+        .then((recipes: any) => {
+            const areas = req.params.areas.split(",");
+            const filteredRecipes = recipes.filter((recipe) => {
+                return areas.some((area) => {
+                    return recipe.area
+                        .toLowerCase()
+                        .includes(area.toLowerCase());
+                });
+            });
+            res.status(200).json(filteredRecipes);
+        })
+        .catch((error: Error) => {
+            res.status(400).json({
+                error: error,
+            });
+        });
+});
+
 module.exports = router;
