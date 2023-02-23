@@ -296,4 +296,21 @@ router.get("/name/:user_id", (req, res, next) => {
         });
 });
 
+//search bar get
+router.get("/search/:search", (req, res, next) => {
+    Recipe.find({ isPublic: true })
+        .then((recipes: any) => {
+            const search = req.params.search;
+            const filteredRecipes = recipes.filter((recipe) => {
+                return recipe.name.toLowerCase().includes(search.toLowerCase());
+            });
+            res.status(200).json(filteredRecipes);
+        })
+        .catch((error: Error) => {
+            res.status(400).json({
+                error: error,
+            });
+        });
+});
+
 module.exports = router;

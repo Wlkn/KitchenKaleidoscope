@@ -12,6 +12,7 @@ import { MyRecipesButton } from "../components/Buttons";
 import MediaCard from "../components/recipe";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { debounce } from "lodash";
+import { useGetSearchedRecipesQuery } from "../redux/slices/recipes";
 export default function RecipeList() {
     const [recipes, setRecipes] = useState<any[]>([]);
     const [searchTerm, setSearchTerm] = useState<string>("");
@@ -23,30 +24,39 @@ export default function RecipeList() {
     });
     console.log(page);
 
-    const MemoizedMediaCard = memo(MediaCard);
+    const { data: searchRecipes, isSuccess: searchSuccess } =
+        useGetSearchedRecipesQuery(searchTerm, {
+            skip: false,
+        });
 
-    const debouncedSetSearchTerm = debounce(
-        (value) => setSearchTerm(value),
-        500
-    );
+    const MemoizedMediaCard = memo(MediaCard);
 
     useEffect(() => {
         if (isSuccess && data) {
             setRecipes((prevRecipes) => [
                 ...prevRecipes,
-                ...data.filter(
-                    (recipe: any) =>
-                        recipe.isPublic &&
-                        recipe.name
-                            .toLowerCase()
-                            .includes(searchTerm.toLowerCase())
-                ),
+                ...data.filter((recipe: any) => recipe.isPublic === true),
             ]);
             if (data.length < 10) {
                 setHasMore(false);
             }
         }
-    }, [data, searchTerm]);
+    }, [data]);
+
+    useEffect(() => {
+        if (searchSuccess && searchRecipes) {
+            console.log(searchRecipes);
+            setRecipes((prevRecipes) => [
+                ...prevRecipes,
+                ...searchRecipes.filter(
+                    (recipe: any) => recipe.isPublic === true
+                ),
+            ]);
+            if (searchRecipes.length < 10) {
+                setHasMore(false);
+            }
+        }
+    }, [searchTerm]);
 
     const currentToken =
         localStorage.getItem("token") || useSelector(selectCurrentToken);
@@ -70,9 +80,7 @@ export default function RecipeList() {
                                 placeholder=" "
                                 className="search-input"
                                 value={searchTerm}
-                                onChange={(e) =>
-                                    debouncedSetSearchTerm(e.target.value)
-                                }
+                                onChange={(e) => e.target.value}
                             />
                             <div>
                                 <svg>

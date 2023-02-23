@@ -57,7 +57,12 @@ export const RecipeApiSlice = apiSlice.injectEndpoints({
                 method: "GET",
             }),
         }),
-
+        getSearchedRecipes: builder.query({
+            query: (searchTerm) => ({
+                url: `/api/recipes/search/${searchTerm}`,
+                method: "GET",
+            }),
+        }),
         editRecipe: builder.mutation({
             query: ({ recipe_id, ...data }) => ({
                 url: `/api/recipes/${recipe_id}`,
@@ -153,6 +158,8 @@ export const { useGet10RandomRecipesQuery } = RecipeApiSlice;
 export const { useGetCreatorOfRecipeQuery } = RecipeApiSlice;
 
 export const { useGetRecipesQuery } = RecipeApiSlice;
+
+export const { useGetSearchedRecipesQuery } = RecipeApiSlice;
 
 export const { useRecipeMutation } = RecipeApiSlice;
 
