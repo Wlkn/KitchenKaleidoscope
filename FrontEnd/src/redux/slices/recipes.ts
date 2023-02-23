@@ -11,7 +11,7 @@ export const RecipeApiSlice = apiSlice.injectEndpoints({
         }),
         getRecipes: builder.query({
             query: (currentRecipeId) => ({
-                url: `/api/recipes/${currentRecipeId}`,
+                url: `/api/recipes/one/${currentRecipeId}`,
                 method: "GET",
             }),
         }),
