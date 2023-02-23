@@ -297,21 +297,6 @@ router.get("/name/:user_id", (req, res, next) => {
 });
 
 //search bar get
-router.get("/search/:search", (req, res, next) => {
-    Recipe.find({ isPublic: true })
-        .then((recipes: any) => {
-            const search = req.params.search;
-            const filteredRecipes = recipes.filter((recipe) => {
-                return recipe.name.toLowerCase().includes(search.toLowerCase());
-            });
-            res.status(200).json(filteredRecipes);
-        })
-        .catch((error: Error) => {
-            res.status(400).json({
-                error: error,
-            });
-        });
-});
 
 // get all the categories that the receipes have
 router.get("/category/all", (req, res, next) => {
@@ -330,25 +315,6 @@ router.get("/category/all", (req, res, next) => {
 
 //get recipes by page of 20 of the received category
 //todo
-router.get("/category/:categories", (req, res, next) => {
-    Recipe.find({ isPublic: true })
-        .then((recipes: any) => {
-            const categories = req.params.categories.split(",");
-            const filteredRecipes = recipes.filter((recipe) => {
-                return categories.some((category) => {
-                    return recipe.category
-                        .toLowerCase()
-                        .includes(category.toLowerCase());
-                });
-            });
-            res.status(200).json(filteredRecipes);
-        })
-        .catch((error: Error) => {
-            res.status(400).json({
-                error: error,
-            });
-        });
-});
 
 //get recipes by page of 20 of the received area
 router.get("/area/all", (req, res, next) => {
@@ -365,18 +331,43 @@ router.get("/area/all", (req, res, next) => {
         });
 });
 
-//todo
-router.get("/area/:areas", (req, res, next) => {
+router.get("/filter/sort", (req, res, next) => {
     Recipe.find({ isPublic: true })
         .then((recipes: any) => {
-            const areas = req.params.areas.split(",");
-            const filteredRecipes = recipes.filter((recipe) => {
-                return areas.some((area) => {
-                    return recipe.area
-                        .toLowerCase()
-                        .includes(area.toLowerCase());
+            let filteredRecipes = recipes;
+
+            // Apply category filter if present
+            if (req.query.categories) {
+                const categories = req.query.categories.split(",");
+                filteredRecipes = filteredRecipes.filter((recipe) => {
+                    return categories.some((category) => {
+                        return recipe.category
+                            .toLowerCase()
+                            .includes(category.toLowerCase());
+                    });
                 });
-            });
+            }
+
+            // Apply area filter if present
+            if (req.query.areas) {
+                const areas = req.query.areas.split(",");
+                filteredRecipes = filteredRecipes.filter((recipe) => {
+                    return areas.some((area) => {
+                        return recipe.area
+                            .toLowerCase()
+                            .includes(area.toLowerCase());
+                    });
+                });
+            }
+
+            // Apply search filter if present
+            if (req.query.search) {
+                const search = req.query.search.toLowerCase();
+                filteredRecipes = filteredRecipes.filter((recipe) => {
+                    return recipe.name.toLowerCase().includes(search);
+                });
+            }
+
             res.status(200).json(filteredRecipes);
         })
         .catch((error: Error) => {

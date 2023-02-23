@@ -5,6 +5,7 @@
 :root {
     --background-color: #f5f5f5;
     --text-color: #171717;
+    
 }
 
 .darkMode {
@@ -15,66 +16,134 @@
 .search-container {
     display: table;
 }
-.filters {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin-bottom: 1em;
-    margin: 0 auto;
-    padding: 0 20px;
-    margin-top: 50px;
-    -webkit-font-smoothing: antialiased;
+
+// .filters {
+//     display: flex;
+//     flex-direction: row;
+//     flex-wrap: wrap;
+//     margin-bottom: 1em;
+//     margin: 0 auto;
+//     padding: 0 20px;
+//     margin-top: 50px;
+//     -webkit-font-smoothing: antialiased;
+//     position: sticky;
+// }
+@import url("https://fonts.googleapis.com/css?family=Orbitron&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Hind&display=swap");
+
+.Card-search {
+    --border-radius: 10px;
+    padding: 1px;
+    border-radius: var(--border-radius);
+    background: linear-gradient(
+        -67deg,
+        rgba(#c8d8e7, 0.7),
+        rgba(255, 255, 255, 0.8)
+    );
+    overflow: hidden;
+    box-shadow: -2px -2px 6px rgba(#fff, 0.6), 2px 2px 12px #c8d8e7;
+    width: 380px;
+    max-width: 380px;
+    margin-left: 80px;
+    height: 100%;
 }
-.search-container input {
-    background: none;
-    border: none;
-    outline: none;
-    width: 28px;
-    min-width: 0;
-    padding: 0;
-    padding-top: 20px;
-    z-index: 1;
-    position: relative;
-    line-height: 18px;
-    margin: 5px 0;
-    font-size: 14px;
-    appearance: none;
-    -webkit-appearance: none;
-    font-family: "Montserrat", sans-serif;
-    transition: all 0.6s ease;
-    cursor: pointer;
-    color: #f5f5f5;
-    & + div {
-        position: relative;
-        height: 28px;
+
+.CardInner-search {
+    --border-radius: 10px;
+    padding: 16px 16px;
+    background-color: #e2e9f4;
+    border-radius: var(--border-radius);
+}
+
+.container-search {
+    display: flex;
+}
+
+.Icon-search {
+    --border-radius: 10px;
+    min-width: 46px;
+    min-height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius);
+    margin-right: 12px;
+    box-shadow: -2px -2px 6px rgba(#fff, 0.6), 2px 2px 12px #c8d8e7;
+
+    svg {
+        transform: translate(-1px, -1px);
+    }
+}
+.CardInner-search {
+    label {
+        font-family: "Hind", sans-serif;
+        display: block;
+        color: #3c4b66;
+        margin-bottom: 12px;
+        background: linear-gradient(45deg, rgba(#6b7b8f, 1), #3c4b66);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+}
+
+.InputContainer-search {
+    width: 100%;
+}
+.InputContainer-search {
+    input {
+        background-color: #e3edf7;
+        padding: 16px 32px;
+        border: none;
+        display: block;
+        font-family: "Orbitron", sans-serif;
+        font-weight: 600;
+        color: #a9b8c9;
+
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        transition: all 240ms ease-out;
         width: 100%;
-        margin: -28px 0 0 0;
-        svg {
-            display: block;
-            position: absolute;
-            height: 28px;
-            width: 160px;
-            right: 0;
-            top: 0;
-            fill: none;
-            stroke: rgb(52, 146, 255);
-            stroke-width: 1.5px;
-            stroke-dashoffset: 212.908 + 59;
-            stroke-dasharray: 59 212.908;
-            transition: all 0.6s ease;
+
+        &::placeholder {
+            color: #6d7f8f;
+        }
+
+        &:focus {
+            outline: none;
+            color: #6d7f8f;
+            background-color: lighten(#e3edf7, 3%);
         }
     }
-    &:not(:placeholder-shown),
-    &:focus {
-        width: 150px;
-        padding: 0 6px;
-        cursor: text;
-        & + div {
-            svg {
-                stroke-dasharray: 150 212.908;
-                stroke-dashoffset: 300;
-            }
-        }
+}
+
+.InputContainer-search {
+    --border-radius: 10px;
+    --top-shadow: inset 1px 1px 3px #c5d4e3, inset 2px 2px 6px #c5d4e3;
+    --bottom-shadow: inset -2px -2px 4px rgba(255, 255, 255, 0.7);
+
+    position: relative;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+
+    &:before,
+    &:after {
+        left: 0;
+        top: 0;
+        display: block;
+        content: "";
+        pointer-events: none;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+    }
+
+    &:before {
+        box-shadow: var(--bottom-shadow);
+    }
+
+    &:after {
+        box-shadow: var(--top-shadow);
     }
 }
 

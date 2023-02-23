@@ -3,7 +3,6 @@
 }
 
 .darkmode {
-
     --background-color: #171717;
 }
 
@@ -40,11 +39,12 @@
         stroke-dashoffset: -124px;
     }
 }
-
-circle {
-    fill: none;
-    stroke: #548fe7;
-    stroke-width: 3px;
-    stroke-linecap: round;
-    animation: dash 2.5s ease-in-out infinite;
+.loader-container {
+    circle {
+        fill: none;
+        stroke: #548fe7;
+        stroke-width: 3px;
+        stroke-linecap: round;
+        animation: dash 2.5s ease-in-out infinite;
+    }
 }

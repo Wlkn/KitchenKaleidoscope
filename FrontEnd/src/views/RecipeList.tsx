@@ -23,7 +23,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
-
+import "../styles/recipes.scss";
 export default function RecipeList() {
     const navigate = useNavigate();
     const name = localStorage.getItem("name");
@@ -36,6 +36,39 @@ export default function RecipeList() {
     const [categoriesChosen, setCategoriesChosen] = useState<any[]>([]);
     const [areasChosen, setAreasChosen] = useState<any[]>([]);
 
+    //
+    //
+    //
+    //
+    //
+    const darkModeLocal =
+        localStorage.getItem("darkMode") == "enabled" ? true : false;
+    let [darkMode, setDarkMode] = useState(darkModeLocal);
+    useEffect(() => {
+        const bodyClassList = document.body.classList;
+        const isDarkMode =
+            bodyClassList.contains("darkMode") ||
+            localStorage.getItem("darkMode") == "enabled"
+                ? true
+                : false;
+        setDarkMode(isDarkMode);
+        const observer = new MutationObserver((mutations) => {
+            const isDarkMode = bodyClassList.contains("darkmode");
+            setDarkMode(isDarkMode);
+        });
+        observer.observe(document.body, {
+            attributes: true,
+            attributeFilter: ["class"],
+        });
+        return () => {
+            observer.disconnect();
+        };
+    }, []);
+    //
+    //
+    //
+    //
+    //
     useEffect(() => {
         fetch(
             "https://kitchenkaleidoscope-server.onrender.com/api/recipes/category/all"
@@ -53,7 +86,9 @@ export default function RecipeList() {
                 setAreaList(data);
             });
     }, []);
+
     //categories come from the database
+
     const { data, isSuccess } = useGetRecipeByPageQuery(page, {
         skip: false,
     });
@@ -79,49 +114,64 @@ export default function RecipeList() {
         setAreasChosen(typeof value === "string" ? value.split(",") : value);
     };
 
-    const MemoizedMediaCard = memo(MediaCard);
+    const filterRecipes = async (
+        categoriesChosen: any,
+        areasChosen: any,
+        searchTerm: any
+    ) => {
+        const query = new URLSearchParams({
+            categories: categoriesChosen,
+            areas: areasChosen,
+            search: searchTerm,
+        }).toString();
+
+        const response = await fetch(
+            `https://kitchenkaleidoscope-server.onrender.com/api/recipes/filter/sort?${query}`
+        );
+        const data = await response.json();
+
+        console.log(data);
+        setRecipes(data);
+    };
 
     useEffect(() => {
         if (isSuccess && data) {
-            setRecipes((prevRecipes) => [
-                ...prevRecipes,
-                ...data.filter((recipe: any) => recipe.isPublic === true),
-            ]);
-            if (data.length < 10) {
-                setHasMore(false);
+            if (
+                categoriesChosen.length > 0 ||
+                areasChosen.length > 0 ||
+                searchTerm
+            ) {
+                filterRecipes(categoriesChosen, areasChosen, searchTerm);
+                setRecipes([]);
+            } else {
+                const filteredData = data.filter(
+                    (recipe: any) => recipe.isPublic === true
+                );
+                setRecipes((prevRecipes) => [...prevRecipes, ...filteredData]);
+                if (filteredData.length < 10) {
+                    setHasMore(false);
+                }
             }
         }
-    }, [data]);
+    }, [categoriesChosen, areasChosen, searchTerm, data]);
+
+    const MemoizedMediaCard = memo(MediaCard);
+
+    // useEffect(() => {
+    //     if (isSuccess && data) {
+    //         const filteredData = data.filter(
+    //             (recipe: any) => recipe.isPublic === true
+    //         );
+    //         setRecipes((prevRecipes) => [...prevRecipes, ...filteredData]);
+    //         if (filteredData.length < 10) {
+    //             setHasMore(false);
+    //         }
+    //     }
+    // }, [data]);
 
     function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
         const value = e.target.value;
         setSearchTerm(value);
-
-        if (value.length > 3) {
-            const debouncedFn = debounce(async () => {
-                if (value !== "") {
-                    try {
-                        const response = await fetch(
-                            `https://kitchenkaleidoscope-server.onrender.com/api/recipes/search/${value}`
-                        );
-                        if (!response.ok) {
-                            throw new Error("Failed to fetch recipes");
-                        }
-                        const data = await response.json();
-                        setRecipes(data);
-                        setHasMore(false);
-                    } catch (error) {
-                        console.error(error);
-                    }
-                } else {
-                    setPage(1);
-                    setRecipes([]);
-                    setHasMore(true);
-                }
-            }, 1000);
-
-            debouncedFn();
-        }
     }
 
     const currentToken =
@@ -167,28 +217,22 @@ export default function RecipeList() {
                     </div>
                 )}
             </header>
-            <div className="RecipeList-container">
-                <div className="filters">
-                    <div className="search-container">
-                        <input
-                            type="text"
-                            placeholder=" "
-                            className="search-input"
-                            value={searchTerm}
-                            onChange={handleSearch}
-                        />
-                        <div>
-                            <svg>
-                                <path
-                                    d="M32.9418651,-20.6880772 C37.9418651,-20.6880772 40.9418651,-16.6880772 40.9418651,-12.6880772 C40.9418651,-8.68807717 37.9418651,-4.68807717 32.9418651,-4.68807717 C27.9418651,-4.68807717 24.9418651,-8.68807717 24.9418651,-12.6880772 C24.9418651,-16.6880772 27.9418651,-20.6880772 32.9418651,-20.6880772 L32.9418651,-29.870624 C32.9418651,-30.3676803 33.3448089,-30.770624 33.8418651,-30.770624 C34.08056,-30.770624 34.3094785,-30.6758029 34.4782612,-30.5070201 L141.371843,76.386562"
-                                    transform="translate(83.156854, 22.171573) rotate(-225.000000) translate(-83.156854, -22.171573)"
-                                ></path>
-                            </svg>
-                        </div>
-                    </div>
+            <div className="filters">
+                <div className="RecipeList-container">
                     <div>
-                        <FormControl sx={{ m: 0, width: 300 }}>
-                            <InputLabel id="demo-multiple-chip-label">
+                        <FormControl
+                            sx={{
+                                m: 0,
+                                width: 300,
+                            }}
+                            color="primary"
+                            focused
+                            variant="outlined"
+                        >
+                            <InputLabel
+                                id="demo-multiple-chip-label"
+                                className="label-text"
+                            >
                                 Category
                             </InputLabel>
                             <Select
@@ -215,7 +259,17 @@ export default function RecipeList() {
                                         }}
                                     >
                                         {selected.map((value) => (
-                                            <Chip key={value} label={value} />
+                                            <Chip
+                                                key={value}
+                                                label={value}
+                                                sx={{
+                                                    backgroundColor: "#F2F2F2",
+                                                    color: "#657789",
+                                                    border: "1px solid #657789",
+                                                    borderRadius: "5px",
+                                                    padding: "5px",
+                                                }}
+                                            />
                                         ))}
                                     </Box>
                                 )}
@@ -228,9 +282,52 @@ export default function RecipeList() {
                             </Select>
                         </FormControl>
                     </div>
+                    <div className="Card-search">
+                        <div className="CardInner-search">
+                            <label>Search for your favourite food</label>
+                            <div className="container-search">
+                                <div className="Icon-search">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="#657789"
+                                        strokeWidth="3"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className="feather feather-search"
+                                    >
+                                        <circle cx="11" cy="11" r="8" />
+                                        <line
+                                            x1="21"
+                                            y1="21"
+                                            x2="16.65"
+                                            y2="16.65"
+                                        />
+                                    </svg>
+                                </div>
+                                <div className="InputContainer-search">
+                                    <input
+                                        placeholder="The limit is the sky..."
+                                        type="text"
+                                        className="search-input"
+                                        value={searchTerm}
+                                        onChange={handleSearch}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div>
                         {" "}
-                        <FormControl sx={{ m: 0, width: 300 }}>
+                        <FormControl
+                            sx={{ ml: 10, width: 300 }}
+                            color="primary"
+                            focused
+                            variant="outlined"
+                        >
                             <InputLabel id="demo-multiple-chip-label">
                                 Area
                             </InputLabel>
@@ -272,6 +369,7 @@ export default function RecipeList() {
                         </FormControl>
                     </div>
                 </div>
+
                 <InfiniteScroll
                     dataLength={recipes.length}
                     next={() => setPage((prevPage) => prevPage + 1)}
