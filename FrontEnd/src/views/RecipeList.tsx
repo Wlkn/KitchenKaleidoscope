@@ -25,68 +25,60 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
 
 export default function RecipeList() {
-    const names = [
-        "Oliver Hansen",
-        "Van Henry",
-        "April Tucker",
-        "Ralph Hubbard",
-        "Omar Alexander",
-        "Carlos Abbott",
-        "Miriam Wagner",
-        "Bradley Wilkerson",
-        "Virginia Andrews",
-        "Kelly Snyder",
-    ];
-
-    //categories come from the database
-    const categories = fetch(
-        "https://kitchenkaleidoscope-server.onrender.com/api/recipes/category/all"
-    )
-        .then((res) => res.json())
-        .then((data) => {
-            return data;
-        });
-    console.log(categories);
-
-    console.log(categories);
-
-    const [personName, setPersonName] = React.useState<string[]>([]);
-
-    const handleChangeCategory = (
-        event: SelectChangeEvent<typeof personName>
-    ) => {
-        const {
-            target: { value },
-        } = event;
-        console.log(value);
-        setPersonName(
-            // On autofill we get a stringified value.
-            typeof value === "string" ? value.split(",") : value
-        );
-    };
-
-    const handleChangeArea = (event: SelectChangeEvent<typeof personName>) => {
-        const {
-            target: { value },
-        } = event;
-        console.log(value);
-        setPersonName(
-            // On autofill we get a stringified value.
-            typeof value === "string" ? value.split(",") : value
-        );
-    };
-
     const navigate = useNavigate();
     const name = localStorage.getItem("name");
     const [recipes, setRecipes] = useState<any[]>([]);
     const [searchTerm, setSearchTerm] = useState<string>("");
     const [hasMore, setHasMore] = useState<boolean>(true);
     const [page, setPage] = useState<number>(1);
+    const [categoryList, setCategoryList] = useState<any[]>([]);
+    const [areaList, setAreaList] = useState<any[]>([]);
+    const [categoriesChosen, setCategoriesChosen] = useState<any[]>([]);
+    const [areasChosen, setAreasChosen] = useState<any[]>([]);
 
+    useEffect(() => {
+        fetch(
+            "https://kitchenkaleidoscope-server.onrender.com/api/recipes/category/all"
+        )
+            .then((res) => res.json())
+            .then((data) => {
+                setCategoryList(data);
+            });
+
+        fetch(
+            "https://kitchenkaleidoscope-server.onrender.com/api/recipes/area/all"
+        )
+            .then((res) => res.json())
+            .then((data) => {
+                setAreaList(data);
+            });
+    }, []);
+    //categories come from the database
     const { data, isSuccess } = useGetRecipeByPageQuery(page, {
         skip: false,
     });
     console.log(page);
+
+    const handleChangeCategory = (
+        event: SelectChangeEvent<typeof categoriesChosen>
+    ) => {
+        const {
+            target: { value },
+        } = event;
+        console.log(value);
+        setCategoriesChosen(
+            typeof value === "string" ? value.split(",") : value
+        );
+    };
+
+    const handleChangeArea = (event: SelectChangeEvent<typeof areasChosen>) => {
+        const {
+            target: { value },
+        } = event;
+        console.log(value);
+        setAreasChosen(typeof value === "string" ? value.split(",") : value);
+    };
+
     const MemoizedMediaCard = memo(MediaCard);
 
     useEffect(() => {
@@ -206,7 +198,7 @@ export default function RecipeList() {
                                 labelId="demo-multiple-chip-label"
                                 id="demo-multiple-chip"
                                 multiple
-                                value={personName}
+                                value={categoriesChosen}
                                 onChange={handleChangeCategory}
                                 input={
                                     <OutlinedInput
@@ -228,9 +220,9 @@ export default function RecipeList() {
                                     </Box>
                                 )}
                             >
-                                {names.map((name) => (
-                                    <MenuItem key={name} value={name}>
-                                        {name}
+                                {categoryList.map((category) => (
+                                    <MenuItem key={category} value={category}>
+                                        {category}
                                     </MenuItem>
                                 ))}
                             </Select>
@@ -249,7 +241,7 @@ export default function RecipeList() {
                                 labelId="demo-multiple-chip-label"
                                 id="demo-multiple-chip"
                                 multiple
-                                value={personName}
+                                value={areasChosen}
                                 onChange={handleChangeArea}
                                 input={
                                     <OutlinedInput
@@ -271,9 +263,9 @@ export default function RecipeList() {
                                     </Box>
                                 )}
                             >
-                                {names.map((name) => (
-                                    <MenuItem key={name} value={name}>
-                                        {name}
+                                {areaList.map((area) => (
+                                    <MenuItem key={area} value={area}>
+                                        {area}
                                     </MenuItem>
                                 ))}
                             </Select>
