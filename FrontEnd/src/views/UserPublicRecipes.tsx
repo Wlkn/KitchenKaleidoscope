@@ -78,7 +78,7 @@ export default function UserPublicRecipes() {
     //     (usersRecipes: UserRecipesProps) => usersRecipes?.isPublic === true
     // );
 
-    const userLoggedIn = userId ? true : false;
+    const userLoggedIn = name ? true : false;
 
     if (isLoading) return <Loader />;
     if (isError) return <div>Error</div>;
