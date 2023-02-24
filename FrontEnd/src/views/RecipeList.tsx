@@ -143,18 +143,16 @@ export default function RecipeList() {
             ) {
                 filterRecipes(categoriesChosen, areasChosen, searchTerm);
                 setRecipes([]);
-                // setHasMore(false);
+                setHasMore(false);
             } else {
                 setRecipes([]);
-                setPage(1);
-
                 const filteredData = data.filter(
                     (recipe: any) => recipe.isPublic === true
                 );
                 setRecipes((prevRecipes) => [...prevRecipes, ...filteredData]);
 
-                // setHasMore(true);
-                if (filteredData.length < 3) {
+                setHasMore(true);
+                if (filteredData.length < 10) {
                     setHasMore(false);
                 }
             }
@@ -162,6 +160,8 @@ export default function RecipeList() {
     }, [categoriesChosen, areasChosen, searchTerm, data]);
 
     const MemoizedMediaCard = memo(MediaCard);
+
+    useEffect(() => {}, []);
 
     function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
         const value = e.target.value;
