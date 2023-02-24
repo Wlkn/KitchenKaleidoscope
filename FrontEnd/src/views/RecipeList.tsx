@@ -141,48 +141,27 @@ export default function RecipeList() {
                 areasChosen.length > 0 ||
                 searchTerm
             ) {
-                console.log("filtering");
                 filterRecipes(categoriesChosen, areasChosen, searchTerm);
                 setRecipes([]);
                 setHasMore(false);
             } else {
-                // setRecipes([]);
-                setPage(1);
-                setHasMore(true);
+                setRecipes([]);
                 const filteredData = data.filter(
                     (recipe: any) => recipe.isPublic === true
                 );
                 setRecipes((prevRecipes) => [...prevRecipes, ...filteredData]);
-                if (filteredData.length < 3) {
+
+                setHasMore(true);
+                if (filteredData.length < 10) {
                     setHasMore(false);
                 }
             }
         }
     }, [categoriesChosen, areasChosen, searchTerm, data]);
 
-    useEffect(() => {
-        if (
-            categoriesChosen.length === 0 &&
-            areasChosen.length === 0 &&
-            searchTerm === ""
-        ) {
-            setRecipes(data);
-        }
-    }, [categoriesChosen, areasChosen, searchTerm]);
-
     const MemoizedMediaCard = memo(MediaCard);
 
-    // useEffect(() => {
-    //     if (isSuccess && data) {
-    //         const filteredData = data.filter(
-    //             (recipe: any) => recipe.isPublic === true
-    //         );
-    //         setRecipes((prevRecipes) => [...prevRecipes, ...filteredData]);
-    //         if (filteredData.length < 10) {
-    //             setHasMore(false);
-    //         }
-    //     }
-    // }, [data]);
+    useEffect(() => {}, []);
 
     function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
         const value = e.target.value;
