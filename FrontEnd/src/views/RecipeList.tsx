@@ -129,8 +129,8 @@ export default function RecipeList() {
             `https://kitchenkaleidoscope-server.onrender.com/api/recipes/filter?${query}`
         );
         const data = await response.json();
-
         console.log(data);
+
         setRecipes(data);
     };
 
@@ -141,19 +141,34 @@ export default function RecipeList() {
                 areasChosen.length > 0 ||
                 searchTerm
             ) {
+                console.log("filtering");
                 filterRecipes(categoriesChosen, areasChosen, searchTerm);
                 setRecipes([]);
+                setHasMore(false);
             } else {
+                // setRecipes([]);
+                setPage(1);
+                setHasMore(true);
                 const filteredData = data.filter(
                     (recipe: any) => recipe.isPublic === true
                 );
                 setRecipes((prevRecipes) => [...prevRecipes, ...filteredData]);
-                if (filteredData.length < 10) {
+                if (filteredData.length < 3) {
                     setHasMore(false);
                 }
             }
         }
     }, [categoriesChosen, areasChosen, searchTerm, data]);
+
+    useEffect(() => {
+        if (
+            categoriesChosen.length === 0 &&
+            areasChosen.length === 0 &&
+            searchTerm === ""
+        ) {
+            setRecipes(data);
+        }
+    }, [categoriesChosen, areasChosen, searchTerm]);
 
     const MemoizedMediaCard = memo(MediaCard);
 

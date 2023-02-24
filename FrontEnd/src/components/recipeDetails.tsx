@@ -68,6 +68,8 @@ export default function RecipeDetails(formData: any) {
         error,
     } = useGetRecipesQuery(id, {});
 
+    console.log(recipeData);
+
     const { data: ingredientsData } = useFetchIngredientsByRecipeIdQuery(
         id,
         {}
@@ -209,8 +211,15 @@ export default function RecipeDetails(formData: any) {
     if (isLoading) {
         content = <Loader />;
     } else if (isSuccess && recipeData && CreatorOfRecipe && ingredientsData) {
-        const { name, description, instructions, imageUrl, isPublic } =
-            recipeData;
+        const {
+            name,
+            description,
+            instructions,
+            imageUrl,
+            isPublic,
+            area,
+            category,
+        } = recipeData;
         const { userId, OwnerName } = CreatorOfRecipe;
         const ingredientList = ingredientsData.map((ingredient: any) => {
             const { quantity, unit_id, ingredient_id } = ingredient;
@@ -227,6 +236,9 @@ export default function RecipeDetails(formData: any) {
         content = (
             <div className="recipeInfo-container">
                 <div className="recipe-title">{name}</div>
+                <div className="category-area-text">
+                    {category}, {area}
+                </div>
                 {currentUserId === userId ? (
                     <div className="recipe-public">
                         {isPublic ? (

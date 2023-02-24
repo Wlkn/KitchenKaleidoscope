@@ -1,11 +1,7 @@
 import "../styles/Home.scss";
 import GlobeAnimation from "../components/GlobeAnimation";
 
-import {
-  
-    ProfileButton,
-  
-} from "../components/Buttons";
+import { ProfileButton } from "../components/Buttons";
 import Header from "../components/header";
 import { useSelector } from "react-redux";
 import {
