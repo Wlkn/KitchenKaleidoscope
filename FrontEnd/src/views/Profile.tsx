@@ -106,7 +106,6 @@ const Profile = () => {
                 <div>Private recipes: {numberOfPrivateRecipes}</div>
                 <div>Public recipes: {numberOfPublicRecipes}</div>
                 <div>Likes given: {numberOfLikes}</div>
-                <div>Likes received: coming..</div>
             </section>
         </div>
     );

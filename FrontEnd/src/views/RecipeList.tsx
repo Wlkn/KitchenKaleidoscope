@@ -97,6 +97,7 @@ export default function RecipeList() {
     const handleChangeCategory = (
         event: SelectChangeEvent<typeof categoriesChosen>
     ) => {
+        setRecipes([]);
         const {
             target: { value },
         } = event;
@@ -107,6 +108,7 @@ export default function RecipeList() {
     };
 
     const handleChangeArea = (event: SelectChangeEvent<typeof areasChosen>) => {
+        setRecipes([]);
         const {
             target: { value },
         } = event;
@@ -114,11 +116,11 @@ export default function RecipeList() {
         setAreasChosen(typeof value === "string" ? value.split(",") : value);
     };
 
-    const filterRecipes = async (
+    async function filterRecipes(
         categoriesChosen: any,
         areasChosen: any,
         searchTerm: any
-    ) => {
+    ) {
         const query = new URLSearchParams({
             categories: categoriesChosen,
             areas: areasChosen,
@@ -132,31 +134,39 @@ export default function RecipeList() {
         console.log(data);
 
         setRecipes(data);
-    };
+    }
 
     useEffect(() => {
-        if (isSuccess && data) {
+        if (data) {
+            console.log(categoriesChosen.length);
+            console.log("d");
+            console.log(areasChosen.length);
+            console.log(searchTerm);
             if (
                 categoriesChosen.length > 0 ||
                 areasChosen.length > 0 ||
                 searchTerm
             ) {
+                console.log("filtering");
                 filterRecipes(categoriesChosen, areasChosen, searchTerm);
-                setRecipes([]);
                 setHasMore(false);
+                setPage(1);
             } else {
-                setRecipes([]);
                 const filteredData = data.filter(
                     (recipe: any) => recipe.isPublic === true
                 );
-                setRecipes((prevRecipes) => [...prevRecipes, ...filteredData]);
-
+                console.log("not filtering");
+                console.log(data);
+                setRecipes((data) => [...data, ...filteredData]);
                 setHasMore(true);
+
                 if (filteredData.length < 10) {
                     setHasMore(false);
                 }
             }
         }
+        console.log(recipes);
+        console.log("categories chosen", categoriesChosen);
     }, [categoriesChosen, areasChosen, searchTerm, data]);
 
     const MemoizedMediaCard = memo(MediaCard);
@@ -164,6 +174,7 @@ export default function RecipeList() {
     useEffect(() => {}, []);
 
     function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
+        setRecipes([]);
         const value = e.target.value;
         setSearchTerm(value);
     }
