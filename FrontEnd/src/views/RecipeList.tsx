@@ -222,8 +222,8 @@ export default function RecipeList() {
                     </div>
                 )}
             </header>
-            <div className="filters">
-                <div className="RecipeList-container">
+            <div className="RecipeList-container">
+                <div className="filters">
                     <div>
                         <FormControl
                             sx={{
@@ -328,7 +328,7 @@ export default function RecipeList() {
                     <div>
                         {" "}
                         <FormControl
-                            sx={{ ml: 10, width: 300 }}
+                            sx={{ width: 300 }}
                             color="primary"
                             focused
                             variant="outlined"

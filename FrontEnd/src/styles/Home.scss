@@ -71,13 +71,13 @@ body {
 .home {
     min-height: 100vh;
     color: var(--text-color);
-    padding-bottom: 150px;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.1);
+    // background-color: rgba(0, 0, 0, 0.1);
     font-family: Montserrat, sans-serif;
     -webkit-font-smoothing: antialiased;
 }
-
+.burger-menu {
+    display: none;
+}
 .home-header-container {
     padding-top: 7px;
     padding-bottom: 7px;
@@ -87,7 +87,7 @@ body {
     position: relative;
     background-color: #171717;
     border-bottom: 2px solid grey;
-    box-shadow: 0px 15px 10px -15px #111;  
+    box-shadow: 0px 15px 10px -15px #111;
     z-index: 1;
 }
 .home-header-containerr {
@@ -140,7 +140,7 @@ body {
     width: 24px px;
     height: 24px;
     display: block;
-    fill: var(--text-color);
+    fill: #f5f5f5;
 }
 
 .home-login a {
@@ -424,44 +424,37 @@ h1 .world .world-globe svg path {
 .home-login span {
     color: var(--text-color);
 }
-@media only screen and (max-width: 800px) {
-    .home .home-navigation {
-        display: none;
+
+@media only screen and (max-width: 1250px) {
+    .home-navigation .home-links a {
+        margin-right: 30px;
+        font-size: 16px;
     }
-    .burger-button {
-        display: block;
-    }
-    .home .home-logo-wrapper {
+
+    .home-navigation .home-links a:last-child {
         margin-right: 0;
-        padding-right: 0;
-    }
-    .home-page-hero .circle-1 {
-        top: -24px;
-        left: 105px;
     }
     .home-page-hero .circle-3 {
-        display: none;
+        top: 30px;
+        left: 650px;
     }
     .home-page-hero .circle-4 {
-        display: none;
+        top: 200px;
+        left: 300px;
     }
 }
-
 @media only screen and (max-width: 950px) {
-    .home .home-navigation {
+    .home-navigation {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         justify-content: center;
         align-items: center;
         margin-top: 30px;
     }
     .burger-button {
-        display: block;
-    }
-    .home-page {
         display: none;
     }
-    .home .home-logo-wrapper {
+    .home-logo-wrapper {
         margin-right: 0;
         padding-right: 0;
     }
@@ -478,21 +471,77 @@ h1 .world .world-globe svg path {
         left: 300px;
     }
 }
-@media only screen and (max-width: 1250px) {
-    .home .home-navigation .home-links a {
-        margin-right: 30px;
-        font-size: 16px;
-    }
 
-    .home .home-navigation .home-links a:last-child {
+@media only screen and (max-width: 800px) {
+    .home-navigation {
+        display: none;
+    }
+    .home-login {
+        display: none;
+    }
+    .home-header-container {
+        display: block;
+    }
+    .burger-button {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        // margin-top: 30px;
+    }
+    .home-logo-wrapper {
         margin-right: 0;
+        padding-right: 0;
+    }
+    .home-page-hero .circle-1 {
+        top: -24px;
+        left: 105px;
     }
     .home-page-hero .circle-3 {
-        top: 30px;
-        left: 650px;
+        display: none;
     }
     .home-page-hero .circle-4 {
-        top: 200px;
-        left: 300px;
+        display: none;
+    }
+
+    .burger-active {
+        .home-page {
+            display: none;
+        }
+        .burger-menu {
+            display: block;
+            height: 100vh;
+        }
+        .home-header-container {
+            height: 100vh;
+            width: 100vw;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+        .burger-links {
+            display: flex;
+            flex-direction: column;
+            // justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
+            background: var(--background-color);
+        }
+        .hover-underline-animation {
+            margin-top: 70px;
+            text-decoration: none;
+            font-size: 18px;
+            display: inline-block;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        .dark-mode-toggle {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 70px;
+        }
     }
 }
