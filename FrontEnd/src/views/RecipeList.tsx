@@ -195,7 +195,7 @@ export default function RecipeList() {
                 <Header />
                 {userLoggedIn ? (
                     <div className="home-logout">
-                        <MyRecipesButton userId={userId} />
+                        {/* <MyRecipesButton userId={userId} /> */}
                         <LogOutButton />
                         <Avatar
                             sx={{ ml: 2 }}
@@ -241,6 +241,11 @@ export default function RecipeList() {
                                 Category
                             </InputLabel>
                             <Select
+                                sx={{
+                                    "& svg": {
+                                        color: "#3c51f2",
+                                    },
+                                }}
                                 inputProps={{
                                     MenuProps: { disableScrollLock: true },
                                 }}
@@ -315,7 +320,7 @@ export default function RecipeList() {
                                 </div>
                                 <div className="InputContainer-search">
                                     <input
-                                        placeholder="The limit is the sky..."
+                                        placeholder="The sky is the limit..."
                                         type="text"
                                         className="search-input"
                                         value={searchTerm}
@@ -326,9 +331,11 @@ export default function RecipeList() {
                         </div>
                     </div>
                     <div>
-                        {" "}
                         <FormControl
-                            sx={{ width: 300 }}
+                            sx={{
+                                m: 0,
+                                width: 300,
+                            }}
                             color="primary"
                             focused
                             variant="outlined"
@@ -337,6 +344,11 @@ export default function RecipeList() {
                                 Area
                             </InputLabel>
                             <Select
+                                sx={{
+                                    "& svg": {
+                                        color: "#3c51f2",
+                                    },
+                                }}
                                 inputProps={{
                                     MenuProps: { disableScrollLock: true },
                                 }}
@@ -360,7 +372,17 @@ export default function RecipeList() {
                                         }}
                                     >
                                         {selected.map((value) => (
-                                            <Chip key={value} label={value} />
+                                            <Chip
+                                                key={value}
+                                                label={value}
+                                                sx={{
+                                                    backgroundColor: "#F2F2F2",
+                                                    color: "#657789",
+                                                    border: "1px solid #657789",
+                                                    borderRadius: "5px",
+                                                    padding: "5px",
+                                                }}
+                                            />
                                         ))}
                                     </Box>
                                 )}
@@ -382,7 +404,9 @@ export default function RecipeList() {
                     loader={<Loader />}
                     endMessage={
                         <div style={{ textAlign: "center" }}>
-                            <div>Yay! You have seen it all</div>
+                            <div className="endMessage-infinite">
+                                Yay! You have seen it all
+                            </div>
                         </div>
                     }
                     className="RecipeList-container"

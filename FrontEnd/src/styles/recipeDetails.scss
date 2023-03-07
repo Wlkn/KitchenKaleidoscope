@@ -140,3 +140,17 @@
     align-items: center;
     position: relative;
 }
+
+@media (max-width: 800px) {
+    .recipeInfo-container {
+        padding-left: 3px;
+    }
+    .burger-active {
+        .recipeDetails-header-buttons {
+            display: none;
+        }
+        .MuiButtonBase-root {
+            display: none;
+        }
+    }
+}

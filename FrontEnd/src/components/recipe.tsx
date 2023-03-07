@@ -170,7 +170,7 @@ export default function MediaCard(Recipe: {
                 <Card
                     sx={{
                         width: 350,
-                        minHeight: 380,
+
                         maxHeight: 380,
                         height: 380, // set a fixed height for the card
                         background:

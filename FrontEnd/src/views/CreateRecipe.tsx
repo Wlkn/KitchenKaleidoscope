@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { selectCurrentRecipeId } from "../redux/reducers/recipes";
 import "../styles/_recipeForm.scss";
 import { useNavigate } from "react-router-dom";
-import { TakemeBackButton } from "../components/Buttons";
+import { LogOutButton, TakemeBackButton } from "../components/Buttons";
 import Loader from "../components/Loader";
 import Header from "../components/header";
 import Avatar from "@mui/material/Avatar";
@@ -329,6 +329,7 @@ const RecipeForm: React.FC = () => {
                 <Header />
                 <div className="home-logout">
                     <TakemeBackButton />
+                    <LogOutButton />
                     <Avatar
                         sx={{ ml: 2 }}
                         onClick={() => navigate(`/profile/`)}

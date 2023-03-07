@@ -68,9 +68,10 @@ const Profile = () => {
                 <Header />
                 {userLoggedIn ? (
                     <div className="home-logout">
-                        <MyRecipesButton userId={userId} />
+                        {/* <MyRecipesButton userId={userId} />
                         <CreateNewRecipeButton />
                         <FavoriteRecipesButton userId={userId} />
+                        */}
                         <LogOutButton />
                         <Avatar
                             sx={{ ml: 2 }}

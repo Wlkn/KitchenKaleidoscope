@@ -31,7 +31,12 @@
 
     height: 100%;
 }
-
-.favoritePage-card {
-    margin-right: 20px;
+@media (max-width: 800px) {
+    .favoritePage-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        margin-top: 3rem;
+        margin-left: 20px;
+    }
 }

@@ -370,16 +370,16 @@ export default function RecipeDetails(formData: any) {
 
     return (
         <div className="recipeDetails-container">
-            <div className="recipeDetails-header-container">
+            <div className="home-header-container">
                 <Header />
-                <div className="recipeDetails-header-buttons">
+                {/* <div className="recipeDetails-header-buttons">
                     {currentUserId && (
                         <MyRecipesButton userId={currentUserId} />
                     )}
 
-                    <TakemeBackButton />
-                </div>
+                </div> */}
             </div>
+            {/* <TakemeBackButton /> */}
             {content}
         </div>
     );

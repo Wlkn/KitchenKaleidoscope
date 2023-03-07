@@ -89,8 +89,8 @@ export default function UserPublicRecipes() {
                 <Header />
                 {userLoggedIn ? (
                     <div className="home-logout">
-                        <MyRecipesButton userId={userId} />
-                        <CreateNewRecipeButton />
+                        {/* <MyRecipesButton userId={userId} /> */}
+                        {/* <CreateNewRecipeButton /> */}
                         <LogOutButton />
                         <Avatar
                             sx={{ ml: 2 }}

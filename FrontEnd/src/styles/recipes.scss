@@ -44,6 +44,7 @@
     width: 380px;
     max-width: 380px;
     margin-left: 80px;
+    margin-right: 80px;
     // height: 100%;
 }
 
@@ -115,7 +116,14 @@
         }
     }
 }
-
+.endMessage-infinite {
+    color: var(--text-color);
+    font-size: 20px;
+    text-align: center;
+    font-weight: 500;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
 .InputContainer-search {
     --border-radius: 10px;
     --top-shadow: inset 1px 1px 3px #c5d4e3, inset 2px 2px 6px #c5d4e3;
@@ -222,7 +230,10 @@
     grid-template-columns: repeat(10, 274px);
     grid-auto-flow: column;
     margin-bottom: 20px;
-    overflow: visible;
+    overflow: hidden;
+    width: auto;
+    height: 100%;
+    padding-top: 10px;
 }
 .filters {
     display: flex;
@@ -237,5 +248,17 @@
         flex-direction: column;
         align-items: center;
         justify-content: space-between;
+    }
+    .Card-search {
+        width: 302px;
+        margin: 20px 0 20px 0;
+    }
+    .burger-active {
+        .filters {
+            display: none;
+        }
+        .RecipeList-container {
+            display: none;
+        }
     }
 }

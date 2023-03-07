@@ -44,8 +44,8 @@ const Home = () => {
                 <Header />
                 {userLoggedIn ? (
                     <div className="home-logout">
-                        <ProfileButton />
-                        <MyRecipesButton userId={userId} />
+                        {/* <ProfileButton /> */}
+                        {/* <MyRecipesButton userId={userId} /> */}
                         <LogOutButton />
                         <Avatar
                             sx={{ ml: 2 }}

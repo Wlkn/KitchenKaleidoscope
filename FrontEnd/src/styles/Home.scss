@@ -422,7 +422,7 @@ h1 .world .world-globe svg path {
     margin-left: 10px;
 }
 .home-login span {
-    color: var(--text-color);
+    color: #f5f5f5;
 }
 
 @media only screen and (max-width: 1250px) {
@@ -473,6 +473,9 @@ h1 .world .world-globe svg path {
 }
 
 @media only screen and (max-width: 800px) {
+    .home-logout {
+        display: none;
+    }
     .home-navigation {
         display: none;
     }
@@ -487,6 +490,7 @@ h1 .world .world-globe svg path {
         flex-direction: row;
         justify-content: center;
         align-items: center;
+        margin-right: 20px;
         // margin-top: 30px;
     }
     .home-logo-wrapper {
@@ -495,10 +499,15 @@ h1 .world .world-globe svg path {
     }
     .home-page-hero .circle-1 {
         top: -24px;
-        left: 105px;
+        left: 140px;
+    }
+    .home-page-hero .circle-2 {
+        top: 230px;
+        left: 10px;
     }
     .home-page-hero .circle-3 {
-        display: none;
+        top: 500px;
+        left: 80px;
     }
     .home-page-hero .circle-4 {
         display: none;
@@ -541,7 +550,7 @@ h1 .world .world-globe svg path {
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: 70px;
+            margin-top: 20px;
         }
     }
 }

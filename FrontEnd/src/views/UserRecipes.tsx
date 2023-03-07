@@ -61,8 +61,8 @@ const UserRecipes: React.FC = () => {
                 <Header />
                 {userLoggedIn ? (
                     <div className="home-logout">
-                        <ProfileButton />
-                        <CreateNewRecipeButton />
+                        {/* <ProfileButton /> */}
+                        {/* <CreateNewRecipeButton /> */}
                         <LogOutButton />
                         <Avatar
                             sx={{ ml: 2 }}

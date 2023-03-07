@@ -1,7 +1,14 @@
 import { useState } from "react";
 import "../styles/Home.scss";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { useDispatch } from "react-redux";
+const MySwal = withReactContent(Swal);
+import { logOut } from "../redux/reducers/auth";
+import { Link, useHref } from "react-router-dom";
 
 export default function Header() {
+    const dispatch = useDispatch();
     let darkMode = localStorage.getItem("darkMode");
     const [logo, setLogo] = useState("/KKaleido.svg");
     const [burgerOpen, setBurgerOpen] = useState(false);
@@ -36,6 +43,27 @@ export default function Header() {
         setBurgerOpen(!burgerOpen);
         console.log(burgerOpen);
         burgerOpen ? console.log("open") : console.log("closed");
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("email");
+        localStorage.removeItem("user");
+        localStorage.removeItem("name");
+
+        dispatch(logOut);
+
+        MySwal.fire({
+            title: <p>Logged Out!</p>,
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1500,
+        });
+
+        setTimeout(() => {
+            window.location.reload();
+        }, 500);
     };
 
     const userConnected = localStorage.getItem("userId");
@@ -101,6 +129,19 @@ export default function Header() {
                             >
                                 Your Favorites
                             </a>
+                            <a
+                                className="hover-underline-animation"
+                                href={`/newRecipe`}
+                            >
+                                Create a Recipe
+                            </a>
+                            {/* <a
+                                className="hover-underline-animation"
+                                onClick={handleLogout}
+                                href="/"
+                            >
+                                Logout
+                            </a> */}
                         </div>
                     ) : (
                         <div className="home-links">
@@ -191,6 +232,25 @@ export default function Header() {
                                     href={`/favorites/${userConnected}`}
                                 >
                                     Your Favorites
+                                </a>
+                                <a
+                                    className="hover-underline-animation"
+                                    href={`/myrecipes/${userConnected}`}
+                                >
+                                    Your Recipes
+                                </a>
+                                <a
+                                    className="hover-underline-animation"
+                                    href={`/newRecipe`}
+                                >
+                                    Create a Recipe
+                                </a>
+                                <a
+                                    className="hover-underline-animation"
+                                    onClick={handleLogout}
+                                    href="/"
+                                >
+                                    Logout
                                 </a>
                             </div>
                         ) : (
