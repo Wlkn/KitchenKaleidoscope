@@ -102,10 +102,7 @@ export default function Header() {
                     </button>
                     {userConnected ? (
                         <div className="home-links">
-                            <a
-                                className="hover-underline-animation"
-                                href={`/myrecipes/${userConnected}`}
-                            >
+                            <a className="hover-underline-animation" href={`/`}>
                                 Home
                             </a>
                             <a
@@ -125,6 +122,12 @@ export default function Header() {
                                 href={`/favorites/${userConnected}`}
                             >
                                 Your Favorites
+                            </a>
+                            <a
+                                className="hover-underline-animation"
+                                href={`/myrecipes/${userConnected}`}
+                            >
+                                Your recipes
                             </a>
                             <a
                                 className="hover-underline-animation"

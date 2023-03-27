@@ -137,7 +137,7 @@ body {
 
 .burger-button svg {
     margin-right: 0;
-    width: 24px px;
+    width: 24px;
     height: 24px;
     display: block;
     fill: #f5f5f5;
@@ -172,7 +172,6 @@ body {
 .home-logo-wrapper {
     display: flex;
     align-items: center;
-
     padding: 17px 54px 17px 17px;
     margin: 0;
     box-sizing: border-box;
@@ -402,15 +401,15 @@ h1 .world .world-globe svg path {
     z-index: 100;
     border: 2px solid currentColor;
     padding: 6px;
-    background: #f5f5f5;
+    // background: #f5f5f5;
     cursor: pointer;
     border-radius: 5px;
     width: 40px;
     height: 40px;
     transform: translateY(3px);
     margin-right: 40px;
-    overflow-clip-margin: content-box;
-    overflow: clip;
+    // overflow-clip-margin: content-box;
+    // overflow: clip;
 }
 .errorText {
     color: red;
