@@ -82,15 +82,12 @@ const About = () => {
                     website is designed to be user-friendly and intuitive,
                     making it easy for you to find new recipes to try and share
                     your own favorite recipes with others.
-                </p>
-                <p>
+                
                     Whether you are a professional chef or a home cook, our
                     website is the perfect platform for sharing your culinary
                     creations with others. You can easily upload your recipes,
                     complete with ingredients and step-by-step instructions, and
                     share them with our community of food lovers.
-                </p>
-                <p>
                     We also offer a wide range of features to help you discover
                     new recipes and connect with other foodies.
                 </p>

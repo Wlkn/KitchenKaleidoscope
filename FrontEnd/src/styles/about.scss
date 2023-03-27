@@ -19,17 +19,21 @@
     // padding-bottom: 80px;
 }
 .about-text {
-    padding-left: 40px;
+    padding-left: 20px;
+    padding-right: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .linkedin-icon {
-    //place icon on the middle
-    display: flex;
     align-items: center;
     justify-content: center;
-
     color: var(--secondary-color-about);
     font-size: 1.5rem;
-    margin-bottom: 1rem;
+    width: fit-content;
+
+    //place icon on the middle
 }
 
 .linkedin-icon svg:hover {
@@ -37,14 +41,12 @@
 }
 
 .github-icon {
-    //place icon on the middle
-    display: flex;
     align-items: center;
     justify-content: center;
-
     color: var(--secondary-color-about);
     font-size: 1.5rem;
-    margin-bottom: 1rem;
+    width: fit-content;
+    margin-left: 40px;
 }
 
 .github-icon svg:hover {
