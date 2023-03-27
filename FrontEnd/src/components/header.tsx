@@ -12,7 +12,6 @@ export default function Header() {
     let darkMode = localStorage.getItem("darkMode");
     const [logo, setLogo] = useState("/KKaleido.svg");
     const [burgerOpen, setBurgerOpen] = useState(false);
-    console.log(burgerOpen);
     const enableDarkMode = () => {
         document.body.classList.add("darkmode");
         localStorage.setItem("darkMode", "enabled");
@@ -41,8 +40,6 @@ export default function Header() {
     const handleBurgerClick = () => {
         document.body.classList.toggle("burger-active");
         setBurgerOpen(!burgerOpen);
-        console.log(burgerOpen);
-        burgerOpen ? console.log("open") : console.log("closed");
     };
 
     const handleLogout = () => {

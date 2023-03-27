@@ -144,6 +144,7 @@ const RecipeForm: React.FC = () => {
 
     async function handleSubmitIngredients(recipeData: any) {
         try {
+            console.log(ingredientsList);
             const recipeIngredientsData = await recipeIngredients({
                 ingredientsList,
                 recipeId: recipeData.recipeId,
@@ -155,7 +156,7 @@ const RecipeForm: React.FC = () => {
                     ingredientsList,
                     recipeId: recipeData.recipeId,
                 })
-            );
+            );      
             //console.log(recipeId);
             setIngredientsList([]);
         } catch (error) {
@@ -280,19 +281,18 @@ const RecipeForm: React.FC = () => {
         ]);
     };
 
-    const handleIngredientChange = (e: any, index: number) => {
-        console.log(e.target.value);
+    const handleIngredientChange = (value: any, index: number) => {
+        console.log(value?.id);
         const newIngredientsList = [...ingredientsList];
-        newIngredientsList[index].ingredientId = parseInt(e.target.value);
+        newIngredientsList[index].ingredientId = parseInt(value?.id);
         setIngredientsList(newIngredientsList);
     };
 
-    const handleUnitChange = (
-        e: React.ChangeEvent<HTMLSelectElement>,
-        index: number
-    ) => {
+    const handleUnitChange = (value: any, index: number) => {
+        console.log(value.id);
+        console.log(index);
         const newIngredientsList = [...ingredientsList];
-        newIngredientsList[index].unitId = parseInt(e.target.value);
+        newIngredientsList[index].unitId = parseInt(value.id);
         setIngredientsList(newIngredientsList);
     };
 
@@ -397,89 +397,42 @@ const RecipeForm: React.FC = () => {
                             <label>
                                 <span className="label-text">Ingredient </span>
                                 <span className="required-star">*</span>
-                                {/* <select
-                                    value={ingredient.ingredientId}
-                                    onChange={(e) =>
-                                        handleIngredientChange(e, index)
-                                    }
-                                > */}
-                                {/* <option value={0} disabled>
-                                        Select an ingredient or enter a new one
-                                    </option>
-                                    {fetchIngredients.map(
-                                        (ingredientName, i) => (
-                                            <option
-                                                key={i}
-                                                value={ingredientName.id}
-                                            >
-                                                {ingredientName.name}
-                                            </option>
-                                        )
-                                    )}
-                                    <option value={-1}>
-                                        Add a new Ingredient!
-                                    </option> */}
-                                {/* </select> */}
                             </label>
                             <label>
                                 <Autocomplete
+                                    options={[
+                                        {
+                                            id: -1,
+                                            name: "New Ingredient",
+                                        },
+                                        ...fetchIngredients,
+                                    ]}
+                                    getOptionLabel={(option) =>
+                                        option.name || ""
+                                    }
+                                    fullWidth
+                                    sx={{ color: "black" }}
                                     renderInput={(params) => (
                                         <TextField
                                             {...params}
-                                            label="Select an ingredient or enter a new one"
                                             variant="outlined"
-                                            sx={{ color: "white" }}
                                         />
                                     )}
-                                    options={[
-                                        ...fetchIngredients.map(
-                                            (ingredientName) => ({
-                                                id: ingredientName.id,
-                                                name: ingredientName.name,
-                                            })
-                                        ),
-                                        { id: -1, name: "New Ingredient" },
-                                    ]}
-                                    getOptionLabel={(option) => option.name}
-                                    value={
-                                        ingredient.ingredientId
-                                            ? fetchIngredients.find(
-                                                  (ingredientName) =>
-                                                      ingredientName.id ===
-                                                      ingredient.ingredientId
-                                              )
-                                            : { id: -1, name: "New Ingredient" }
+                                    onChange={(event, value) =>
+                                        handleIngredientChange(value, index)
                                     }
-                                    fullWidth
-                                    sx={{ color: "white" }}
-                                    renderOption={(props, option) => (
-                                        <li {...props}>
-                                            {option.name ===
-                                            "New Ingredient" ? (
-                                                <span className="label-text">
-                                                    {option.name}
-                                                </span>
-                                            ) : (
-                                                option.name
-                                            )}
-                                        </li>
-                                    )}
-                                    onChange={(e, value) => {
-                                        if (value) {
-                                            handleIngredientChange(
-                                                value,
-                                                index
-                                            );
-                                        }
-                                    }}
+                                    isOptionEqualToValue={(option, value) =>
+                                        option.id === value.id ||
+                                        option.name === value.name
+                                    }
                                 />
-                                {/* {ingredient.ingredientId === -1 && (
-                                    <>
+                                {ingredient.ingredientId === -1 && (
+                                    <label>
                                         <span className="label-text">
-                                            New Ingredient
+                                            New ingredient
                                         </span>
                                         <input
-                                            className="newIngredient"
+                                            className="formInput"
                                             type="text"
                                             value={ingredient.newIngredient}
                                             onChange={(e) =>
@@ -489,28 +442,42 @@ const RecipeForm: React.FC = () => {
                                                 )
                                             }
                                         />
-                                    </>
-                                )} */}
+                                    </label>
+                                )}
                             </label>
-
-                            <br />
                             <label>
                                 <span className="label-text">Unit </span>
                                 <span className="required-star">*</span>
-                                <select
-                                    value={ingredient.unitId}
-                                    onChange={(e) => handleUnitChange(e, index)}
-                                >
-                                    <option value={0} disabled>
-                                        Select a unit or enter a new one
-                                    </option>
-                                    {fetchUnits.map((unit, i) => (
-                                        <option key={i} value={unit.id}>
-                                            {unit.name}
-                                        </option>
-                                    ))}
-                                    <option value={-1}>Add a new unit!</option>
-                                </select>
+                            </label>
+                            <label>
+                                <Autocomplete
+                                    options={[
+                                        {
+                                            id: -1,
+                                            name: "New Unit",
+                                        },
+                                        ...fetchUnits,
+                                    ]}
+                                    getOptionLabel={(option) =>
+                                        option.name || ""
+                                    }
+                                    fullWidth
+                                    sx={{ color: "black" }}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            variant="outlined"
+                                        />
+                                    )}
+                                    onChange={(event, value) =>
+                                        handleUnitChange(value, index)
+                                    }
+                                    isOptionEqualToValue={(option, value) =>
+                                        option.id === value.id ||
+                                        option.name === value.name
+                                    }
+                                />
+
                                 {ingredient.unitId === -1 && (
                                     <label>
                                         <span className="label-text">
@@ -528,7 +495,7 @@ const RecipeForm: React.FC = () => {
                                     </label>
                                 )}
                             </label>
-                            <br />
+
                             <label>
                                 <span className="label-text"> Quantity</span>
 

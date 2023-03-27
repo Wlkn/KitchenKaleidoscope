@@ -401,7 +401,7 @@ export default function RecipeList() {
                     dataLength={recipes.length}
                     next={() => setPage((prevPage) => prevPage + 1)}
                     hasMore={hasMore}
-                    loader={<Loader />}
+                    loader={<div className="loader-recipelist"><Loader /></div>}
                     endMessage={
                         <div style={{ textAlign: "center" }}>
                             <div className="endMessage-infinite">

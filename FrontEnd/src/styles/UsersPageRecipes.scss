@@ -14,3 +14,7 @@
     align-items: center;
     position: relative;
 }
+
+.MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"] {
+    background: #fff;
+}

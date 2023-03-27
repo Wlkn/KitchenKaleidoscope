@@ -9,7 +9,7 @@ router.post("/", (req, res, next) => {
     let imageUrl = req.body.imageUrl;
     if (!imageUrl) {
         imageUrl =
-            "hhttps://w1.pngwing.com/pngs/543/616/png-transparent-blue-circle-fork-logo-spoon-line-green-cutlery-aqua.png";
+            "https://w1.pngwing.com/pngs/543/616/png-transparent-blue-circle-fork-logo-spoon-line-green-cutlery-aqua.png";
     }
     const recipe = new Recipe({
         name: req.body.recipeName,
