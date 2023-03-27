@@ -394,9 +394,7 @@ h1 .world .world-globe svg path {
 }
 
 .dark-mode-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  
     position: relative;
     z-index: 100;
     border: 2px solid currentColor;
@@ -544,9 +542,9 @@ h1 .world .world-globe svg path {
         }
         .dark-mode-toggle {
             margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            // display: flex;
+            // align-items: center;
+            // justify-content: center;
             margin-top: 20px;
         }
     }
