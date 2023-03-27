@@ -30,15 +30,14 @@ router.post("/", (req, res) => {
                         [req.body.recipeId, ingredientId, unitId, quantity],
                         (error: Error, results: any) => {
                             if (error) {
+                                console.log(
+                                    "Error adding ingredients." + error
+                                );
                                 throw error;
                             }
-                            res.status(201).send(
-                                "Ingredients added to recipe."
-                            );
                             console.log("Ingredients added to recipe.");
                         }
                     );
-                    // }
                 }
             }
         }
@@ -101,7 +100,7 @@ async function addNewIngredient(newIngredient) {
         console.log(`new Ingredient added with ID: ${newIngredientId}`);
         return newIngredientId;
     } catch (error) {
-        console.error(error);
+        console.error("error adding new ingredient." + error);
         throw error;
     }
 }
@@ -116,7 +115,7 @@ async function addNewUnit(newUnit) {
         console.log(`new Unit added with ID: ${newUnitId}`);
         return newUnitId;
     } catch (error) {
-        console.error(error);
+        console.error("Error adding new unit." + error);
         throw error;
     }
 }
