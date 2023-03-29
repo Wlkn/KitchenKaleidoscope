@@ -80,7 +80,7 @@ export default function FavoritePage() {
                 </div>
             </div>
             <div className="favoritePage-title">Favorite Recipes</div>
-            <div className="favoritePage-body">
+            <div className="RecipeList-container">
                 {favorites?.length > 0 &&
                     favorites?.map((favorite: any) => (
                         <div className="favoritePage-card" key={favorite._id}>

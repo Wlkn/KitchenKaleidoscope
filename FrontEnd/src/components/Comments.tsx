@@ -72,7 +72,12 @@ export default function Comments() {
                 .then((data) => {
                     setComments((prevComments) => {
                         const newComments = prevComments.map((comment) => {
-                            if (comment.user_id === userId) {
+                            if (comment.user_id === null) {
+                                return {
+                                    ...comment,
+                                    userName: "Guest",
+                                };
+                            } else if (comment.user_id === userId) {
                                 return {
                                     ...comment,
                                     userName: data?.name,
@@ -143,7 +148,9 @@ export default function Comments() {
                                     {comments.userName} -{" "}
                                     {timeSinceComment(comments.created_at)}
                                 </div>
-                                <div className="comment-text">{comments.comment}</div>
+                                <div className="comment-text">
+                                    {comments.comment}
+                                </div>
                             </div>
                         ))}
                     </div>
