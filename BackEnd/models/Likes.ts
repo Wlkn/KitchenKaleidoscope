@@ -4,7 +4,7 @@ const pool = require("../postGres");
 
 //ADD A LIKE WITH /api/likes/
 router.post("/", (req, res) => {
-    console.log(req.body); //TODO REMOVE THIS WHEN DONE
+    // console.log(req.body); //TODO REMOVE THIS WHEN DONE
     pool.query(
         "SELECT to_regclass('likes')",
 
@@ -12,8 +12,6 @@ router.post("/", (req, res) => {
             if (error) {
                 throw error;
             }
-
-            
 
             const { recipe_id, user_id, liked } = req.body;
             pool.query(
@@ -49,17 +47,15 @@ router.put("/:id", (req, res) => {
             if (error) {
                 throw error;
             }
-            
+
             res.status(200).send(`Like modified with ID: ${id}`);
-            console.log(`Like modified with ID: ${id}`); //TODO REMOVE THIS WHEN DONE
+            // console.log(`Like modified with ID: ${id}`); //TODO REMOVE THIS WHEN DONE
         }
     );
 });
 
 router.get("/", (req, res) => {
     pool.query("SELECT * FROM likes", (error: Error, results: any) => {
-        
-        
         if (error) {
             throw error;
         }
@@ -74,7 +70,7 @@ router.get("/:id", (req, res) => {
         "SELECT * FROM likes WHERE user_id = $1 AND liked = true",
         [userId],
         (error: Error, results: any) => {
-             if (error) {
+            if (error) {
                 throw error;
             } else if (results.rows.length === 0) {
                 res.status(200).json({ message: "No liked recipes found" });
@@ -92,10 +88,9 @@ function addLike(recipe_id: string, user_id: string, liked: boolean, res: any) {
             if (error) {
                 throw error;
             }
-            
 
             res.status(201).json(`Like added with ID: ${results.rows[0].id}`);
-            console.log(`Like added with ID: ${results.rows[0].id}`); //TODO REMOVE THIS WHEN DONE
+            // console.log(`Like added with ID: ${results.rows[0].id}`); //TODO REMOVE THIS WHEN DONE
         }
     );
 }
@@ -113,7 +108,7 @@ function updateLike(
                 throw error;
             }
             res.status(201).json(`Like updated with ID: ${results.rows[0].id}`);
-            console.log(`Like updated with ID: ${results.rows[0].id}`);
+            // console.log(`Like updated with ID: ${results.rows[0].id}`);
         }
     );
 }
@@ -125,7 +120,7 @@ router.delete("/", (req, res) => {
             throw error;
         }
         res.status(200).send(`Likes table deleted`);
-        console.log(`Likes table deleted`); //TODO REMOVE THIS WHEN DONE
+        // console.log(`Likes table deleted`); //TODO REMOVE THIS WHEN DONE
     });
 });
 

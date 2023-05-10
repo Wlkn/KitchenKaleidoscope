@@ -2,7 +2,7 @@ import express = require("express");
 const router = express.Router();
 const pool = require("../postGres");
 router.post("/", (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     pool.query(
         "SELECT to_regclass('ingredients')",
         async (error: Error, results: any) => {
@@ -35,7 +35,7 @@ router.post("/", (req, res) => {
                                 );
                                 throw error;
                             }
-                            console.log("Ingredients added to recipe.");
+                            // console.log("Ingredients added to recipe.");
                         }
                     );
                 }
@@ -97,7 +97,7 @@ async function addNewIngredient(newIngredient) {
             [newIngredient]
         );
         const newIngredientId = rows[0].id;
-        console.log(`new Ingredient added with ID: ${newIngredientId}`);
+        // console.log(`new Ingredient added with ID: ${newIngredientId}`);
         return newIngredientId;
     } catch (error) {
         console.error("error adding new ingredient." + error);
@@ -112,7 +112,7 @@ async function addNewUnit(newUnit) {
             [newUnit]
         );
         const newUnitId = rows[0].id;
-        console.log(`new Unit added with ID: ${newUnitId}`);
+        // console.log(`new Unit added with ID: ${newUnitId}`);
         return newUnitId;
     } catch (error) {
         console.error("Error adding new unit." + error);

@@ -19,7 +19,7 @@ router.post("/", (req, res, next) => {
         category: req.body.category,
         area: req.body.area,
     });
-    console.log(req.body.isPublic);
+    // console.log(req.body.isPublic);
 
     recipe
         .save()
@@ -36,7 +36,7 @@ router.post("/", (req, res, next) => {
             res.status(400).json({
                 error: error,
             });
-            console.log(error);
+            // console.log(error);
         });
 });
 //PUT ROUTE TO UPDATE THE RECIPE WITH THE RECIPEID RECIEVED FROM THE FRONT END
@@ -60,9 +60,9 @@ router.put("/:id", (req, res, next) => {
             res.status(200).json({
                 message: `The recipe with the ID of ${req.params.id} has been updated.`,
             });
-            console.log(
-                `The recipe with the ID of ${req.params.id} has been updated.`
-            );
+            // console.log(
+            //     `The recipe with the ID of ${req.params.id} has been updated.`
+            // );
         })
         .catch((error) => {
             res.status(400).json({
@@ -80,15 +80,15 @@ router.delete("/:id", (req, res, next) => {
             res.status(200).json({
                 message: `The recipe with the ID of ${req.params.id} has been deleted.`,
             });
-            console.log(
-                `The recipe with the ID of ${req.params.id} has been deleted.`
-            );
+            // console.log(
+            //     `The recipe with the ID of ${req.params.id} has been deleted.`
+            // );
         })
         .catch((error) => {
             res.status(400).json({
                 error: error,
             });
-            console.log(error);
+            // console.log(error);
         });
 });
 // GET ROUTES
@@ -163,10 +163,10 @@ function updateUserRecipes(req, recipeId) {
         { $push: { recipes: recipeId } }
     )
         .then(() => {
-            console.log("Recipe added to user.");
+            // console.log("Recipe added to user.");
         })
         .catch((error: Error) => {
-            console.log(error);
+            // console.log(error);
         });
 }
 

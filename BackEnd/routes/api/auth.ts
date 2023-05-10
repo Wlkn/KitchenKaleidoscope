@@ -21,6 +21,6 @@ module.exports = (req, res, next) => {
         res.status(401).json({
             error: "Invalid request, from auth.ts.",
         });
-        console.log(error);
+        // console.log(error);
     }
 };

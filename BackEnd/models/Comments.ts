@@ -4,7 +4,7 @@ const pool = require("../postGres");
 
 //ADD A COMMENT WITH /api/comments/
 router.post("/", (req, res) => {
-    console.log(req.body); //TODO REMOVE THIS WHEN DONE
+    // console.log(req.body); //TODO REMOVE THIS WHEN DONE
     pool.query(
         "SELECT to_regclass('comments')",
 
@@ -12,7 +12,6 @@ router.post("/", (req, res) => {
             if (error) {
                 throw error;
             }
-
 
             const { recipe_id, user_id, comment } = req.body;
             pool.query(
@@ -25,7 +24,7 @@ router.post("/", (req, res) => {
                     res.status(201).json(
                         `Comment added with ID: ${results.rows[0].id}`
                     );
-                    console.log(`Comment added with ID: ${results.rows[0].id}`); //TODO REMOVE THIS WHEN DONE
+                    // console.log(`Comment added with ID: ${results.rows[0].id}`); //TODO REMOVE THIS WHEN DONE
                 }
             );
         }
@@ -44,7 +43,7 @@ router.put("/:id", (req, res) => {
                 throw error;
             }
             res.status(200).send(`Comment modified with ID: ${id}`);
-            console.log(`Comment modified with ID: ${id}`); //TODO REMOVE THIS WHEN DONE
+            // console.log(`Comment modified with ID: ${id}`); //TODO REMOVE THIS WHEN DONE
         }
     );
 });
@@ -61,7 +60,7 @@ router.delete("/:id", (req, res) => {
                 throw error;
             }
             res.status(200).send(`Comment deleted with ID: ${id}`);
-            console.log(`Comment deleted with ID: ${id}`); //TODO REMOVE THIS WHEN DONE
+            // console.log(`Comment deleted with ID: ${id}`); //TODO REMOVE THIS WHEN DONE
         }
     );
 });
@@ -73,7 +72,7 @@ router.get("/", (req, res) => {
             throw error;
         }
         res.status(200).json(results.rows);
-        console.log(results.rows); //TODO REMOVE THIS WHEN DONE
+        // console.log(results.rows); //TODO REMOVE THIS WHEN DONE
     });
 });
 
@@ -89,7 +88,7 @@ router.get("/:id", (req, res) => {
                 throw error;
             }
             res.status(200).json(results.rows);
-            console.log(results.rows); //TODO REMOVE THIS WHEN DONE
+            // console.log(results.rows); //TODO REMOVE THIS WHEN DONE
         }
     );
 });
@@ -101,7 +100,7 @@ router.delete("/", (req, res) => {
             throw error;
         }
         res.status(200).send(`All comments deleted`);
-        console.log(`All comments deleted`);
+        // console.log(`All comments deleted`);
     });
 });
 

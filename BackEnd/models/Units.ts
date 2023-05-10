@@ -3,7 +3,7 @@ const router = express.Router();
 const pool = require("../postGres");
 
 router.post("/", (req, res) => {
-    console.log(req.body); //TODO REMOVE THIS WHEN DONE
+    // console.log(req.body); //TODO REMOVE THIS WHEN DONE
     pool.query(
         "SELECT to_regclass('units')",
 
@@ -22,7 +22,7 @@ router.post("/", (req, res) => {
                     }
                     res.json({ unitId: results.rows[0].id });
 
-                    console.log(`Unit added with ID: ${results.rows[0].id}`); //TODO REMOVE THIS WHEN DONE
+                    // console.log(`Unit added with ID: ${results.rows[0].id}`); //TODO REMOVE THIS WHEN DONE
                 }
             );
         }
