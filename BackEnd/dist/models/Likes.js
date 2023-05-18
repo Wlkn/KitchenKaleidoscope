@@ -5,7 +5,7 @@ const router = express.Router();
 const pool = require("../postGres");
 //ADD A LIKE WITH /api/likes/
 router.post("/", (req, res) => {
-    console.log(req.body); //TODO REMOVE THIS WHEN DONE
+    // console.log(req.body); //TODO REMOVE THIS WHEN DONE
     pool.query("SELECT to_regclass('likes')", (error, results) => {
         if (error) {
             throw error;
@@ -38,7 +38,7 @@ router.put("/:id", (req, res) => {
             throw error;
         }
         res.status(200).send(`Like modified with ID: ${id}`);
-        console.log(`Like modified with ID: ${id}`); //TODO REMOVE THIS WHEN DONE
+        // console.log(`Like modified with ID: ${id}`); //TODO REMOVE THIS WHEN DONE
     });
 });
 router.get("/", (req, res) => {
@@ -69,7 +69,7 @@ function addLike(recipe_id, user_id, liked, res) {
             throw error;
         }
         res.status(201).json(`Like added with ID: ${results.rows[0].id}`);
-        console.log(`Like added with ID: ${results.rows[0].id}`); //TODO REMOVE THIS WHEN DONE
+        // console.log(`Like added with ID: ${results.rows[0].id}`); //TODO REMOVE THIS WHEN DONE
     });
 }
 function updateLike(recipe_id, user_id, liked, res) {
@@ -78,7 +78,7 @@ function updateLike(recipe_id, user_id, liked, res) {
             throw error;
         }
         res.status(201).json(`Like updated with ID: ${results.rows[0].id}`);
-        console.log(`Like updated with ID: ${results.rows[0].id}`);
+        // console.log(`Like updated with ID: ${results.rows[0].id}`);
     });
 }
 //keep this commented as it will delete wipe the table clean
@@ -88,7 +88,7 @@ router.delete("/", (req, res) => {
             throw error;
         }
         res.status(200).send(`Likes table deleted`);
-        console.log(`Likes table deleted`); //TODO REMOVE THIS WHEN DONE
+        // console.log(`Likes table deleted`); //TODO REMOVE THIS WHEN DONE
     });
 });
 // function createTables() {

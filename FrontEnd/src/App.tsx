@@ -27,7 +27,6 @@ function App() {
                     <Route path="/auth/signup" element={<SignUp />} />
 
                     <Route path="/newRecipe" element={<CreateRecipe />} />
-                    <Route path="/home" element={<LoggedInHome />} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/recipe/:id" element={<RecipeDetails />} />
                     <Route path="/recipe/:id/comments" element={<Comments />} />

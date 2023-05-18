@@ -17,6 +17,7 @@ pool.connect();
 
 pool.on("error", (err, client) => {
     console.error("Unexpected error on idle client", err);
+    console.log("There was an error connecting to the database. Please try again later.")
     process.exit(-1);
 });
 

@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 module.exports = (req, res, next) => {
     try {
         const token = req.headers.authorization.split("Bearer ")[1];
-        //TODO fix this any.
         const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
         const userId = decodedToken;
         req.auth = { userId };
@@ -20,6 +19,6 @@ module.exports = (req, res, next) => {
         res.status(401).json({
             error: "Invalid request, from auth.ts.",
         });
-        console.log(error);
+        // console.log(error);
     }
 };
