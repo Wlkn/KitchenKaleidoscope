@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet";
 import Header from "../components/header";
 import "../styles/_ErrorPage.scss";
 import "../styles/_base.scss";
@@ -5,8 +6,11 @@ import "../styles/_base.scss";
 export default function ErrorPage() {
     return (
         <div className="ErrorPage-container">
+            <Helmet>
+                <title>KitchenKaleidoscope | Error</title>
+            </Helmet>
             <div className="home-header-container">
-                <Header />
+                <Header />H
             </div>
             <h1>Page not found</h1>
             <section className="error-container">

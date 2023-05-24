@@ -24,6 +24,7 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
 import "../styles/recipes.scss";
+import { Helmet } from "react-helmet";
 export default function RecipeList() {
     const navigate = useNavigate();
     const name = localStorage.getItem("name");
@@ -190,6 +191,9 @@ export default function RecipeList() {
 
     return (
         <div className="recipeListPage-container">
+            <Helmet>
+                <title>KitchenKaleidoscope | Recipes</title>
+            </Helmet>
             <header className="home-header-container">
                 {" "}
                 <Header />

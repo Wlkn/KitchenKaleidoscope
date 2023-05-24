@@ -19,6 +19,7 @@ import {
 } from "../redux/reducers/auth";
 import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
+import { Helmet } from "react-helmet";
 interface UserCreatedRecipesProps {
     _id: string;
     name: string;
@@ -57,6 +58,9 @@ const UserRecipes: React.FC = () => {
 
     return (
         <div className="userRecipes-container">
+            <Helmet>
+                <title>KitchenKaleidoscope | {name}'s Recipes</title>
+            </Helmet>
             <div className="home-header-container">
                 <Header />
                 {userLoggedIn ? (
@@ -88,7 +92,7 @@ const UserRecipes: React.FC = () => {
                         </a>
                     </div>
                 )}
-            </div>
+            h</div>
             <p className="h1-userRecipes">Theses are your recipes!</p>
             <p className="h2-LearnMore">
                 Click on learn more to edit, delete or see the recipes.

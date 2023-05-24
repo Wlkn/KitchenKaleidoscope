@@ -1,6 +1,6 @@
 import "../styles/Home.scss";
 import GlobeAnimation from "../components/GlobeAnimation";
-
+import { Helmet } from "react-helmet";
 import { ProfileButton } from "../components/Buttons";
 import Header from "../components/header";
 import { useSelector } from "react-redux";
@@ -40,6 +40,9 @@ const Home = () => {
 
     return (
         <div className="home">
+            <Helmet>
+                <title>KitchenKaleidoscope | Home</title>
+            </Helmet>
             <header className="home-header-container">
                 <Header />
                 {userLoggedIn ? (

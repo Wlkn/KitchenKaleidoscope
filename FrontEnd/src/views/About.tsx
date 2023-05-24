@@ -7,6 +7,7 @@ import Header from "../components/header";
 import { LogOutButton } from "../components/Buttons";
 import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
+import { Helmet } from "react-helmet";
 const About = () => {
     const userLoggedIn = localStorage.getItem("token") ? true : false;
     const navigate = useNavigate();
@@ -44,6 +45,9 @@ const About = () => {
     }, []);
     return (
         <div className="about-container">
+            <Helmet>
+                <title>KitchenKaleidoscope | About</title>
+            </Helmet>
             <header className="home-header-container">
                 <Header />
                 {userLoggedIn ? (

@@ -14,6 +14,7 @@ import Header from "../components/header";
 import Avatar from "@mui/material/Avatar";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
+import { Helmet } from "react-helmet";
 interface Ingredient {
     ingredientId: number;
     unitId: number;
@@ -325,6 +326,9 @@ const RecipeForm: React.FC = () => {
         <Loader />
     ) : (
         <div className="CreateRecipe-container">
+            <Helmet>
+            <title>KitchenKaleidoscope | Create Recipe</title>
+            </Helmet>
             <header className="home-header-container">
                 <Header />
                 <div className="home-logout">

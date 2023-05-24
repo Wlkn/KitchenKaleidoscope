@@ -21,6 +21,7 @@ import {
 } from "../redux/slices/recipes";
 import Avatar from "@mui/material/Avatar";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 const Profile = () => {
     const navigate = useNavigate();
     const SelectedUserId =
@@ -64,6 +65,9 @@ const Profile = () => {
 
     const content = (
         <div className="home">
+            <Helmet>
+            <title>KitchenKaleidoscope | Profile</title>
+            </Helmet>
             <header className="home-header-container">
                 <Header />
                 {userLoggedIn ? (

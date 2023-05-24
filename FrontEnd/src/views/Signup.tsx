@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useNavigate } from "react-router-dom";
 import "../styles/signup.scss";
+import { Helmet } from "react-helmet";
 function Copyright(props: any) {
     return (
         <Typography
@@ -90,6 +91,9 @@ export default function Signup() {
 
     return (
         <div className="signupContainer">
+            <Helmet>
+            <title>KitchenKaleidoscope | SignUp</title>
+            </Helmet>
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box

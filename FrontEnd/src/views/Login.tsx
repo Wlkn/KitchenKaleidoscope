@@ -27,6 +27,7 @@ import { useRef, useState, useEffect } from "react";
 import { setCredentials } from "../redux/reducers/auth";
 import { useLoginMutation } from "../redux/slices/auth";
 import Loader from "../components/Loader";
+import { Helmet } from "react-helmet";
 
 //REDUX
 
@@ -105,6 +106,9 @@ function SignIn() {
         <Loader />
     ) : (
         <div className="loginContainer">
+            <Helmet>
+                <title>KitchenKaleidoscope | SignIn</title>
+            </Helmet>
             {/* <Header /> */}
             <Container
                 component="main"
