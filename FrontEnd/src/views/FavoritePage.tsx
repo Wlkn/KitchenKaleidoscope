@@ -10,6 +10,7 @@ import { LogOutButton } from "../components/Buttons";
 import Loader from "../components/Loader";
 import Avatar from "@mui/material/Avatar";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 export default function FavoritePage() {
     const navigate = useNavigate();
     const name = localStorage.getItem("name");
@@ -65,6 +66,9 @@ export default function FavoritePage() {
         </div>
     ) : (
         <div className="favoritePage-container">
+            <Helmet>
+                <title>KKaleido | Favorites</title>
+            </Helmet>
             <div className="home-header-container">
                 <Header />
                 <div className="home-logout">
@@ -78,7 +82,7 @@ export default function FavoritePage() {
                         {name && name[0]}
                     </Avatar>
                 </div>
-            </div>
+            h</div>
             <div className="favoritePage-title">Favorite Recipes</div>
             <div className="RecipeList-container">
                 {favorites?.length > 0 &&

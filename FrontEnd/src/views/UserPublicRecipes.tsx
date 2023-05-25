@@ -14,6 +14,7 @@ import {
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
+import { Helmet } from "react-helmet";
 // interface UserRecipesProps {
 //     _id: string;
 //     name: string;
@@ -85,6 +86,9 @@ export default function UserPublicRecipes() {
 
     return (
         <div className="userPageRecipes-container">
+            <Helmet>
+                <title>{`${CreatorName}'s Recipes`}</title>
+            </Helmet>
             <header className="home-header-container">
                 <Header />
                 {userLoggedIn ? (

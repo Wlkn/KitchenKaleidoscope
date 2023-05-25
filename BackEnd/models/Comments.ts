@@ -94,15 +94,15 @@ router.get("/:id", (req, res) => {
 });
 
 //DELETE ALL COMMENTS, LEAVE THIS COMMENTED OUT
-router.delete("/", (req, res) => {
-    pool.query("DELETE FROM comments", (error: Error, results: any) => {
-        if (error) {
-            throw error;
-        }
-        res.status(200).send(`All comments deleted`);
-        // console.log(`All comments deleted`);
-    });
-});
+// router.delete("/", (req, res) => {
+//     pool.query("DELETE FROM comments", (error: Error, results: any) => {
+//         if (error) {
+//             throw error;
+//         }
+//         res.status(200).send(`All comments deleted`);
+//         // console.log(`All comments deleted`);
+//     });
+// });
 
 // INFO:
 //TO DELETE, or UPDATE you need to auth it, so send the token as authorizatio and the user_id which will be in the body.

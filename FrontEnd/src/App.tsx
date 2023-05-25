@@ -5,7 +5,6 @@ import SignUp from "../src/views/Signup";
 import Profile from "../src/views/Profile";
 import RecipeList from "../src/views/RecipeList";
 import ErrorPage from "../src/views/ErrorPage";
-import LoggedInHome from "../src/views/LoggedInHome";
 import RequireAuth from "../src/components/requireAuth";
 import Layout from "../src/components/Layout";
 import CreateRecipe from "./views/CreateRecipe";
@@ -27,7 +26,6 @@ function App() {
                     <Route path="/auth/signup" element={<SignUp />} />
 
                     <Route path="/newRecipe" element={<CreateRecipe />} />
-                    <Route path="/home" element={<LoggedInHome />} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/recipe/:id" element={<RecipeDetails />} />
                     <Route path="/recipe/:id/comments" element={<Comments />} />

@@ -24,6 +24,7 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
 import "../styles/recipes.scss";
+import { Helmet } from "react-helmet";
 export default function RecipeList() {
     const navigate = useNavigate();
     const name = localStorage.getItem("name");
@@ -195,6 +196,9 @@ export default function RecipeList() {
                 <Header />
                 {userLoggedIn ? (
                     <div className="home-logout">
+                        <Helmet>
+                            <title>KKaleido | Recipes</title>
+                        </Helmet>
                         {/* <MyRecipesButton userId={userId} /> */}
                         <LogOutButton />
                         <Avatar

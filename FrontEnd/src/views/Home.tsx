@@ -15,6 +15,7 @@ import MediaCard from "../components/recipe";
 import Loader from "../components/Loader";
 import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
+import { Helmet } from "react-helmet";
 const Home = () => {
     const navigate = useNavigate();
     const currentToken =
@@ -40,6 +41,9 @@ const Home = () => {
 
     return (
         <div className="home">
+            <Helmet>
+                <title>KitchenKaleidoscope</title>
+            </Helmet>
             <header className="home-header-container">
                 <Header />
                 {userLoggedIn ? (

@@ -114,15 +114,15 @@ function updateLike(
 }
 
 //keep this commented as it will delete wipe the table clean
-router.delete("/", (req, res) => {
-    pool.query("DELETE FROM likes", (error: Error, results: any) => {
-        if (error) {
-            throw error;
-        }
-        res.status(200).send(`Likes table deleted`);
-        // console.log(`Likes table deleted`); //TODO REMOVE THIS WHEN DONE
-    });
-});
+// router.delete("/", (req, res) => {
+//     pool.query("DELETE FROM likes", (error: Error, results: any) => {
+//         if (error) {
+//             throw error;
+//         }
+//         res.status(200).send(`Likes table deleted`);
+//         // console.log(`Likes table deleted`); //TODO REMOVE THIS WHEN DONE
+//     });
+// });
 
 // function createTables() {
 //     pool.query(

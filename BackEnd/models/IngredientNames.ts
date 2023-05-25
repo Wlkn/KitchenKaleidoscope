@@ -90,16 +90,16 @@ router.get("/:name", (req, res) => {
 });
 
 //delete all ingredients
-router.delete("/", (req, res) => {
-    pool.query(
-        "DELETE FROM ingredient_names",
-        async (error: Error, results: any) => {
-            if (error) {
-                throw error;
-            }
-            res.status(200).send(`All ingredient names deleted`);
-        }
-    );
-});
+// router.delete("/", (req, res) => {
+//     pool.query(
+//         "DELETE FROM ingredient_names",
+//         async (error: Error, results: any) => {
+//             if (error) {
+//                 throw error;
+//             }
+//             res.status(200).send(`All ingredient names deleted`);
+//         }
+//     );
+// });
 
 module.exports = router;

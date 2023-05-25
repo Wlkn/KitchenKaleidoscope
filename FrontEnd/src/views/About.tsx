@@ -7,6 +7,7 @@ import Header from "../components/header";
 import { LogOutButton } from "../components/Buttons";
 import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
+import { Helmet } from "react-helmet";
 const About = () => {
     const userLoggedIn = localStorage.getItem("token") ? true : false;
     const navigate = useNavigate();
@@ -44,6 +45,9 @@ const About = () => {
     }, []);
     return (
         <div className="about-container">
+            <Helmet>
+                <title>KKaleido | About</title>
+            </Helmet>
             <header className="home-header-container">
                 <Header />
                 {userLoggedIn ? (
@@ -81,15 +85,14 @@ const About = () => {
                     and share delicious recipes with other food enthusiasts! Our
                     website is designed to be user-friendly and intuitive,
                     making it easy for you to find new recipes to try and share
-                    your own favorite recipes with others.
-                
-                    Whether you are a professional chef or a home cook, our
-                    website is the perfect platform for sharing your culinary
-                    creations with others. You can easily upload your recipes,
-                    complete with ingredients and step-by-step instructions, and
-                    share them with our community of food lovers.
-                    We also offer a wide range of features to help you discover
-                    new recipes and connect with other foodies.
+                    your own favorite recipes with others. Whether you are a
+                    professional chef or a home cook, our website is the perfect
+                    platform for sharing your culinary creations with others.
+                    You can easily upload your recipes, complete with
+                    ingredients and step-by-step instructions, and share them
+                    with our community of food lovers. We also offer a wide
+                    range of features to help you discover new recipes and
+                    connect with other foodies.
                 </p>
                 <h2>About the Developer</h2>
                 <p>
