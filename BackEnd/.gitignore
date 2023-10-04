@@ -1,4 +1,5 @@
 .env
+.history
 
 /vercel.json
 /dist

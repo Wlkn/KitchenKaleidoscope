@@ -6,11 +6,9 @@ const pool = new Pool({
     host: process.env.POSTGRE_HOST_STRING2,
     user: process.env.POSTGRE_USER2,
     password: process.env.POSTGRE_PASSWORD2,
-    database: process.env.POSTGRE_DATABASE2, //KitchenKaleidoscope Database
-
-    //switched to "better" free database than before since it was slow and was going to expire soon
+    database: process.env.POSTGRE_DATABASE2 ,
     port: 5432,
-    ssl: true,
+    ssl: true
 });
 
 pool.connect();
