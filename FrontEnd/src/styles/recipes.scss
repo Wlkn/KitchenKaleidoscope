@@ -3,17 +3,17 @@
     margin-top: 2px;
 } */
 :root {
-    --background-color: #f5f5f5;
-    --text-color: #171717;
+  --background-color: #f5f5f5;
+  --text-color: #171717;
 }
 
 .darkMode {
-    background-color: #171717;
-    color: #f5f5f5;
+  background-color: #171717;
+  color: #f5f5f5;
 }
 
 .search-container {
-    display: table;
+  display: table;
 }
 
 // .filters {
@@ -31,188 +31,190 @@
 @import url("https://fonts.googleapis.com/css?family=Hind&display=swap");
 
 .Card-search {
-    --border-radius: 10px;
-    padding: 1px;
-    border-radius: var(--border-radius);
-    background: linear-gradient(
-        -67deg,
-        rgba(#c8d8e7, 0.7),
-        rgba(255, 255, 255, 0.8)
-    );
-    overflow: hidden;
-    box-shadow: -2px -2px 6px rgba(#fff, 0.6), 2px 2px 12px #c8d8e7;
-    width: 380px;
-    max-width: 380px;
-    margin-left: 80px;
-    margin-right: 80px;
-    // height: 100%;
+  --border-radius: 10px;
+  padding: 1px;
+  border-radius: var(--border-radius);
+  background: linear-gradient(
+    -67deg,
+    rgba(#c8d8e7, 0.7),
+    rgba(255, 255, 255, 0.8)
+  );
+  overflow: hidden;
+  box-shadow: -2px -2px 6px rgba(#fff, 0.6), 2px 2px 12px #c8d8e7;
+  width: 380px;
+  max-width: 380px;
+  margin-left: 80px;
+  margin-right: 80px;
+  // height: 100%;
 }
 
 .CardInner-search {
-    --border-radius: 10px;
-    padding: 16px 16px;
-    background-color: #e2e9f4;
-    border-radius: var(--border-radius);
+  --border-radius: 10px;
+  padding: 16px 16px;
+  background-color: #e2e9f4;
+  border-radius: var(--border-radius);
 }
 
 .container-search {
-    display: flex;
+  display: flex;
 }
 
 .Icon-search {
-    --border-radius: 10px;
-    min-width: 46px;
-    min-height: 46px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: var(--border-radius);
-    margin-right: 12px;
-    box-shadow: -2px -2px 6px rgba(#fff, 0.6), 2px 2px 12px #c8d8e7;
+  --border-radius: 10px;
+  min-width: 46px;
+  min-height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius);
+  margin-right: 12px;
+  box-shadow: -2px -2px 6px rgba(#fff, 0.6), 2px 2px 12px #c8d8e7;
 
-    svg {
-        transform: translate(-1px, -1px);
-    }
+  svg {
+    transform: translate(-1px, -1px);
+  }
 }
 .CardInner-search {
-    label {
-        font-family: "Hind", sans-serif;
-        display: block;
-        color: #3c4b66;
-        margin-bottom: 12px;
-        background: linear-gradient(45deg, rgba(#6b7b8f, 1), #3c4b66);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
+  label {
+    font-family: "Hind", sans-serif;
+    display: block;
+    color: #3c4b66;
+    margin-bottom: 12px;
+    background: linear-gradient(45deg, rgba(#6b7b8f, 1), #3c4b66);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }
 
 .InputContainer-search {
+  width: 100%;
+}
+.InputContainer-search {
+  input {
+    background-color: #e3edf7;
+    padding: 16px 32px;
+    border: none;
+    display: block;
+    font-family: "Orbitron", sans-serif;
+    font-weight: 600;
+    color: #a9b8c9;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    transition: all 240ms ease-out;
     width: 100%;
-}
-.InputContainer-search {
-    input {
-        background-color: #e3edf7;
-        padding: 16px 32px;
-        border: none;
-        display: block;
-        font-family: "Orbitron", sans-serif;
-        font-weight: 600;
-        color: #a9b8c9;
 
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        transition: all 240ms ease-out;
-        width: 100%;
-
-        &::placeholder {
-            color: #6d7f8f;
-        }
-
-        &:focus {
-            outline: none;
-            color: #6d7f8f;
-            background-color: lighten(#e3edf7, 3%);
-        }
+    &::placeholder {
+      color: #6d7f8f;
     }
+
+    &:focus {
+      outline: none;
+      color: #6d7f8f;
+      background-color: lighten(#e3edf7, 3%);
+    }
+  }
 }
 .endMessage-infinite {
-    color: var(--text-color);
-    font-size: 20px;
-    text-align: center;
-    font-weight: 500;
-    margin-top: 1em;
-    margin-bottom: 1em;
+  color: var(--text-color);
+  font-size: 20px;
+  text-align: center;
+  font-weight: 500;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 .InputContainer-search {
-    --border-radius: 10px;
-    --top-shadow: inset 1px 1px 3px #c5d4e3, inset 2px 2px 6px #c5d4e3;
-    --bottom-shadow: inset -2px -2px 4px rgba(255, 255, 255, 0.7);
+  --border-radius: 10px;
+  --top-shadow: inset 1px 1px 3px #c5d4e3, inset 2px 2px 6px #c5d4e3;
+  --bottom-shadow: inset -2px -2px 4px rgba(255, 255, 255, 0.7);
 
-    position: relative;
-    border-radius: var(--border-radius);
-    overflow: hidden;
+  position: relative;
+  border-radius: var(--border-radius);
+  overflow: hidden;
 
-    &:before,
-    &:after {
-        left: 0;
-        top: 0;
-        display: block;
-        content: "";
-        pointer-events: none;
-        width: 100%;
-        height: 100%;
-        position: absolute;
-    }
+  &:before,
+  &:after {
+    left: 0;
+    top: 0;
+    display: block;
+    content: "";
+    pointer-events: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+  }
 
-    &:before {
-        box-shadow: var(--bottom-shadow);
-    }
+  &:before {
+    box-shadow: var(--bottom-shadow);
+  }
 
-    &:after {
-        box-shadow: var(--top-shadow);
-    }
+  &:after {
+    box-shadow: var(--top-shadow);
+  }
 }
 
 .h1-userRecipes {
-    text-align: center;
-    font-size: 2em;
-    font-weight: 600;
-    margin-bottom: 1em;
-    color: var(--text-color);
+  text-align: center;
+  font-size: 2em;
+  font-weight: 600;
+  margin-bottom: 1em;
+  color: var(--text-color);
 }
 .h2-LearnMore {
-    text-align: center;
-    font-size: 1.5em;
-    font-weight: 600;
-    margin-bottom: 1em;
-    color: var(--text-color);
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: 600;
+  margin-bottom: 1em;
+  color: var(--text-color);
 }
 .lock-explanation {
-    text-align: center;
-    font-size: 0.9em;
-    font-weight: 600;
-    margin-bottom: 1em;
-    color: var(--text-color);
+  text-align: center;
+  font-size: 0.9em;
+  font-weight: 600;
+  margin-bottom: 1em;
+  color: var(--text-color);
 
-    margin-top: 1.1em;
-    margin-right: 10px;
+  margin-top: 1.1em;
+  margin-right: 10px;
 }
 .recipe-image {
-    height: 220px;
-    width: 220px;
-    border-radius: 20px;
-    margin-bottom: 12px;
+  height: 220px;
+  width: 220px;
+  border-radius: 20px;
+  margin-bottom: 12px;
 }
 
 .recipe-item {
-    margin-bottom: 1em;
+  margin-bottom: 1em;
 }
 .recipeListPage-container {
-    min-height: 100vh;
-    color: #f5f5f5;
-    padding-bottom: 150px;
-    font-family: Montserrat, sans-serif;
-    -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  color: #f5f5f5;
+  padding-bottom: 150px;
+  font-family: Montserrat, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 .RecipeList-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    margin: 0 auto;
-    max-width: 1800px;
-    padding: 0 20px;
-    margin-top: 50px;
-    -webkit-font-smoothing: antialiased;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 0 auto;
+//   max-width: 1800px;
+//   min-width: 1740px;
+  padding: 0 20px;
+  margin-top: 50px;
+  -webkit-font-smoothing: antialiased;
+  min-height: 300px; /* Adjust this value as needed */
 }
 
 .RecipeList-header-container {
-    padding-top: 7px;
-    padding-bottom: 7px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
 }
 // .home-page-featured-recipes {
 //     overflow: hidden;
@@ -222,60 +224,61 @@
 //     padding-bottom: 50px;
 // }
 .featured-recipes {
-    display: grid;
-    grid-gap: 20px 14px;
-    align-content: start;
-    justify-content: center;
-    align-items: start;
-    grid-template-columns: repeat(10, 274px);
-    grid-auto-flow: column;
-    margin-bottom: 20px;
-    overflow: hidden;
-    width: auto;
-    height: 100%;
-    padding-top: 10px;
+  display: grid;
+  grid-gap: 20px 14px;
+  align-content: start;
+  justify-content: center;
+  align-items: start;
+  grid-template-columns: repeat(10, 274px);
+  grid-auto-flow: column;
+  margin-bottom: 20px;
+  overflow: hidden;
+  width: auto;
+  height: 100%;
+  padding-top: 10px;
 }
 .filters {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  margin-top: 50px;
 }
 @media only screen and (max-width: 1100px) {
+  .filters {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .Card-search {
+    width: 302px;
+    margin: 20px 0 20px 0;
+  }
+  .burger-active {
     .filters {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-between;
+      display: none;
     }
-    .Card-search {
-        width: 302px;
-        margin: 20px 0 20px 0;
+    .RecipeList-container {
+      display: none;
     }
-    .burger-active {
-        .filters {
-            display: none;
-        }
-        .RecipeList-container {
-            display: none;
-        }
-    }
+  }
 }
 
 .loader-recipelist {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100%;
-    margin: 0 ;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 100;
-    background-color: #fff;
-    opacity: 0.8;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   height: 100vh;
+//   width: 100%;
+//   margin: 0;
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   right: 0;
+//   bottom: 0;
+//   z-index: 100;
+//   background-color: #fff;
+//   opacity: 0.8;
 }
