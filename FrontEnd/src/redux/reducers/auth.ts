@@ -1,8 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// Hydrate from localStorage so that auth survives a page reload. Without this
+// the store always starts empty and RequireAuth would bounce logged-in users
+// back to the login page after every refresh.
+const initialState = {
+    user: localStorage.getItem("email") || null,
+    token: localStorage.getItem("token") || null,
+    userId: localStorage.getItem("userId") || null,
+    name: localStorage.getItem("name") || null,
+};
+
 const authSlice = createSlice({
     name: "auth",
-    initialState: { user: null, token: null, userId: null, name: null },
+    initialState,
     reducers: {
         setCredentials: (state, action) => {
             const { email, token, userId, name } = action.payload;
@@ -15,10 +25,16 @@ const authSlice = createSlice({
             localStorage.setItem("name", name);
             localStorage.setItem("email", email);
         },
-        logOut: (state, action) => {
+        logOut: (state) => {
             state.user = null;
             state.token = null;
             state.userId = null;
+            state.name = null;
+            localStorage.removeItem("token");
+            localStorage.removeItem("userId");
+            localStorage.removeItem("name");
+            localStorage.removeItem("email");
+            localStorage.removeItem("user");
         },
     },
 });

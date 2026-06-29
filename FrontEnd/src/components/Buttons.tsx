@@ -132,7 +132,7 @@ export const LogOutButton = () => {
         localStorage.removeItem("user");
         localStorage.removeItem("name");
 
-        dispatch(logOut);
+        dispatch(logOut());
 
         MySwal.fire({
             title: <p>Logged Out!</p>,

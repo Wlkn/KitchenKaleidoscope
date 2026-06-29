@@ -18,28 +18,29 @@ function App() {
     return (
         <Router basename="/">
             <Routes>
-                {/* PUBLIC ROUTES */}
                 <Route path="/" element={<Layout />}>
-                    <Route path="/*" element={<ErrorPage />} />
+                    {/* PUBLIC ROUTES */}
                     <Route index element={<Home />} />
                     <Route path="/auth/login" element={<Login />} />
                     <Route path="/auth/signup" element={<SignUp />} />
-
-                    <Route path="/newRecipe" element={<CreateRecipe />} />
-                    <Route path="/profile" element={<Profile />} />
                     <Route path="/recipe/:id" element={<RecipeDetails />} />
                     <Route path="/recipe/:id/comments" element={<Comments />} />
-                    <Route path="/myrecipes/:id" element={<UserRecipes />} />
                     <Route path="/recipelist" element={<RecipeList />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/user/:id" element={<UserPublicRecipes />} />
 
                     {/* PRIVATE ROUTES */}
-                    <Route
-                        path="/favorites/:id"
-                        element={<FavoritePage />}
-                    ></Route>
-                    <Route element={<RequireAuth />}></Route>
+                    <Route element={<RequireAuth />}>
+                        <Route path="/newRecipe" element={<CreateRecipe />} />
+                        <Route path="/profile" element={<Profile />} />
+                        <Route path="/myrecipes/:id" element={<UserRecipes />} />
+                        <Route
+                            path="/favorites/:id"
+                            element={<FavoritePage />}
+                        />
+                    </Route>
+
+                    <Route path="*" element={<ErrorPage />} />
                 </Route>
             </Routes>
         </Router>

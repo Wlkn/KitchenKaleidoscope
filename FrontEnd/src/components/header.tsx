@@ -49,7 +49,7 @@ export default function Header() {
         localStorage.removeItem("user");
         localStorage.removeItem("name");
 
-        dispatch(logOut);
+        dispatch(logOut());
 
         MySwal.fire({
             title: <p>Logged Out!</p>,
