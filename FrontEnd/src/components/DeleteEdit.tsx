@@ -18,8 +18,8 @@ const DeleteEdit = ({ deleteFunc, editFunc, recipeData }: Props) => {
     const [editMode, setEditMode] = useState(false);
     const [formData, setFormData] = useState(recipeData || {});
     const navigate = useNavigate();
-    const currentUserId =
-        localStorage.getItem("userId") || useSelector(selectCurrentUserId);
+    const userIdFromStore = useSelector(selectCurrentUserId);
+    const currentUserId = localStorage.getItem("userId") || userIdFromStore;
 
     const handleSubmit = (event: any) => {
         MySwal.fire({

@@ -32,10 +32,10 @@ interface UserCreatedRecipesProps {
 const UserRecipes: React.FC = () => {
     const name = localStorage.getItem("name");
     const navigate = useNavigate();
-    const currentToken =
-        localStorage.getItem("token") || useSelector(selectCurrentToken);
-    const currentUserId =
-        localStorage.getItem("userId") || useSelector(selectCurrentUserId);
+    const tokenFromStore = useSelector(selectCurrentToken);
+    const userIdFromStore = useSelector(selectCurrentUserId);
+    const currentToken = localStorage.getItem("token") || tokenFromStore;
+    const currentUserId = localStorage.getItem("userId") || userIdFromStore;
     const userLoggedIn = currentUserId && currentToken ? true : false;
     const { id } = useParams();
     const user_id = id?.toString();

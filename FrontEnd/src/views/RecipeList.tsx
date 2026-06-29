@@ -174,11 +174,11 @@ export default function RecipeList() {
     setSearchTerm(value);
   }
 
-  const currentToken =
-    localStorage.getItem("token") || useSelector(selectCurrentToken);
+  const tokenFromStore = useSelector(selectCurrentToken);
+  const userIdFromStore = useSelector(selectCurrentUserId);
+  const currentToken = localStorage.getItem("token") || tokenFromStore;
 
-  const currentUserId =
-    localStorage.getItem("userId") || useSelector(selectCurrentUserId);
+  const currentUserId = localStorage.getItem("userId") || userIdFromStore;
 
   const userId = currentUserId;
   const userLoggedIn = currentUserId && currentToken ? true : false;
